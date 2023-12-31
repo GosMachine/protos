@@ -16,15 +16,17 @@ service Auth {
 message RegisterRequest {
   string email = 1;
   string password = 2;
+  string IP = 3;
 }
 
 message RegisterResponse {
-  int64 user_id = 1;
+  string token = 1;
 }
 
 message LoginRequest {
   string email = 1;
   string password = 2;
+  string IP = 3;
 }
 
 message LoginResponse {

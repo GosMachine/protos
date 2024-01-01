@@ -49,4 +49,5 @@ message IsUserLoggedInRequest {
 
 message IsUserLoggedInResponse {
   bool is_user_logged_in = 1;
+  string token = 2;
 }

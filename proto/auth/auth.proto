@@ -49,6 +49,6 @@ message UserRequest {
 }
 
 message UserResponse {
-  float balance = 1;
+  double balance = 1;
   bool isAdmin = 2;
 }

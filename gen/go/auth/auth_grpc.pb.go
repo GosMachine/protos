@@ -24,8 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type AuthClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	IsAdmin(ctx context.Context, in *IsAdminRequest, opts ...grpc.CallOption) (*IsAdminResponse, error)
 	IsUserLoggedIn(ctx context.Context, in *IsUserLoggedInRequest, opts ...grpc.CallOption) (*IsUserLoggedInResponse, error)
+	User(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 }
 
 type authClient struct {
@@ -54,18 +54,18 @@ func (c *authClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *authClient) IsAdmin(ctx context.Context, in *IsAdminRequest, opts ...grpc.CallOption) (*IsAdminResponse, error) {
-	out := new(IsAdminResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/IsAdmin", in, out, opts...)
+func (c *authClient) IsUserLoggedIn(ctx context.Context, in *IsUserLoggedInRequest, opts ...grpc.CallOption) (*IsUserLoggedInResponse, error) {
+	out := new(IsUserLoggedInResponse)
+	err := c.cc.Invoke(ctx, "/auth.Auth/IsUserLoggedIn", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *authClient) IsUserLoggedIn(ctx context.Context, in *IsUserLoggedInRequest, opts ...grpc.CallOption) (*IsUserLoggedInResponse, error) {
-	out := new(IsUserLoggedInResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/IsUserLoggedIn", in, out, opts...)
+func (c *authClient) User(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+	out := new(UserResponse)
+	err := c.cc.Invoke(ctx, "/auth.Auth/User", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,8 +78,8 @@ func (c *authClient) IsUserLoggedIn(ctx context.Context, in *IsUserLoggedInReque
 type AuthServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	IsAdmin(context.Context, *IsAdminRequest) (*IsAdminResponse, error)
 	IsUserLoggedIn(context.Context, *IsUserLoggedInRequest) (*IsUserLoggedInResponse, error)
+	User(context.Context, *UserRequest) (*UserResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -93,11 +93,11 @@ func (UnimplementedAuthServer) Register(context.Context, *RegisterRequest) (*Reg
 func (UnimplementedAuthServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServer) IsAdmin(context.Context, *IsAdminRequest) (*IsAdminResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsAdmin not implemented")
-}
 func (UnimplementedAuthServer) IsUserLoggedIn(context.Context, *IsUserLoggedInRequest) (*IsUserLoggedInResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsUserLoggedIn not implemented")
+}
+func (UnimplementedAuthServer) User(context.Context, *UserRequest) (*UserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method User not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -148,24 +148,6 @@ func _Auth_Login_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_IsAdmin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsAdminRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServer).IsAdmin(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/auth.Auth/IsAdmin",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).IsAdmin(ctx, req.(*IsAdminRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Auth_IsUserLoggedIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(IsUserLoggedInRequest)
 	if err := dec(in); err != nil {
@@ -180,6 +162,24 @@ func _Auth_IsUserLoggedIn_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthServer).IsUserLoggedIn(ctx, req.(*IsUserLoggedInRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Auth_User_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).User(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/User",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).User(ctx, req.(*UserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -200,12 +200,12 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Auth_Login_Handler,
 		},
 		{
-			MethodName: "IsAdmin",
-			Handler:    _Auth_IsAdmin_Handler,
-		},
-		{
 			MethodName: "IsUserLoggedIn",
 			Handler:    _Auth_IsUserLoggedIn_Handler,
+		},
+		{
+			MethodName: "User",
+			Handler:    _Auth_User_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

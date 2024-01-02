@@ -9,8 +9,8 @@ option go_package = "gosmach1ne.auth.v1;authv1";
 service Auth {
   rpc Register (RegisterRequest) returns (RegisterResponse);
   rpc Login (LoginRequest) returns (LoginResponse);
-  rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
-  rpc IsUserLoggedIn(IsUserLoggedInRequest) returns (IsUserLoggedInResponse);
+  rpc IsUserLoggedIn (IsUserLoggedInRequest) returns (IsUserLoggedInResponse);
+  rpc User (UserRequest) returns (UserResponse);
 }
 
 message RegisterRequest {
@@ -35,19 +35,20 @@ message LoginResponse {
   string token = 1;
 }
 
-message IsAdminRequest {
-  int64 user_id = 1;
-}
-
-message IsAdminResponse {
-  bool is_admin = 1;
-}
-
 message IsUserLoggedInRequest {
   string token = 1;
 }
 
 message IsUserLoggedInResponse {
-  bool is_user_logged_in = 1;
+  string email = 1;
   string token = 2;
+}
+
+message UserRequest {
+  string email = 1;
+}
+
+message UserResponse {
+  float balance = 1;
+  bool isAdmin = 2;
 }

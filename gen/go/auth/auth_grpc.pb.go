@@ -24,7 +24,6 @@ const _ = grpc.SupportPackageIsVersion7
 type AuthClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	IsUserLoggedIn(ctx context.Context, in *IsUserLoggedInRequest, opts ...grpc.CallOption) (*IsUserLoggedInResponse, error)
 	User(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 }
 
@@ -54,15 +53,6 @@ func (c *authClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.C
 	return out, nil
 }
 
-func (c *authClient) IsUserLoggedIn(ctx context.Context, in *IsUserLoggedInRequest, opts ...grpc.CallOption) (*IsUserLoggedInResponse, error) {
-	out := new(IsUserLoggedInResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/IsUserLoggedIn", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *authClient) User(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserResponse, error) {
 	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, "/auth.Auth/User", in, out, opts...)
@@ -78,7 +68,6 @@ func (c *authClient) User(ctx context.Context, in *UserRequest, opts ...grpc.Cal
 type AuthServer interface {
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	IsUserLoggedIn(context.Context, *IsUserLoggedInRequest) (*IsUserLoggedInResponse, error)
 	User(context.Context, *UserRequest) (*UserResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
@@ -92,9 +81,6 @@ func (UnimplementedAuthServer) Register(context.Context, *RegisterRequest) (*Reg
 }
 func (UnimplementedAuthServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
-}
-func (UnimplementedAuthServer) IsUserLoggedIn(context.Context, *IsUserLoggedInRequest) (*IsUserLoggedInResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsUserLoggedIn not implemented")
 }
 func (UnimplementedAuthServer) User(context.Context, *UserRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method User not implemented")
@@ -148,24 +134,6 @@ func _Auth_Login_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_IsUserLoggedIn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsUserLoggedInRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServer).IsUserLoggedIn(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/auth.Auth/IsUserLoggedIn",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).IsUserLoggedIn(ctx, req.(*IsUserLoggedInRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Auth_User_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserRequest)
 	if err := dec(in); err != nil {
@@ -198,10 +166,6 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _Auth_Login_Handler,
-		},
-		{
-			MethodName: "IsUserLoggedIn",
-			Handler:    _Auth_IsUserLoggedIn_Handler,
 		},
 		{
 			MethodName: "User",

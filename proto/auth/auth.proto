@@ -17,6 +17,7 @@ message RegisterRequest {
   string password = 2;
   string IP = 3;
   string rememberMe = 4;
+  string authMethod = 5;
 }
 
 message RegisterResponse {
@@ -28,6 +29,7 @@ message LoginRequest {
   string password = 2;
   string IP = 3;
   string rememberMe = 4;
+  string authMethod = 5;
 }
 
 message LoginResponse {

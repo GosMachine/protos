@@ -1,5 +1,3 @@
-// protoc -I proto proto/auth/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
-
 syntax = "proto3";
 
 package auth;
@@ -9,14 +7,19 @@ option go_package = "gosmach1ne.auth.v1;authv1";
 service Auth {
   rpc Register (RegisterRequest) returns (RegisterResponse);
   rpc Login (LoginRequest) returns (LoginResponse);
-  rpc User (UserRequest) returns (UserResponse);
+  rpc OAuth (OAuthRequest) returns (OAuthResponse);
+  rpc EmailVerified (EmailVerifiedRequest) returns (EmailVerifiedResponse);
 }
 
-message RegisterRequest {
+message BaseRequest {
   string email = 1;
   string password = 2;
   string IP = 3;
   string rememberMe = 4;
+}
+
+message RegisterRequest {
+  BaseRequest base = 1;
 }
 
 message RegisterResponse {
@@ -24,22 +27,30 @@ message RegisterResponse {
 }
 
 message LoginRequest {
-  string email = 1;
-  string password = 2;
-  string IP = 3;
-  string rememberMe = 4;
-  string authMethod = 5;
+  BaseRequest base = 1;
 }
 
 message LoginResponse {
   string token = 1;
 }
 
-message UserRequest {
+message EmailVerifiedRequest {
   string email = 1;
 }
 
-message UserResponse {
-  double balance = 1;
-  bool isAdmin = 2;
+message EmailVerifiedResponse {
+  bool emailVerified = 1;
 }
+
+message OAuthRequest {
+  string email = 1;
+  string IP = 2;
+}
+
+message OAuthResponse {
+  string token = 1;
+}
+
+// message BaseResponse {
+//   string token = 1;
+// }

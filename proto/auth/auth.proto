@@ -11,15 +11,11 @@ service Auth {
   rpc EmailVerified (EmailVerifiedRequest) returns (EmailVerifiedResponse);
 }
 
-message BaseRequest {
+message RegisterRequest {
   string email = 1;
   string password = 2;
   string IP = 3;
   string rememberMe = 4;
-}
-
-message RegisterRequest {
-  BaseRequest base = 1;
 }
 
 message RegisterResponse {
@@ -27,7 +23,10 @@ message RegisterResponse {
 }
 
 message LoginRequest {
-  BaseRequest base = 1;
+  string email = 1;
+  string password = 2;
+  string IP = 3;
+  string rememberMe = 4;
 }
 
 message LoginResponse {
@@ -50,7 +49,3 @@ message OAuthRequest {
 message OAuthResponse {
   string token = 1;
 }
-
-// message BaseResponse {
-//   string token = 1;
-// }

@@ -2,13 +2,17 @@ syntax = "proto3";
 
 package auth;
 
+import "google/protobuf/empty.proto";
+
 option go_package = "gosmach1ne.auth.v1;authv1";
+
 
 service Auth {
   rpc Register (RegisterRequest) returns (RegisterResponse);
   rpc Login (LoginRequest) returns (LoginResponse);
   rpc OAuth (OAuthRequest) returns (OAuthResponse);
   rpc EmailVerified (EmailVerifiedRequest) returns (EmailVerifiedResponse);
+  rpc EmailVerify (EmailVerifyRequest) returns (google.protobuf.Empty);
 }
 
 message RegisterRequest {
@@ -39,6 +43,10 @@ message EmailVerifiedRequest {
 
 message EmailVerifiedResponse {
   bool emailVerified = 1;
+}
+
+message EmailVerifyRequest {
+  string email = 1;
 }
 
 message OAuthRequest {

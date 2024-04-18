@@ -28,6 +28,7 @@ type AuthClient interface {
 	OAuth(ctx context.Context, in *OAuthRequest, opts ...grpc.CallOption) (*OAuthResponse, error)
 	EmailVerified(ctx context.Context, in *EmailVerifiedRequest, opts ...grpc.CallOption) (*EmailVerifiedResponse, error)
 	EmailVerify(ctx context.Context, in *EmailVerifyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ChangePass(ctx context.Context, in *ChangePassRequest, opts ...grpc.CallOption) (*ChangePassResponse, error)
 }
 
 type authClient struct {
@@ -83,6 +84,15 @@ func (c *authClient) EmailVerify(ctx context.Context, in *EmailVerifyRequest, op
 	return out, nil
 }
 
+func (c *authClient) ChangePass(ctx context.Context, in *ChangePassRequest, opts ...grpc.CallOption) (*ChangePassResponse, error) {
+	out := new(ChangePassResponse)
+	err := c.cc.Invoke(ctx, "/auth.Auth/ChangePass", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
@@ -92,6 +102,7 @@ type AuthServer interface {
 	OAuth(context.Context, *OAuthRequest) (*OAuthResponse, error)
 	EmailVerified(context.Context, *EmailVerifiedRequest) (*EmailVerifiedResponse, error)
 	EmailVerify(context.Context, *EmailVerifyRequest) (*emptypb.Empty, error)
+	ChangePass(context.Context, *ChangePassRequest) (*ChangePassResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -113,6 +124,9 @@ func (UnimplementedAuthServer) EmailVerified(context.Context, *EmailVerifiedRequ
 }
 func (UnimplementedAuthServer) EmailVerify(context.Context, *EmailVerifyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmailVerify not implemented")
+}
+func (UnimplementedAuthServer) ChangePass(context.Context, *ChangePassRequest) (*ChangePassResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangePass not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -217,6 +231,24 @@ func _Auth_EmailVerify_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_ChangePass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePassRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).ChangePass(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/ChangePass",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).ChangePass(ctx, req.(*ChangePassRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -243,6 +275,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EmailVerify",
 			Handler:    _Auth_EmailVerify_Handler,
+		},
+		{
+			MethodName: "ChangePass",
+			Handler:    _Auth_ChangePass_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

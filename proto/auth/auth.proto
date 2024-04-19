@@ -3,7 +3,6 @@ syntax = "proto3";
 package auth;
 
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "gosmach1ne.auth.v1;authv1";
 
@@ -25,7 +24,6 @@ message ChangePassRequest {
 
 message ChangePassResponse {
   string token = 1;
-  google.protobuf.Timestamp expiration = 2;
 }
 
 message RegisterRequest {
@@ -37,7 +35,6 @@ message RegisterRequest {
 
 message RegisterResponse {
   string token = 1;
-  google.protobuf.Timestamp expiration = 2;
 }
 
 message LoginRequest {
@@ -49,7 +46,6 @@ message LoginRequest {
 
 message LoginResponse {
   string token = 1;
-  google.protobuf.Timestamp expiration = 2;
 }
 
 message EmailVerifiedRequest {
@@ -71,5 +67,4 @@ message OAuthRequest {
 
 message OAuthResponse {
   string token = 1;
-  google.protobuf.Timestamp expiration = 2;
 }

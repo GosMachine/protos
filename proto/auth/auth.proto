@@ -20,7 +20,8 @@ service Auth {
 message ChangePassRequest {
   string email = 1;
   string password = 2;
-  string IP = 3;
+  string oldToken = 3;
+  string IP = 4;
 }
 
 message ChangePassResponse {
@@ -30,6 +31,7 @@ message ChangePassResponse {
 message ChangeEmailRequest {
   string email = 1;
   string newEmail = 2;
+  string oldToken = 3;
 }
 
 message ChangeEmailResponse {

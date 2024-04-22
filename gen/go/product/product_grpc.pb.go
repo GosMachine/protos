@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductClient interface {
 	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetGategoryResponse, error)
-	GetCategoryNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategoryNamesResponse, error)
+	GetCategoryNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategories, error)
 }
 
 type productClient struct {
@@ -44,8 +44,8 @@ func (c *productClient) GetCategory(ctx context.Context, in *GetCategoryRequest,
 	return out, nil
 }
 
-func (c *productClient) GetCategoryNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategoryNamesResponse, error) {
-	out := new(GetCategoryNamesResponse)
+func (c *productClient) GetCategoryNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategories, error) {
+	out := new(GetCategories)
 	err := c.cc.Invoke(ctx, "/product.Product/GetCategoryNames", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func (c *productClient) GetCategoryNames(ctx context.Context, in *emptypb.Empty,
 // for forward compatibility
 type ProductServer interface {
 	GetCategory(context.Context, *GetCategoryRequest) (*GetGategoryResponse, error)
-	GetCategoryNames(context.Context, *emptypb.Empty) (*GetCategoryNamesResponse, error)
+	GetCategoryNames(context.Context, *emptypb.Empty) (*GetCategories, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -69,7 +69,7 @@ type UnimplementedProductServer struct {
 func (UnimplementedProductServer) GetCategory(context.Context, *GetCategoryRequest) (*GetGategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
 }
-func (UnimplementedProductServer) GetCategoryNames(context.Context, *emptypb.Empty) (*GetCategoryNamesResponse, error) {
+func (UnimplementedProductServer) GetCategoryNames(context.Context, *emptypb.Empty) (*GetCategories, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryNames not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}

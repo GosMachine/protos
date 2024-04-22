@@ -28,7 +28,7 @@ message Item {
 	int64 stock = 4;
 	string image = 5;
 	string slug = 6;
-  InputFields fields = 7;
+  repeated InputFields fields = 7;
 }
 
 message InputFields {

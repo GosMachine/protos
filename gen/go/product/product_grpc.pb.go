@@ -24,7 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductClient interface {
 	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetGategoryResponse, error)
-	GetCategoryNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategories, error)
+	GetCategories(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
 }
 
 type productClient struct {
@@ -44,9 +44,9 @@ func (c *productClient) GetCategory(ctx context.Context, in *GetCategoryRequest,
 	return out, nil
 }
 
-func (c *productClient) GetCategoryNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategories, error) {
-	out := new(GetCategories)
-	err := c.cc.Invoke(ctx, "/product.Product/GetCategoryNames", in, out, opts...)
+func (c *productClient) GetCategories(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategoriesResponse, error) {
+	out := new(GetCategoriesResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/GetCategories", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (c *productClient) GetCategoryNames(ctx context.Context, in *emptypb.Empty,
 // for forward compatibility
 type ProductServer interface {
 	GetCategory(context.Context, *GetCategoryRequest) (*GetGategoryResponse, error)
-	GetCategoryNames(context.Context, *emptypb.Empty) (*GetCategories, error)
+	GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -69,8 +69,8 @@ type UnimplementedProductServer struct {
 func (UnimplementedProductServer) GetCategory(context.Context, *GetCategoryRequest) (*GetGategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
 }
-func (UnimplementedProductServer) GetCategoryNames(context.Context, *emptypb.Empty) (*GetCategories, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryNames not implemented")
+func (UnimplementedProductServer) GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategories not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -103,20 +103,20 @@ func _Product_GetCategory_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_GetCategoryNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Product_GetCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).GetCategoryNames(ctx, in)
+		return srv.(ProductServer).GetCategories(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.Product/GetCategoryNames",
+		FullMethod: "/product.Product/GetCategories",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).GetCategoryNames(ctx, req.(*emptypb.Empty))
+		return srv.(ProductServer).GetCategories(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -133,8 +133,8 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Product_GetCategory_Handler,
 		},
 		{
-			MethodName: "GetCategoryNames",
-			Handler:    _Product_GetCategoryNames_Handler,
+			MethodName: "GetCategories",
+			Handler:    _Product_GetCategories_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -8,7 +8,7 @@ option go_package = "gosmach1ne.product.v1;productv1";
 
 service Product {
   rpc GetCategory(GetCategoryRequest) returns (GetGategoryResponse);
-  rpc GetCategoryNames(google.protobuf.Empty) returns (GetCategories);
+  rpc GetCategories(google.protobuf.Empty) returns (GetCategoriesResponse);
 }
 
 message GetCategoryRequest {
@@ -30,7 +30,7 @@ message Item {
 	string slug = 6;
 }
 
-message GetCategories {
+message GetCategoriesResponse {
   repeated string names = 1;
   repeated string slugs = 2;
 }

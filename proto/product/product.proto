@@ -2,10 +2,13 @@ syntax = "proto3";
 
 package product;
 
+import "google/protobuf/empty.proto";
+
 option go_package = "gosmach1ne.product.v1;productv1";
 
 service Product {
   rpc GetCategory(GetCategoryRequest) returns (GetGategoryResponse);
+  rpc GetCategoryNames(google.protobuf.Empty) returns (GetCategoryNamesResponse);
 }
 
 message GetCategoryRequest {
@@ -23,4 +26,8 @@ message Item {
 	double price = 3;
 	int64 stock = 4;
 	string image = 5;
+}
+
+message GetCategoryNamesResponse {
+  repeated string names = 1;
 }

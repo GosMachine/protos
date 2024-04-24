@@ -25,6 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ProductClient interface {
 	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*GetGategoryResponse, error)
 	GetCategories(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
+	Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error)
 }
 
 type productClient struct {
@@ -53,12 +54,22 @@ func (c *productClient) GetCategories(ctx context.Context, in *emptypb.Empty, op
 	return out, nil
 }
 
+func (c *productClient) Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error) {
+	out := new(CheckoutResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/Checkout", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
 type ProductServer interface {
 	GetCategory(context.Context, *GetCategoryRequest) (*GetGategoryResponse, error)
 	GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error)
+	Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -71,6 +82,9 @@ func (UnimplementedProductServer) GetCategory(context.Context, *GetCategoryReque
 }
 func (UnimplementedProductServer) GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategories not implemented")
+}
+func (UnimplementedProductServer) Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Checkout not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -121,6 +135,24 @@ func _Product_GetCategories_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_Checkout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckoutRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).Checkout(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/product.Product/Checkout",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).Checkout(ctx, req.(*CheckoutRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -135,6 +167,10 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCategories",
 			Handler:    _Product_GetCategories_Handler,
+		},
+		{
+			MethodName: "Checkout",
+			Handler:    _Product_Checkout_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

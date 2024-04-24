@@ -9,6 +9,19 @@ option go_package = "gosmach1ne.product.v1;productv1";
 service Product {
   rpc GetCategory(GetCategoryRequest) returns (GetGategoryResponse);
   rpc GetCategories(google.protobuf.Empty) returns (GetCategoriesResponse);
+  rpc Checkout(CheckoutRequest) returns (CheckoutResponse);
+}
+
+message CheckoutRequest {
+  string quantity = 1;
+  string channel = 2;
+  string product = 3;
+  string messages = 4;
+  string duration = 5;
+}
+
+message CheckoutResponse {
+  string url = 1;
 }
 
 message GetCategoryRequest {

@@ -15,7 +15,7 @@ message AddAccountRequest {
 	string password = 2;
 	string oauth = 3;
 	string game = 4;
-	Drop drops = 5;
+	map<string, Drop> drops = 5;
   repeated string campaigns = 6;
 }
 

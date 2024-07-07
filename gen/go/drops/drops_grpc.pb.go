@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -22,9 +23,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DropsClient interface {
-	RunGame(ctx context.Context, in *RunGameRequest, opts ...grpc.CallOption) (*RunGameResponse, error)
-	RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*RunChannelsResponse, error)
-	Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*StopResponse, error)
+	RunGame(ctx context.Context, in *RunGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
 }
 
@@ -36,8 +37,8 @@ func NewDropsClient(cc grpc.ClientConnInterface) DropsClient {
 	return &dropsClient{cc}
 }
 
-func (c *dropsClient) RunGame(ctx context.Context, in *RunGameRequest, opts ...grpc.CallOption) (*RunGameResponse, error) {
-	out := new(RunGameResponse)
+func (c *dropsClient) RunGame(ctx context.Context, in *RunGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/drops.Drops/RunGame", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -45,8 +46,8 @@ func (c *dropsClient) RunGame(ctx context.Context, in *RunGameRequest, opts ...g
 	return out, nil
 }
 
-func (c *dropsClient) RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*RunChannelsResponse, error) {
-	out := new(RunChannelsResponse)
+func (c *dropsClient) RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/drops.Drops/RunChannels", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,8 +55,8 @@ func (c *dropsClient) RunChannels(ctx context.Context, in *RunChannelsRequest, o
 	return out, nil
 }
 
-func (c *dropsClient) Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*StopResponse, error) {
-	out := new(StopResponse)
+func (c *dropsClient) Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/drops.Drops/Stop", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -76,9 +77,9 @@ func (c *dropsClient) GetInfo(ctx context.Context, in *GetInfoRequest, opts ...g
 // All implementations must embed UnimplementedDropsServer
 // for forward compatibility
 type DropsServer interface {
-	RunGame(context.Context, *RunGameRequest) (*RunGameResponse, error)
-	RunChannels(context.Context, *RunChannelsRequest) (*RunChannelsResponse, error)
-	Stop(context.Context, *StopRequest) (*StopResponse, error)
+	RunGame(context.Context, *RunGameRequest) (*emptypb.Empty, error)
+	RunChannels(context.Context, *RunChannelsRequest) (*emptypb.Empty, error)
+	Stop(context.Context, *StopRequest) (*emptypb.Empty, error)
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
 	mustEmbedUnimplementedDropsServer()
 }
@@ -87,13 +88,13 @@ type DropsServer interface {
 type UnimplementedDropsServer struct {
 }
 
-func (UnimplementedDropsServer) RunGame(context.Context, *RunGameRequest) (*RunGameResponse, error) {
+func (UnimplementedDropsServer) RunGame(context.Context, *RunGameRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RunGame not implemented")
 }
-func (UnimplementedDropsServer) RunChannels(context.Context, *RunChannelsRequest) (*RunChannelsResponse, error) {
+func (UnimplementedDropsServer) RunChannels(context.Context, *RunChannelsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RunChannels not implemented")
 }
-func (UnimplementedDropsServer) Stop(context.Context, *StopRequest) (*StopResponse, error) {
+func (UnimplementedDropsServer) Stop(context.Context, *StopRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
 func (UnimplementedDropsServer) GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error) {

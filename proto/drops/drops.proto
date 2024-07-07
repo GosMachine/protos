@@ -2,43 +2,59 @@ syntax = "proto3";
 
 package drops;
 
+import "google/protobuf/empty.proto";
+
 option go_package = "gosmach1ne.drops.v1;dropsv1";
 
 service Drops {
-  rpc RunGame(RunGameRequest) returns (RunGameResponse);
-  rpc RunChannels(RunChannelsRequest) returns (RunChannelsResponse);
-  rpc Stop(StopRequest) returns (StopResponse);
+  rpc RunGame(RunGameRequest) returns (google.protobuf.Empty);
+  rpc RunChannels(RunChannelsRequest) returns (google.protobuf.Empty);
+  rpc Stop(StopRequest) returns (google.protobuf.Empty);
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
 }
 
-message RunGameRequest {
+message Token {
+	string username = 1;
+	string password = 2;
+	string oauth = 3;
+	string game = 4;
+	map<string, Drop> drops = 5;
+  repeated string campaigns = 6;
+}
 
+
+message Drop {
+	string name = 1;
+	int32 quantity = 2;
+	int64 taken_at = 3;
+}
+
+message RunGameRequest {
+	string name = 1;
+	string slug = 2;
+	int64 workers = 3;
+	repeated Token tokens = 4;
 }
 
 message RunChannelsRequest {
-
+	repeated string channels = 1;
+	int64 workers = 2;
+	repeated Token tokens = 3;
+	string game = 4;
+	bool watchChannelsAfterDropsClaiming = 5;
 }
 
 message StopRequest {
-
+	string game = 1;
 }
 
 message GetInfoRequest {
-
-}
-
-message RunGameResponse {
-
-}
-
-message RunChannelsResponse {
-
-}
-
-message StopResponse {
-
+	string game = 1;
 }
 
 message GetInfoResponse {
-
+	int64 activeWorkers = 1;
+	string currentChannel = 2;
+	int64 requiredWatch = 3;
+	int64 successCount = 4;
 }

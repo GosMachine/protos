@@ -2,25 +2,43 @@ syntax = "proto3";
 
 package drops;
 
-import "google/protobuf/empty.proto";
-
 option go_package = "gosmach1ne.drops.v1;dropsv1";
 
 service Drops {
-  rpc AddAccount(AddAccountRequest) returns (google.protobuf.Empty);
+  rpc RunGame(RunGameRequest) returns (RunGameResponse);
+  rpc RunChannels(RunChannelsRequest) returns (RunChannelsResponse);
+  rpc Stop(StopRequest) returns (StopResponse);
+  rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
 }
 
-message AddAccountRequest {
-	string username = 1;
-	string password = 2;
-	string oauth = 3;
-	string game = 4;
-	map<string, Drop> drops = 5;
-  repeated string campaigns = 6;
+message RunGameRequest {
+
 }
 
+message RunChannelsRequest {
 
-message Drop {
-	int32 quantity = 1;
-	int64 taken_at = 2;
+}
+
+message StopRequest {
+
+}
+
+message GetInfoRequest {
+
+}
+
+message RunGameResponse {
+
+}
+
+message RunChannelsResponse {
+
+}
+
+message StopResponse {
+
+}
+
+message GetInfoResponse {
+
 }

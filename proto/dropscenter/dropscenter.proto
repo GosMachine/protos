@@ -3,25 +3,15 @@ syntax = "proto3";
 package dropscenter;
 
 import "google/protobuf/empty.proto";
+import "drops/drops.proto";
 
 option go_package = "gosmach1ne.dropscenter.v1;dropscenterv1";
 
 service DropsCenter {
-  rpc AddAccount(AddAccountRequest) returns (google.protobuf.Empty);
+  rpc AddAccount(AddAccountsRequest) returns (google.protobuf.Empty);
 }
 
-message AddAccountRequest {
-	string username = 1;
-	string password = 2;
-	string oauth = 3;
-	string game = 4;
-	map<string, Drop> drops = 5;
-  repeated string campaigns = 6;
-}
-
-
-message Drop {
-	string name = 1;
-	int32 quantity = 2;
-	int64 taken_at = 3;
+message AddAccountsRequest {
+	repeated drops.Token accounts = 1;
+	string game = 2;
 }

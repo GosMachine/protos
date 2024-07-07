@@ -24,9 +24,8 @@ message Token {
 
 
 message Drop {
-	string name = 1;
-	int32 quantity = 2;
-	int64 taken_at = 3;
+	int32 quantity = 1;
+	int64 taken_at = 2;
 }
 
 message RunGameRequest {

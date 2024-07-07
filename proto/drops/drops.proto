@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package drops;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "gosmach1ne.drops.v1;dropsv1";
+
+service Drops {
+  rpc AddAccount(CheckoutRequest) returns (google.protobuf.Empty);
+}
+
+message CheckoutRequest {
+	string username = 1;
+	string password = 2;
+	string oauth = 3;
+	string game = 4;
+	map<string, Drop> drops = 5;
+  repeated string campaigns = 6;
+}
+
+
+message Drop {
+	int32 quantity = 1;
+	int64 taken_at = 2;
+}

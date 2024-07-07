@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DropsClient interface {
-	AddAccount(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	AddAccount(ctx context.Context, in *AddAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsClient struct {
@@ -34,7 +34,7 @@ func NewDropsClient(cc grpc.ClientConnInterface) DropsClient {
 	return &dropsClient{cc}
 }
 
-func (c *dropsClient) AddAccount(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dropsClient) AddAccount(ctx context.Context, in *AddAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/drops.Drops/AddAccount", in, out, opts...)
 	if err != nil {
@@ -47,7 +47,7 @@ func (c *dropsClient) AddAccount(ctx context.Context, in *CheckoutRequest, opts 
 // All implementations must embed UnimplementedDropsServer
 // for forward compatibility
 type DropsServer interface {
-	AddAccount(context.Context, *CheckoutRequest) (*emptypb.Empty, error)
+	AddAccount(context.Context, *AddAccountRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsServer()
 }
 
@@ -55,7 +55,7 @@ type DropsServer interface {
 type UnimplementedDropsServer struct {
 }
 
-func (UnimplementedDropsServer) AddAccount(context.Context, *CheckoutRequest) (*emptypb.Empty, error) {
+func (UnimplementedDropsServer) AddAccount(context.Context, *AddAccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddAccount not implemented")
 }
 func (UnimplementedDropsServer) mustEmbedUnimplementedDropsServer() {}
@@ -72,7 +72,7 @@ func RegisterDropsServer(s grpc.ServiceRegistrar, srv DropsServer) {
 }
 
 func _Drops_AddAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckoutRequest)
+	in := new(AddAccountRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func _Drops_AddAccount_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/drops.Drops/AddAccount",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsServer).AddAccount(ctx, req.(*CheckoutRequest))
+		return srv.(DropsServer).AddAccount(ctx, req.(*AddAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -7,10 +7,10 @@ import "google/protobuf/empty.proto";
 option go_package = "gosmach1ne.drops.v1;dropsv1";
 
 service Drops {
-  rpc AddAccount(CheckoutRequest) returns (google.protobuf.Empty);
+  rpc AddAccount(AddAccountRequest) returns (google.protobuf.Empty);
 }
 
-message CheckoutRequest {
+message AddAccountRequest {
 	string username = 1;
 	string password = 2;
 	string oauth = 3;

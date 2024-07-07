@@ -212,3 +212,89 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "drops/drops.proto",
 }
+
+// DropsCenterClient is the client API for DropsCenter service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type DropsCenterClient interface {
+	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+}
+
+type dropsCenterClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewDropsCenterClient(cc grpc.ClientConnInterface) DropsCenterClient {
+	return &dropsCenterClient{cc}
+}
+
+func (c *dropsCenterClient) AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/AddAccounts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// DropsCenterServer is the server API for DropsCenter service.
+// All implementations must embed UnimplementedDropsCenterServer
+// for forward compatibility
+type DropsCenterServer interface {
+	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
+	mustEmbedUnimplementedDropsCenterServer()
+}
+
+// UnimplementedDropsCenterServer must be embedded to have forward compatible implementations.
+type UnimplementedDropsCenterServer struct {
+}
+
+func (UnimplementedDropsCenterServer) AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddAccounts not implemented")
+}
+func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
+
+// UnsafeDropsCenterServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DropsCenterServer will
+// result in compilation errors.
+type UnsafeDropsCenterServer interface {
+	mustEmbedUnimplementedDropsCenterServer()
+}
+
+func RegisterDropsCenterServer(s grpc.ServiceRegistrar, srv DropsCenterServer) {
+	s.RegisterService(&DropsCenter_ServiceDesc, srv)
+}
+
+func _DropsCenter_AddAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddAccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).AddAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/drops.DropsCenter/AddAccounts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).AddAccounts(ctx, req.(*AddAccountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var DropsCenter_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "drops.DropsCenter",
+	HandlerType: (*DropsCenterServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "AddAccounts",
+			Handler:    _DropsCenter_AddAccounts_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "drops/drops.proto",
+}

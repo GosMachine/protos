@@ -13,6 +13,15 @@ service Drops {
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
 }
 
+service DropsCenter {
+	rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
+}
+  
+message AddAccountsRequest {
+	repeated Token accounts = 1;
+	string game = 2;
+}
+
 message Token {
 	string username = 1;
 	string password = 2;

@@ -8,7 +8,7 @@ import "drops/drops.proto";
 option go_package = "gosmach1ne.dropscenter.v1;dropscenterv1";
 
 service DropsCenter {
-  rpc AddAccount(AddAccountsRequest) returns (google.protobuf.Empty);
+  rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
 }
 
 message AddAccountsRequest {

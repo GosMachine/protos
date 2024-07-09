@@ -14,12 +14,22 @@ service Drops {
 }
 
 service DropsCenter {
-	rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
+	rpc UpdateAccounts(UpdateAccountsRequest) returns (google.protobuf.Empty);
+	rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
 }
   
-message AddAccountsRequest {
-	repeated Token accounts = 1;
-	string game = 2;
+message UpdateAccountsRequest {
+	string game = 1;
+	string campaign = 2;
+	repeated string tokens = 3;
+	repeated string drops = 4;
+}
+
+message AddGameRequest {
+	string game = 1;
+	string slug = 2;
+	int64 workers = 3;
+	repeated Token accounts = 4;
 }
 
 message Token {

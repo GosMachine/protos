@@ -19,10 +19,9 @@ service DropsCenter {
 }
   
 message UpdateAccountsRequest {
-	string game = 1;
-	string campaign = 2;
-	repeated string tokens = 3;
-	repeated string drops = 4;
+	string campaign = 1;
+	repeated string tokens = 2;
+	repeated string drops = 3;
 }
 
 message AddGameRequest {

@@ -10,66 +10,69 @@ service Drops {
   rpc RunGame(RunGameRequest) returns (google.protobuf.Empty);
   rpc RunChannels(RunChannelsRequest) returns (google.protobuf.Empty);
   rpc Stop(StopRequest) returns (google.protobuf.Empty);
-  rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
+  rpc GetActiveGamesInfo(google.protobuf.Empty) returns (GetActiveGamesInfoResponse);
 }
 
 service DropsCenter {
-	rpc UpdateAccounts(UpdateAccountsRequest) returns (google.protobuf.Empty);
-	rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
+  rpc UpdateAccounts(UpdateAccountsRequest) returns (google.protobuf.Empty);
+  rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
+  rpc GetGames(GetGamesRequest) returns (GetGamesResponse);
 }
-  
+
+message GetGamesRequest { int64 page = 1; }
+
+message GetGamesResponse {
+  string game = 1;
+  string slug = 2;
+}
+
 message UpdateAccountsRequest {
-	string campaign = 1;
-	repeated string tokens = 2;
-	repeated string drops = 3;
+  string campaign = 1;
+  repeated string tokens = 2;
+  repeated string drops = 3;
 }
 
 message AddGameRequest {
-	string game = 1;
-	string slug = 2;
-	int64 workers = 3;
-	repeated Token accounts = 4;
+  string game = 1;
+  string slug = 2;
+  int64 workers = 3;
+  repeated Token accounts = 4;
 }
 
 message Token {
-	string username = 1;
-	string password = 2;
-	string oauth = 3;
-	map<string, Drop> drops = 4;
+  string username = 1;
+  string password = 2;
+  string oauth = 3;
+  map<string, Drop> drops = 4;
   repeated string campaigns = 5;
 }
 
-
-message Drop {
-	int32 quantity = 1;
-}
+message Drop { int32 quantity = 1; }
 
 message RunGameRequest {
-	string name = 1;
-	string slug = 2;
-	int64 workers = 3;
-	repeated Token tokens = 4;
+  string name = 1;
+  string slug = 2;
+  int64 workers = 3;
+  repeated Token tokens = 4;
 }
 
 message RunChannelsRequest {
-	repeated string channels = 1;
-	int64 workers = 2;
-	repeated Token tokens = 3;
-	string game = 4;
-	bool watchChannelsAfterDropsClaiming = 5;
+  repeated string channels = 1;
+  int64 workers = 2;
+  repeated Token tokens = 3;
+  string game = 4;
+  bool watchChannelsAfterDropsClaiming = 5;
 }
 
-message StopRequest {
-	string game = 1;
+message StopRequest { string game = 1; }
+
+message GetActiveGamesInfoResponse {
+	repeated GameInfo games = 1;
 }
 
-message GetInfoRequest {
-	string game = 1;
-}
-
-message GetInfoResponse {
-	int64 activeWorkers = 1;
-	string currentChannel = 2;
-	int64 requiredWatch = 3;
-	int64 successCount = 4;
+message GameInfo {
+  int64 activeWorkers = 1;
+  string currentChannel = 2;
+  int64 requiredWatch = 3;
+  int64 successCount = 4;
 }

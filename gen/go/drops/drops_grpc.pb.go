@@ -26,7 +26,7 @@ type DropsClient interface {
 	RunGame(ctx context.Context, in *RunGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
+	GetActiveGamesInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetActiveGamesInfoResponse, error)
 }
 
 type dropsClient struct {
@@ -64,9 +64,9 @@ func (c *dropsClient) Stop(ctx context.Context, in *StopRequest, opts ...grpc.Ca
 	return out, nil
 }
 
-func (c *dropsClient) GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error) {
-	out := new(GetInfoResponse)
-	err := c.cc.Invoke(ctx, "/drops.Drops/GetInfo", in, out, opts...)
+func (c *dropsClient) GetActiveGamesInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetActiveGamesInfoResponse, error) {
+	out := new(GetActiveGamesInfoResponse)
+	err := c.cc.Invoke(ctx, "/drops.Drops/GetActiveGamesInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ type DropsServer interface {
 	RunGame(context.Context, *RunGameRequest) (*emptypb.Empty, error)
 	RunChannels(context.Context, *RunChannelsRequest) (*emptypb.Empty, error)
 	Stop(context.Context, *StopRequest) (*emptypb.Empty, error)
-	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
+	GetActiveGamesInfo(context.Context, *emptypb.Empty) (*GetActiveGamesInfoResponse, error)
 	mustEmbedUnimplementedDropsServer()
 }
 
@@ -97,8 +97,8 @@ func (UnimplementedDropsServer) RunChannels(context.Context, *RunChannelsRequest
 func (UnimplementedDropsServer) Stop(context.Context, *StopRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
-func (UnimplementedDropsServer) GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetInfo not implemented")
+func (UnimplementedDropsServer) GetActiveGamesInfo(context.Context, *emptypb.Empty) (*GetActiveGamesInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetActiveGamesInfo not implemented")
 }
 func (UnimplementedDropsServer) mustEmbedUnimplementedDropsServer() {}
 
@@ -167,20 +167,20 @@ func _Drops_Stop_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Drops_GetInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetInfoRequest)
+func _Drops_GetActiveGamesInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DropsServer).GetInfo(ctx, in)
+		return srv.(DropsServer).GetActiveGamesInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/drops.Drops/GetInfo",
+		FullMethod: "/drops.Drops/GetActiveGamesInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsServer).GetInfo(ctx, req.(*GetInfoRequest))
+		return srv.(DropsServer).GetActiveGamesInfo(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -205,8 +205,8 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Drops_Stop_Handler,
 		},
 		{
-			MethodName: "GetInfo",
-			Handler:    _Drops_GetInfo_Handler,
+			MethodName: "GetActiveGamesInfo",
+			Handler:    _Drops_GetActiveGamesInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -219,6 +219,7 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 type DropsCenterClient interface {
 	UpdateAccounts(ctx context.Context, in *UpdateAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddGame(ctx context.Context, in *AddGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetGames(ctx context.Context, in *GetGamesRequest, opts ...grpc.CallOption) (*GetGamesResponse, error)
 }
 
 type dropsCenterClient struct {
@@ -247,12 +248,22 @@ func (c *dropsCenterClient) AddGame(ctx context.Context, in *AddGameRequest, opt
 	return out, nil
 }
 
+func (c *dropsCenterClient) GetGames(ctx context.Context, in *GetGamesRequest, opts ...grpc.CallOption) (*GetGamesResponse, error) {
+	out := new(GetGamesResponse)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/GetGames", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsCenterServer is the server API for DropsCenter service.
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility
 type DropsCenterServer interface {
 	UpdateAccounts(context.Context, *UpdateAccountsRequest) (*emptypb.Empty, error)
 	AddGame(context.Context, *AddGameRequest) (*emptypb.Empty, error)
+	GetGames(context.Context, *GetGamesRequest) (*GetGamesResponse, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -265,6 +276,9 @@ func (UnimplementedDropsCenterServer) UpdateAccounts(context.Context, *UpdateAcc
 }
 func (UnimplementedDropsCenterServer) AddGame(context.Context, *AddGameRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddGame not implemented")
+}
+func (UnimplementedDropsCenterServer) GetGames(context.Context, *GetGamesRequest) (*GetGamesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGames not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 
@@ -315,6 +329,24 @@ func _DropsCenter_AddGame_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_GetGames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGamesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).GetGames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/drops.DropsCenter/GetGames",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).GetGames(ctx, req.(*GetGamesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -329,6 +361,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AddGame",
 			Handler:    _DropsCenter_AddGame_Handler,
+		},
+		{
+			MethodName: "GetGames",
+			Handler:    _DropsCenter_GetGames_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

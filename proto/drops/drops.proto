@@ -74,7 +74,8 @@ message GetActiveGamesInfoResponse { repeated GameInfo games = 1; }
 message GameInfo {
   int64 activeWorkers = 1;
   string currentChannel = 2;
-  int64 requiredWatch = 3;
+  int64 leftToWatch = 3;
   int64 successCount = 4;
   string name = 5;
+  string slug = 6;
 }

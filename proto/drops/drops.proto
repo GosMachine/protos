@@ -48,12 +48,16 @@ message Token {
   string oauth = 3;
 }
 
+message AccountWithData {
+	Token token = 1;
+	repeated string Campaigns = 2;
+	map<string, int32> drops = 3;
+}
+
 message AddAccountsRequest {
 	repeated Token accounts = 1;
 	string game = 2;
 }
-
-message Drop { int32 quantity = 1; }
 
 message RunGameRequest {
   string slug = 1;

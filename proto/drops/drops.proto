@@ -50,6 +50,7 @@ message Token {
 
 message AddAccountsRequest {
 	repeated Token accounts = 1;
+	string game = 2;
 }
 
 message Drop { int32 quantity = 1; }

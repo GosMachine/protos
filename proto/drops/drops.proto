@@ -35,15 +35,13 @@ message Token {
 	string username = 1;
 	string password = 2;
 	string oauth = 3;
-	string game = 4;
-	map<string, Drop> drops = 5;
-  repeated string campaigns = 6;
+	map<string, Drop> drops = 4;
+  repeated string campaigns = 5;
 }
 
 
 message Drop {
 	int32 quantity = 1;
-	int64 taken_at = 2;
 }
 
 message RunGameRequest {

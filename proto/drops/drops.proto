@@ -19,11 +19,19 @@ service DropsCenter {
   rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
   rpc GetGames(GetGamesRequest) returns (GetGamesResponse);
+  rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse);
 }
 
 message GetGamesRequest { int64 page = 1; }
 
 message GetGamesResponse { repeated Game games = 1; }
+
+message GetAccountsRequest { 
+	int64 page = 1;
+	repeated string games = 2;
+ }
+
+message GetAccountsResponse { repeated AccountWithData accounts = 1; }
 
 message Game {
   string game = 1;
@@ -52,6 +60,7 @@ message AccountWithData {
 	Token token = 1;
 	repeated string Campaigns = 2;
 	map<string, int32> drops = 3;
+	string game = 4;
 }
 
 message AddAccountsRequest {

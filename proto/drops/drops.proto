@@ -17,6 +17,7 @@ service Drops {
 service DropsCenter {
   rpc UpdateAccounts(UpdateAccountsRequest) returns (google.protobuf.Empty);
   rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
+  rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
   rpc GetGames(GetGamesRequest) returns (GetGamesResponse);
 }
 
@@ -39,32 +40,31 @@ message AddGameRequest {
   string game = 1;
   string slug = 2;
   int64 workers = 3;
-  repeated Token accounts = 4;
 }
 
 message Token {
   string username = 1;
   string password = 2;
   string oauth = 3;
-  map<string, Drop> drops = 4;
-  repeated string campaigns = 5;
+}
+
+message AddAccountsRequest {
+	repeated Token accounts = 1;
 }
 
 message Drop { int32 quantity = 1; }
 
 message RunGameRequest {
-  string name = 1;
-  string slug = 2;
-  int64 workers = 3;
-  repeated Token tokens = 4;
+  string slug = 1;
+  int64 workers = 2;
+  repeated string tokens = 3;
 }
 
 message RunChannelsRequest {
   repeated string channels = 1;
   int64 workers = 2;
-  repeated Token tokens = 3;
-  string game = 4;
-  bool watchChannelsAfterDropsClaiming = 5;
+  repeated string tokens = 3;
+  bool watchChannelsAfterDropsClaiming = 4;
 }
 
 message StopRequest { string game = 1; }

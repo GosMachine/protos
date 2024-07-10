@@ -10,7 +10,8 @@ service Drops {
   rpc RunGame(RunGameRequest) returns (google.protobuf.Empty);
   rpc RunChannels(RunChannelsRequest) returns (google.protobuf.Empty);
   rpc Stop(StopRequest) returns (google.protobuf.Empty);
-  rpc GetActiveGamesInfo(google.protobuf.Empty) returns (GetActiveGamesInfoResponse);
+  rpc GetActiveGamesInfo(google.protobuf.Empty)
+      returns (GetActiveGamesInfoResponse);
 }
 
 service DropsCenter {
@@ -21,7 +22,9 @@ service DropsCenter {
 
 message GetGamesRequest { int64 page = 1; }
 
-message GetGamesResponse {
+message GetGamesResponse { repeated Game games = 1; }
+
+message Game {
   string game = 1;
   string slug = 2;
 }
@@ -66,13 +69,12 @@ message RunChannelsRequest {
 
 message StopRequest { string game = 1; }
 
-message GetActiveGamesInfoResponse {
-	repeated GameInfo games = 1;
-}
+message GetActiveGamesInfoResponse { repeated GameInfo games = 1; }
 
 message GameInfo {
   int64 activeWorkers = 1;
   string currentChannel = 2;
   int64 requiredWatch = 3;
   int64 successCount = 4;
+  string name = 5;
 }

@@ -79,9 +79,10 @@ message RunChannelsRequest {
   int64 workers = 2;
   repeated string tokens = 3;
   bool watchChannelsAfterDropsClaiming = 4;
+  string slug = 5;
 }
 
-message StopRequest { string game = 1; }
+message StopRequest { string slug = 1; }
 
 message GetActiveGamesInfoResponse { repeated GameInfo games = 1; }
 

@@ -36,6 +36,8 @@ message GetAccountsResponse { repeated AccountWithData accounts = 1; }
 message Game {
   string game = 1;
   string slug = 2;
+  int64 workers = 3;
+  repeated string channels = 4;
 }
 
 message UpdateAccountsRequest {

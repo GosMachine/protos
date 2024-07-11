@@ -222,6 +222,8 @@ type DropsCenterClient interface {
 	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetGames(ctx context.Context, in *GetGamesRequest, opts ...grpc.CallOption) (*GetGamesResponse, error)
 	GetAccounts(ctx context.Context, in *GetAccountsRequest, opts ...grpc.CallOption) (*GetAccountsResponse, error)
+	UpdateGameWorkers(ctx context.Context, in *UpdateGameWorkersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateGameChannels(ctx context.Context, in *UpdateGameChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsCenterClient struct {
@@ -277,6 +279,24 @@ func (c *dropsCenterClient) GetAccounts(ctx context.Context, in *GetAccountsRequ
 	return out, nil
 }
 
+func (c *dropsCenterClient) UpdateGameWorkers(ctx context.Context, in *UpdateGameWorkersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/UpdateGameWorkers", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dropsCenterClient) UpdateGameChannels(ctx context.Context, in *UpdateGameChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/UpdateGameChannels", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsCenterServer is the server API for DropsCenter service.
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility
@@ -286,6 +306,8 @@ type DropsCenterServer interface {
 	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
 	GetGames(context.Context, *GetGamesRequest) (*GetGamesResponse, error)
 	GetAccounts(context.Context, *GetAccountsRequest) (*GetAccountsResponse, error)
+	UpdateGameWorkers(context.Context, *UpdateGameWorkersRequest) (*emptypb.Empty, error)
+	UpdateGameChannels(context.Context, *UpdateGameChannelsRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -307,6 +329,12 @@ func (UnimplementedDropsCenterServer) GetGames(context.Context, *GetGamesRequest
 }
 func (UnimplementedDropsCenterServer) GetAccounts(context.Context, *GetAccountsRequest) (*GetAccountsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccounts not implemented")
+}
+func (UnimplementedDropsCenterServer) UpdateGameWorkers(context.Context, *UpdateGameWorkersRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameWorkers not implemented")
+}
+func (UnimplementedDropsCenterServer) UpdateGameChannels(context.Context, *UpdateGameChannelsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameChannels not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 
@@ -411,6 +439,42 @@ func _DropsCenter_GetAccounts_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_UpdateGameWorkers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGameWorkersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).UpdateGameWorkers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/drops.DropsCenter/UpdateGameWorkers",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).UpdateGameWorkers(ctx, req.(*UpdateGameWorkersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DropsCenter_UpdateGameChannels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGameChannelsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).UpdateGameChannels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/drops.DropsCenter/UpdateGameChannels",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).UpdateGameChannels(ctx, req.(*UpdateGameChannelsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -437,6 +501,14 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAccounts",
 			Handler:    _DropsCenter_GetAccounts_Handler,
+		},
+		{
+			MethodName: "UpdateGameWorkers",
+			Handler:    _DropsCenter_UpdateGameWorkers_Handler,
+		},
+		{
+			MethodName: "UpdateGameChannels",
+			Handler:    _DropsCenter_UpdateGameChannels_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

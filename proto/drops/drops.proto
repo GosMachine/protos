@@ -20,6 +20,18 @@ service DropsCenter {
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
   rpc GetGames(GetGamesRequest) returns (GetGamesResponse);
   rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse);
+  rpc UpdateGameWorkers(UpdateGameWorkersRequest) returns (google.protobuf.Empty);
+  rpc UpdateGameChannels(UpdateGameChannelsRequest) returns (google.protobuf.Empty);
+}
+
+message UpdateGameWorkersRequest {
+  string game = 1;
+  int64 workers = 2;
+}
+
+message UpdateGameChannelsRequest {
+  string game = 1;
+  repeated string channels = 2;
 }
 
 message GetGamesRequest { int64 page = 1; }

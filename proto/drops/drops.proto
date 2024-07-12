@@ -23,6 +23,11 @@ service DropsCenter {
   rpc UpdateGameWorkers(UpdateGameWorkersRequest) returns (google.protobuf.Empty);
   rpc UpdateGameChannels(UpdateGameChannelsRequest) returns (google.protobuf.Empty);
   rpc GetAllGameNames(google.protobuf.Empty) returns (GetAllGameNamesResponse);
+  rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
+}
+
+message DeleteAccountRequest {
+  string oauth = 1;
 }
 
 message GetAllGameNamesResponse {

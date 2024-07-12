@@ -45,7 +45,7 @@ message GetGamesResponse { repeated Game games = 1; }
 
 message GetAccountsRequest { 
 	int64 page = 1;
-	repeated string games = 2;
+	string game = 2;
  }
 
 message GetAccountsResponse { repeated AccountWithData accounts = 1; }

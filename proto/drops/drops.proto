@@ -30,7 +30,7 @@ service DropsCenter {
   rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
 }
 
-message GameCenterRequest {string name = 1;}
+message GameCenterRequest {string slug = 1;}
 
 message DeleteAccountRequest { string oauth = 1; }
 

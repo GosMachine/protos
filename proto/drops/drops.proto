@@ -20,19 +20,17 @@ service DropsCenter {
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
   rpc GetGames(GetGamesRequest) returns (GetGamesResponse);
   rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse);
-  rpc UpdateGameWorkers(UpdateGameWorkersRequest) returns (google.protobuf.Empty);
-  rpc UpdateGameChannels(UpdateGameChannelsRequest) returns (google.protobuf.Empty);
+  rpc UpdateGameWorkers(UpdateGameWorkersRequest)
+      returns (google.protobuf.Empty);
+  rpc UpdateGameChannels(UpdateGameChannelsRequest)
+      returns (google.protobuf.Empty);
   rpc GetAllGameNames(google.protobuf.Empty) returns (GetAllGameNamesResponse);
   rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
 }
 
-message DeleteAccountRequest {
-  string oauth = 1;
-}
+message DeleteAccountRequest { string oauth = 1; }
 
-message GetAllGameNamesResponse {
-  repeated string games = 1;
-}
+message GetAllGameNamesResponse { repeated string games = 1; }
 
 message UpdateGameWorkersRequest {
   string game = 1;
@@ -44,18 +42,23 @@ message UpdateGameChannelsRequest {
   repeated string channels = 2;
 }
 
-message GetGamesRequest { int64 page = 1;
-int64 limit =2; }
+message GetGamesRequest {
+  int64 page = 1;
+  int64 limit = 2;
+}
 
-message GetGamesResponse { repeated Game games = 1; }
+message GetGamesResponse {
+  repeated Game games = 1;
+  int64 totalGameCount = 2;
+}
 
-message GetAccountsRequest { 
-	int64 page = 1;
-	string game = 2;
+message GetAccountsRequest {
+  int64 page = 1;
+  string game = 2;
   int64 limit = 3;
- }
+}
 
-message GetAccountsResponse { 
+message GetAccountsResponse {
   repeated AccountWithData accounts = 1;
   int64 totalGameCount = 2;
 }
@@ -86,15 +89,15 @@ message Token {
 }
 
 message AccountWithData {
-	Token token = 1;
-	repeated string Campaigns = 2;
-	map<string, int32> drops = 3;
-	string game = 4;
+  Token token = 1;
+  repeated string Campaigns = 2;
+  map<string, int32> drops = 3;
+  string game = 4;
 }
 
 message AddAccountsRequest {
-	repeated Token accounts = 1;
-	string game = 2;
+  repeated Token accounts = 1;
+  string game = 2;
 }
 
 message RunGameRequest {

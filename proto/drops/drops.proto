@@ -53,7 +53,10 @@ message GetAccountsRequest {
 	string game = 2;
  }
 
-message GetAccountsResponse { repeated AccountWithData accounts = 1; }
+message GetAccountsResponse { 
+  repeated AccountWithData accounts = 1;
+  int64 totalGameCount = 2;
+}
 
 message Game {
   string game = 1;

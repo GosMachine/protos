@@ -60,6 +60,7 @@ message GetAccountsRequest {
   int64 page = 1;
   string game = 2;
   int64 limit = 3;
+  string search = 4;
 }
 
 message GetAccountsResponse {

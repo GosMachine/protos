@@ -226,6 +226,7 @@ type DropsCenterClient interface {
 	GetAccounts(ctx context.Context, in *GetAccountsRequest, opts ...grpc.CallOption) (*GetAccountsResponse, error)
 	UpdateGameWorkers(ctx context.Context, in *UpdateGameWorkersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateGameChannels(ctx context.Context, in *UpdateGameChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateGameAutoFarm(ctx context.Context, in *UpdateGameAutoFarmRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -319,6 +320,15 @@ func (c *dropsCenterClient) UpdateGameChannels(ctx context.Context, in *UpdateGa
 	return out, nil
 }
 
+func (c *dropsCenterClient) UpdateGameAutoFarm(ctx context.Context, in *UpdateGameAutoFarmRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/UpdateGameAutoFarm", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *dropsCenterClient) GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error) {
 	out := new(GetAllGameNamesResponse)
 	err := c.cc.Invoke(ctx, "/drops.DropsCenter/GetAllGameNames", in, out, opts...)
@@ -350,6 +360,7 @@ type DropsCenterServer interface {
 	GetAccounts(context.Context, *GetAccountsRequest) (*GetAccountsResponse, error)
 	UpdateGameWorkers(context.Context, *UpdateGameWorkersRequest) (*emptypb.Empty, error)
 	UpdateGameChannels(context.Context, *UpdateGameChannelsRequest) (*emptypb.Empty, error)
+	UpdateGameAutoFarm(context.Context, *UpdateGameAutoFarmRequest) (*emptypb.Empty, error)
 	GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsCenterServer()
@@ -385,6 +396,9 @@ func (UnimplementedDropsCenterServer) UpdateGameWorkers(context.Context, *Update
 }
 func (UnimplementedDropsCenterServer) UpdateGameChannels(context.Context, *UpdateGameChannelsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameChannels not implemented")
+}
+func (UnimplementedDropsCenterServer) UpdateGameAutoFarm(context.Context, *UpdateGameAutoFarmRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameAutoFarm not implemented")
 }
 func (UnimplementedDropsCenterServer) GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllGameNames not implemented")
@@ -567,6 +581,24 @@ func _DropsCenter_UpdateGameChannels_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_UpdateGameAutoFarm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGameAutoFarmRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).UpdateGameAutoFarm(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/drops.DropsCenter/UpdateGameAutoFarm",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).UpdateGameAutoFarm(ctx, req.(*UpdateGameAutoFarmRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _DropsCenter_GetAllGameNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -645,6 +677,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateGameChannels",
 			Handler:    _DropsCenter_UpdateGameChannels_Handler,
+		},
+		{
+			MethodName: "UpdateGameAutoFarm",
+			Handler:    _DropsCenter_UpdateGameAutoFarm_Handler,
 		},
 		{
 			MethodName: "GetAllGameNames",

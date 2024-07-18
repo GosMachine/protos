@@ -109,6 +109,7 @@ message RunGameRequest {
   string slug = 1;
   int64 workers = 2;
   repeated string tokens = 3;
+  bool autoFarm = 4;
 }
 
 message RunChannelsRequest {

@@ -80,6 +80,7 @@ message Game {
   string slug = 2;
   int64 workers = 3;
   repeated string channels = 4;
+  bool autoFarm = 5;
 }
 
 message UpdateAccountsRequest {

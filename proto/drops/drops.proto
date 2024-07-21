@@ -37,7 +37,7 @@ message GameCenterRequest { string name = 1; }
 
 message GetFunPayGamesResponse { repeated string games = 1; }
 
-message DeleteAccountRequest { string oauth = 1; }
+message DeleteAccountRequest { string username = 1; }
 
 message GetAllGameNamesResponse { repeated string games = 1; }
 

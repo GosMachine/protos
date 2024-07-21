@@ -30,9 +30,12 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc GetAllGameNames(google.protobuf.Empty) returns (GetAllGameNamesResponse);
   rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
+  rpc GetFunPayGames(google.protobuf.Empty) returns (GetFunPayGamesResponse);
 }
 
 message GameCenterRequest { string name = 1; }
+
+message GetFunPayGamesResponse { repeated string games = 1; }
 
 message DeleteAccountRequest { string oauth = 1; }
 

@@ -68,6 +68,53 @@ func (x *GameCenterRequest) GetName() string {
 	return ""
 }
 
+type GetFunPayGamesResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Games []string `protobuf:"bytes,1,rep,name=games,proto3" json:"games,omitempty"`
+}
+
+func (x *GetFunPayGamesResponse) Reset() {
+	*x = GetFunPayGamesResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_drops_drops_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetFunPayGamesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetFunPayGamesResponse) ProtoMessage() {}
+
+func (x *GetFunPayGamesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_drops_drops_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetFunPayGamesResponse.ProtoReflect.Descriptor instead.
+func (*GetFunPayGamesResponse) Descriptor() ([]byte, []int) {
+	return file_drops_drops_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetFunPayGamesResponse) GetGames() []string {
+	if x != nil {
+		return x.Games
+	}
+	return nil
+}
+
 type DeleteAccountRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -79,7 +126,7 @@ type DeleteAccountRequest struct {
 func (x *DeleteAccountRequest) Reset() {
 	*x = DeleteAccountRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[1]
+		mi := &file_drops_drops_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -92,7 +139,7 @@ func (x *DeleteAccountRequest) String() string {
 func (*DeleteAccountRequest) ProtoMessage() {}
 
 func (x *DeleteAccountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[1]
+	mi := &file_drops_drops_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -105,7 +152,7 @@ func (x *DeleteAccountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAccountRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAccountRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{1}
+	return file_drops_drops_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *DeleteAccountRequest) GetOauth() string {
@@ -126,7 +173,7 @@ type GetAllGameNamesResponse struct {
 func (x *GetAllGameNamesResponse) Reset() {
 	*x = GetAllGameNamesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[2]
+		mi := &file_drops_drops_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -139,7 +186,7 @@ func (x *GetAllGameNamesResponse) String() string {
 func (*GetAllGameNamesResponse) ProtoMessage() {}
 
 func (x *GetAllGameNamesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[2]
+	mi := &file_drops_drops_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +199,7 @@ func (x *GetAllGameNamesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAllGameNamesResponse.ProtoReflect.Descriptor instead.
 func (*GetAllGameNamesResponse) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{2}
+	return file_drops_drops_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetAllGameNamesResponse) GetGames() []string {
@@ -174,7 +221,7 @@ type UpdateGameWorkersRequest struct {
 func (x *UpdateGameWorkersRequest) Reset() {
 	*x = UpdateGameWorkersRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[3]
+		mi := &file_drops_drops_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -187,7 +234,7 @@ func (x *UpdateGameWorkersRequest) String() string {
 func (*UpdateGameWorkersRequest) ProtoMessage() {}
 
 func (x *UpdateGameWorkersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[3]
+	mi := &file_drops_drops_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -200,7 +247,7 @@ func (x *UpdateGameWorkersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGameWorkersRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGameWorkersRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{3}
+	return file_drops_drops_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UpdateGameWorkersRequest) GetGame() string {
@@ -229,7 +276,7 @@ type UpdateGameChannelsRequest struct {
 func (x *UpdateGameChannelsRequest) Reset() {
 	*x = UpdateGameChannelsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[4]
+		mi := &file_drops_drops_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -242,7 +289,7 @@ func (x *UpdateGameChannelsRequest) String() string {
 func (*UpdateGameChannelsRequest) ProtoMessage() {}
 
 func (x *UpdateGameChannelsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[4]
+	mi := &file_drops_drops_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -255,7 +302,7 @@ func (x *UpdateGameChannelsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGameChannelsRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGameChannelsRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{4}
+	return file_drops_drops_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateGameChannelsRequest) GetGame() string {
@@ -284,7 +331,7 @@ type UpdateGameAutoFarmRequest struct {
 func (x *UpdateGameAutoFarmRequest) Reset() {
 	*x = UpdateGameAutoFarmRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[5]
+		mi := &file_drops_drops_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -297,7 +344,7 @@ func (x *UpdateGameAutoFarmRequest) String() string {
 func (*UpdateGameAutoFarmRequest) ProtoMessage() {}
 
 func (x *UpdateGameAutoFarmRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[5]
+	mi := &file_drops_drops_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -310,7 +357,7 @@ func (x *UpdateGameAutoFarmRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGameAutoFarmRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGameAutoFarmRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{5}
+	return file_drops_drops_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateGameAutoFarmRequest) GetGame() string {
@@ -339,7 +386,7 @@ type GetGamesRequest struct {
 func (x *GetGamesRequest) Reset() {
 	*x = GetGamesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[6]
+		mi := &file_drops_drops_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -352,7 +399,7 @@ func (x *GetGamesRequest) String() string {
 func (*GetGamesRequest) ProtoMessage() {}
 
 func (x *GetGamesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[6]
+	mi := &file_drops_drops_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -365,7 +412,7 @@ func (x *GetGamesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGamesRequest.ProtoReflect.Descriptor instead.
 func (*GetGamesRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{6}
+	return file_drops_drops_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetGamesRequest) GetPage() int64 {
@@ -394,7 +441,7 @@ type GetGamesResponse struct {
 func (x *GetGamesResponse) Reset() {
 	*x = GetGamesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[7]
+		mi := &file_drops_drops_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -407,7 +454,7 @@ func (x *GetGamesResponse) String() string {
 func (*GetGamesResponse) ProtoMessage() {}
 
 func (x *GetGamesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[7]
+	mi := &file_drops_drops_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -420,7 +467,7 @@ func (x *GetGamesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetGamesResponse.ProtoReflect.Descriptor instead.
 func (*GetGamesResponse) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{7}
+	return file_drops_drops_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetGamesResponse) GetGames() []*Game {
@@ -451,7 +498,7 @@ type GetAccountsRequest struct {
 func (x *GetAccountsRequest) Reset() {
 	*x = GetAccountsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[8]
+		mi := &file_drops_drops_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -464,7 +511,7 @@ func (x *GetAccountsRequest) String() string {
 func (*GetAccountsRequest) ProtoMessage() {}
 
 func (x *GetAccountsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[8]
+	mi := &file_drops_drops_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -477,7 +524,7 @@ func (x *GetAccountsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAccountsRequest.ProtoReflect.Descriptor instead.
 func (*GetAccountsRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{8}
+	return file_drops_drops_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *GetAccountsRequest) GetPage() int64 {
@@ -520,7 +567,7 @@ type GetAccountsResponse struct {
 func (x *GetAccountsResponse) Reset() {
 	*x = GetAccountsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[9]
+		mi := &file_drops_drops_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -533,7 +580,7 @@ func (x *GetAccountsResponse) String() string {
 func (*GetAccountsResponse) ProtoMessage() {}
 
 func (x *GetAccountsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[9]
+	mi := &file_drops_drops_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -546,7 +593,7 @@ func (x *GetAccountsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAccountsResponse.ProtoReflect.Descriptor instead.
 func (*GetAccountsResponse) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{9}
+	return file_drops_drops_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *GetAccountsResponse) GetAccounts() []*AccountWithData {
@@ -578,7 +625,7 @@ type Game struct {
 func (x *Game) Reset() {
 	*x = Game{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[10]
+		mi := &file_drops_drops_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -591,7 +638,7 @@ func (x *Game) String() string {
 func (*Game) ProtoMessage() {}
 
 func (x *Game) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[10]
+	mi := &file_drops_drops_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -604,7 +651,7 @@ func (x *Game) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Game.ProtoReflect.Descriptor instead.
 func (*Game) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{10}
+	return file_drops_drops_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *Game) GetGame() string {
@@ -655,7 +702,7 @@ type UpdateAccountsRequest struct {
 func (x *UpdateAccountsRequest) Reset() {
 	*x = UpdateAccountsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[11]
+		mi := &file_drops_drops_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -668,7 +715,7 @@ func (x *UpdateAccountsRequest) String() string {
 func (*UpdateAccountsRequest) ProtoMessage() {}
 
 func (x *UpdateAccountsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[11]
+	mi := &file_drops_drops_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -681,7 +728,7 @@ func (x *UpdateAccountsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAccountsRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAccountsRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{11}
+	return file_drops_drops_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateAccountsRequest) GetCampaign() string {
@@ -718,7 +765,7 @@ type AddGameRequest struct {
 func (x *AddGameRequest) Reset() {
 	*x = AddGameRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[12]
+		mi := &file_drops_drops_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -731,7 +778,7 @@ func (x *AddGameRequest) String() string {
 func (*AddGameRequest) ProtoMessage() {}
 
 func (x *AddGameRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[12]
+	mi := &file_drops_drops_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -744,7 +791,7 @@ func (x *AddGameRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddGameRequest.ProtoReflect.Descriptor instead.
 func (*AddGameRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{12}
+	return file_drops_drops_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *AddGameRequest) GetGame() string {
@@ -781,7 +828,7 @@ type Token struct {
 func (x *Token) Reset() {
 	*x = Token{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[13]
+		mi := &file_drops_drops_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -794,7 +841,7 @@ func (x *Token) String() string {
 func (*Token) ProtoMessage() {}
 
 func (x *Token) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[13]
+	mi := &file_drops_drops_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -807,7 +854,7 @@ func (x *Token) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Token.ProtoReflect.Descriptor instead.
 func (*Token) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{13}
+	return file_drops_drops_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Token) GetUsername() string {
@@ -845,7 +892,7 @@ type AccountWithData struct {
 func (x *AccountWithData) Reset() {
 	*x = AccountWithData{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[14]
+		mi := &file_drops_drops_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -858,7 +905,7 @@ func (x *AccountWithData) String() string {
 func (*AccountWithData) ProtoMessage() {}
 
 func (x *AccountWithData) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[14]
+	mi := &file_drops_drops_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -871,7 +918,7 @@ func (x *AccountWithData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccountWithData.ProtoReflect.Descriptor instead.
 func (*AccountWithData) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{14}
+	return file_drops_drops_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *AccountWithData) GetToken() *Token {
@@ -914,7 +961,7 @@ type AddAccountsRequest struct {
 func (x *AddAccountsRequest) Reset() {
 	*x = AddAccountsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[15]
+		mi := &file_drops_drops_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -927,7 +974,7 @@ func (x *AddAccountsRequest) String() string {
 func (*AddAccountsRequest) ProtoMessage() {}
 
 func (x *AddAccountsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[15]
+	mi := &file_drops_drops_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -940,7 +987,7 @@ func (x *AddAccountsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddAccountsRequest.ProtoReflect.Descriptor instead.
 func (*AddAccountsRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{15}
+	return file_drops_drops_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AddAccountsRequest) GetAccounts() []*Token {
@@ -971,7 +1018,7 @@ type RunGameRequest struct {
 func (x *RunGameRequest) Reset() {
 	*x = RunGameRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[16]
+		mi := &file_drops_drops_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -984,7 +1031,7 @@ func (x *RunGameRequest) String() string {
 func (*RunGameRequest) ProtoMessage() {}
 
 func (x *RunGameRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[16]
+	mi := &file_drops_drops_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -997,7 +1044,7 @@ func (x *RunGameRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunGameRequest.ProtoReflect.Descriptor instead.
 func (*RunGameRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{16}
+	return file_drops_drops_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *RunGameRequest) GetSlug() string {
@@ -1043,7 +1090,7 @@ type RunChannelsRequest struct {
 func (x *RunChannelsRequest) Reset() {
 	*x = RunChannelsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[17]
+		mi := &file_drops_drops_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1056,7 +1103,7 @@ func (x *RunChannelsRequest) String() string {
 func (*RunChannelsRequest) ProtoMessage() {}
 
 func (x *RunChannelsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[17]
+	mi := &file_drops_drops_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1069,7 +1116,7 @@ func (x *RunChannelsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RunChannelsRequest.ProtoReflect.Descriptor instead.
 func (*RunChannelsRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{17}
+	return file_drops_drops_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *RunChannelsRequest) GetChannels() []string {
@@ -1118,7 +1165,7 @@ type StopRequest struct {
 func (x *StopRequest) Reset() {
 	*x = StopRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[18]
+		mi := &file_drops_drops_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1131,7 +1178,7 @@ func (x *StopRequest) String() string {
 func (*StopRequest) ProtoMessage() {}
 
 func (x *StopRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[18]
+	mi := &file_drops_drops_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1144,7 +1191,7 @@ func (x *StopRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StopRequest.ProtoReflect.Descriptor instead.
 func (*StopRequest) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{18}
+	return file_drops_drops_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *StopRequest) GetSlug() string {
@@ -1165,7 +1212,7 @@ type GetActiveGamesInfoResponse struct {
 func (x *GetActiveGamesInfoResponse) Reset() {
 	*x = GetActiveGamesInfoResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[19]
+		mi := &file_drops_drops_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1178,7 +1225,7 @@ func (x *GetActiveGamesInfoResponse) String() string {
 func (*GetActiveGamesInfoResponse) ProtoMessage() {}
 
 func (x *GetActiveGamesInfoResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[19]
+	mi := &file_drops_drops_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1191,7 +1238,7 @@ func (x *GetActiveGamesInfoResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetActiveGamesInfoResponse.ProtoReflect.Descriptor instead.
 func (*GetActiveGamesInfoResponse) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{19}
+	return file_drops_drops_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetActiveGamesInfoResponse) GetGames() []*GameInfo {
@@ -1217,7 +1264,7 @@ type GameInfo struct {
 func (x *GameInfo) Reset() {
 	*x = GameInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_drops_drops_proto_msgTypes[20]
+		mi := &file_drops_drops_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1230,7 +1277,7 @@ func (x *GameInfo) String() string {
 func (*GameInfo) ProtoMessage() {}
 
 func (x *GameInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_drops_drops_proto_msgTypes[20]
+	mi := &file_drops_drops_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1243,7 +1290,7 @@ func (x *GameInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GameInfo.ProtoReflect.Descriptor instead.
 func (*GameInfo) Descriptor() ([]byte, []int) {
-	return file_drops_drops_proto_rawDescGZIP(), []int{20}
+	return file_drops_drops_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *GameInfo) GetActiveWorkers() int64 {
@@ -1297,6 +1344,9 @@ var file_drops_drops_proto_rawDesc = []byte{
 	0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x27, 0x0a, 0x11, 0x47, 0x61, 0x6d, 0x65, 0x43,
 	0x65, 0x6e, 0x74, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04,
 	0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x22, 0x2e, 0x0a, 0x16, 0x47, 0x65, 0x74, 0x46, 0x75, 0x6e, 0x50, 0x61, 0x79, 0x47, 0x61, 0x6d,
+	0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x67, 0x61,
+	0x6d, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x67, 0x61, 0x6d, 0x65, 0x73,
 	0x22, 0x2c, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e,
 	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x6f, 0x61, 0x75, 0x74,
 	0x68, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6f, 0x61, 0x75, 0x74, 0x68, 0x22, 0x2f,
@@ -1440,7 +1490,7 @@ var file_drops_drops_proto_rawDesc = []byte{
 	0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79,
 	0x1a, 0x21, 0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69,
 	0x76, 0x65, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x32, 0xce, 0x06, 0x0a, 0x0b, 0x44, 0x72, 0x6f, 0x70, 0x73, 0x43, 0x65, 0x6e,
+	0x6e, 0x73, 0x65, 0x32, 0x97, 0x07, 0x0a, 0x0b, 0x44, 0x72, 0x6f, 0x70, 0x73, 0x43, 0x65, 0x6e,
 	0x74, 0x65, 0x72, 0x12, 0x3b, 0x0a, 0x07, 0x52, 0x75, 0x6e, 0x47, 0x61, 0x6d, 0x65, 0x12, 0x18,
 	0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x47, 0x61, 0x6d, 0x65, 0x43, 0x65, 0x6e, 0x74, 0x65,
 	0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
@@ -1493,9 +1543,14 @@ var file_drops_drops_proto_rawDesc = []byte{
 	0x1b, 0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x63,
 	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67,
 	0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45,
-	0x6d, 0x70, 0x74, 0x79, 0x42, 0x1d, 0x5a, 0x1b, 0x67, 0x6f, 0x73, 0x6d, 0x61, 0x63, 0x68, 0x31,
-	0x6e, 0x65, 0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x76, 0x31, 0x3b, 0x64, 0x72, 0x6f, 0x70,
-	0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x70, 0x74, 0x79, 0x12, 0x47, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x46, 0x75, 0x6e, 0x50, 0x61,
+	0x79, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x12, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a, 0x1d,
+	0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x46, 0x75, 0x6e, 0x50, 0x61, 0x79,
+	0x47, 0x61, 0x6d, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x1d, 0x5a,
+	0x1b, 0x67, 0x6f, 0x73, 0x6d, 0x61, 0x63, 0x68, 0x31, 0x6e, 0x65, 0x2e, 0x64, 0x72, 0x6f, 0x70,
+	0x73, 0x2e, 0x76, 0x31, 0x3b, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1510,73 +1565,76 @@ func file_drops_drops_proto_rawDescGZIP() []byte {
 	return file_drops_drops_proto_rawDescData
 }
 
-var file_drops_drops_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_drops_drops_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_drops_drops_proto_goTypes = []interface{}{
 	(*GameCenterRequest)(nil),          // 0: drops.GameCenterRequest
-	(*DeleteAccountRequest)(nil),       // 1: drops.DeleteAccountRequest
-	(*GetAllGameNamesResponse)(nil),    // 2: drops.GetAllGameNamesResponse
-	(*UpdateGameWorkersRequest)(nil),   // 3: drops.UpdateGameWorkersRequest
-	(*UpdateGameChannelsRequest)(nil),  // 4: drops.UpdateGameChannelsRequest
-	(*UpdateGameAutoFarmRequest)(nil),  // 5: drops.UpdateGameAutoFarmRequest
-	(*GetGamesRequest)(nil),            // 6: drops.GetGamesRequest
-	(*GetGamesResponse)(nil),           // 7: drops.GetGamesResponse
-	(*GetAccountsRequest)(nil),         // 8: drops.GetAccountsRequest
-	(*GetAccountsResponse)(nil),        // 9: drops.GetAccountsResponse
-	(*Game)(nil),                       // 10: drops.Game
-	(*UpdateAccountsRequest)(nil),      // 11: drops.UpdateAccountsRequest
-	(*AddGameRequest)(nil),             // 12: drops.AddGameRequest
-	(*Token)(nil),                      // 13: drops.Token
-	(*AccountWithData)(nil),            // 14: drops.AccountWithData
-	(*AddAccountsRequest)(nil),         // 15: drops.AddAccountsRequest
-	(*RunGameRequest)(nil),             // 16: drops.RunGameRequest
-	(*RunChannelsRequest)(nil),         // 17: drops.RunChannelsRequest
-	(*StopRequest)(nil),                // 18: drops.StopRequest
-	(*GetActiveGamesInfoResponse)(nil), // 19: drops.GetActiveGamesInfoResponse
-	(*GameInfo)(nil),                   // 20: drops.GameInfo
-	nil,                                // 21: drops.AccountWithData.DropsEntry
-	(*emptypb.Empty)(nil),              // 22: google.protobuf.Empty
+	(*GetFunPayGamesResponse)(nil),     // 1: drops.GetFunPayGamesResponse
+	(*DeleteAccountRequest)(nil),       // 2: drops.DeleteAccountRequest
+	(*GetAllGameNamesResponse)(nil),    // 3: drops.GetAllGameNamesResponse
+	(*UpdateGameWorkersRequest)(nil),   // 4: drops.UpdateGameWorkersRequest
+	(*UpdateGameChannelsRequest)(nil),  // 5: drops.UpdateGameChannelsRequest
+	(*UpdateGameAutoFarmRequest)(nil),  // 6: drops.UpdateGameAutoFarmRequest
+	(*GetGamesRequest)(nil),            // 7: drops.GetGamesRequest
+	(*GetGamesResponse)(nil),           // 8: drops.GetGamesResponse
+	(*GetAccountsRequest)(nil),         // 9: drops.GetAccountsRequest
+	(*GetAccountsResponse)(nil),        // 10: drops.GetAccountsResponse
+	(*Game)(nil),                       // 11: drops.Game
+	(*UpdateAccountsRequest)(nil),      // 12: drops.UpdateAccountsRequest
+	(*AddGameRequest)(nil),             // 13: drops.AddGameRequest
+	(*Token)(nil),                      // 14: drops.Token
+	(*AccountWithData)(nil),            // 15: drops.AccountWithData
+	(*AddAccountsRequest)(nil),         // 16: drops.AddAccountsRequest
+	(*RunGameRequest)(nil),             // 17: drops.RunGameRequest
+	(*RunChannelsRequest)(nil),         // 18: drops.RunChannelsRequest
+	(*StopRequest)(nil),                // 19: drops.StopRequest
+	(*GetActiveGamesInfoResponse)(nil), // 20: drops.GetActiveGamesInfoResponse
+	(*GameInfo)(nil),                   // 21: drops.GameInfo
+	nil,                                // 22: drops.AccountWithData.DropsEntry
+	(*emptypb.Empty)(nil),              // 23: google.protobuf.Empty
 }
 var file_drops_drops_proto_depIdxs = []int32{
-	10, // 0: drops.GetGamesResponse.games:type_name -> drops.Game
-	14, // 1: drops.GetAccountsResponse.accounts:type_name -> drops.AccountWithData
-	13, // 2: drops.AccountWithData.token:type_name -> drops.Token
-	21, // 3: drops.AccountWithData.drops:type_name -> drops.AccountWithData.DropsEntry
-	13, // 4: drops.AddAccountsRequest.accounts:type_name -> drops.Token
-	20, // 5: drops.GetActiveGamesInfoResponse.games:type_name -> drops.GameInfo
-	16, // 6: drops.Drops.RunGame:input_type -> drops.RunGameRequest
-	17, // 7: drops.Drops.RunChannels:input_type -> drops.RunChannelsRequest
-	18, // 8: drops.Drops.Stop:input_type -> drops.StopRequest
-	22, // 9: drops.Drops.GetActiveGamesInfo:input_type -> google.protobuf.Empty
+	11, // 0: drops.GetGamesResponse.games:type_name -> drops.Game
+	15, // 1: drops.GetAccountsResponse.accounts:type_name -> drops.AccountWithData
+	14, // 2: drops.AccountWithData.token:type_name -> drops.Token
+	22, // 3: drops.AccountWithData.drops:type_name -> drops.AccountWithData.DropsEntry
+	14, // 4: drops.AddAccountsRequest.accounts:type_name -> drops.Token
+	21, // 5: drops.GetActiveGamesInfoResponse.games:type_name -> drops.GameInfo
+	17, // 6: drops.Drops.RunGame:input_type -> drops.RunGameRequest
+	18, // 7: drops.Drops.RunChannels:input_type -> drops.RunChannelsRequest
+	19, // 8: drops.Drops.Stop:input_type -> drops.StopRequest
+	23, // 9: drops.Drops.GetActiveGamesInfo:input_type -> google.protobuf.Empty
 	0,  // 10: drops.DropsCenter.RunGame:input_type -> drops.GameCenterRequest
 	0,  // 11: drops.DropsCenter.StopGame:input_type -> drops.GameCenterRequest
-	11, // 12: drops.DropsCenter.UpdateAccounts:input_type -> drops.UpdateAccountsRequest
-	12, // 13: drops.DropsCenter.AddGame:input_type -> drops.AddGameRequest
-	15, // 14: drops.DropsCenter.AddAccounts:input_type -> drops.AddAccountsRequest
-	6,  // 15: drops.DropsCenter.GetGames:input_type -> drops.GetGamesRequest
-	8,  // 16: drops.DropsCenter.GetAccounts:input_type -> drops.GetAccountsRequest
-	3,  // 17: drops.DropsCenter.UpdateGameWorkers:input_type -> drops.UpdateGameWorkersRequest
-	4,  // 18: drops.DropsCenter.UpdateGameChannels:input_type -> drops.UpdateGameChannelsRequest
-	5,  // 19: drops.DropsCenter.UpdateGameAutoFarm:input_type -> drops.UpdateGameAutoFarmRequest
-	22, // 20: drops.DropsCenter.GetAllGameNames:input_type -> google.protobuf.Empty
-	1,  // 21: drops.DropsCenter.DeleteAccount:input_type -> drops.DeleteAccountRequest
-	22, // 22: drops.Drops.RunGame:output_type -> google.protobuf.Empty
-	22, // 23: drops.Drops.RunChannels:output_type -> google.protobuf.Empty
-	22, // 24: drops.Drops.Stop:output_type -> google.protobuf.Empty
-	19, // 25: drops.Drops.GetActiveGamesInfo:output_type -> drops.GetActiveGamesInfoResponse
-	22, // 26: drops.DropsCenter.RunGame:output_type -> google.protobuf.Empty
-	22, // 27: drops.DropsCenter.StopGame:output_type -> google.protobuf.Empty
-	22, // 28: drops.DropsCenter.UpdateAccounts:output_type -> google.protobuf.Empty
-	22, // 29: drops.DropsCenter.AddGame:output_type -> google.protobuf.Empty
-	22, // 30: drops.DropsCenter.AddAccounts:output_type -> google.protobuf.Empty
-	7,  // 31: drops.DropsCenter.GetGames:output_type -> drops.GetGamesResponse
-	9,  // 32: drops.DropsCenter.GetAccounts:output_type -> drops.GetAccountsResponse
-	22, // 33: drops.DropsCenter.UpdateGameWorkers:output_type -> google.protobuf.Empty
-	22, // 34: drops.DropsCenter.UpdateGameChannels:output_type -> google.protobuf.Empty
-	22, // 35: drops.DropsCenter.UpdateGameAutoFarm:output_type -> google.protobuf.Empty
-	2,  // 36: drops.DropsCenter.GetAllGameNames:output_type -> drops.GetAllGameNamesResponse
-	22, // 37: drops.DropsCenter.DeleteAccount:output_type -> google.protobuf.Empty
-	22, // [22:38] is the sub-list for method output_type
-	6,  // [6:22] is the sub-list for method input_type
+	12, // 12: drops.DropsCenter.UpdateAccounts:input_type -> drops.UpdateAccountsRequest
+	13, // 13: drops.DropsCenter.AddGame:input_type -> drops.AddGameRequest
+	16, // 14: drops.DropsCenter.AddAccounts:input_type -> drops.AddAccountsRequest
+	7,  // 15: drops.DropsCenter.GetGames:input_type -> drops.GetGamesRequest
+	9,  // 16: drops.DropsCenter.GetAccounts:input_type -> drops.GetAccountsRequest
+	4,  // 17: drops.DropsCenter.UpdateGameWorkers:input_type -> drops.UpdateGameWorkersRequest
+	5,  // 18: drops.DropsCenter.UpdateGameChannels:input_type -> drops.UpdateGameChannelsRequest
+	6,  // 19: drops.DropsCenter.UpdateGameAutoFarm:input_type -> drops.UpdateGameAutoFarmRequest
+	23, // 20: drops.DropsCenter.GetAllGameNames:input_type -> google.protobuf.Empty
+	2,  // 21: drops.DropsCenter.DeleteAccount:input_type -> drops.DeleteAccountRequest
+	23, // 22: drops.DropsCenter.GetFunPayGames:input_type -> google.protobuf.Empty
+	23, // 23: drops.Drops.RunGame:output_type -> google.protobuf.Empty
+	23, // 24: drops.Drops.RunChannels:output_type -> google.protobuf.Empty
+	23, // 25: drops.Drops.Stop:output_type -> google.protobuf.Empty
+	20, // 26: drops.Drops.GetActiveGamesInfo:output_type -> drops.GetActiveGamesInfoResponse
+	23, // 27: drops.DropsCenter.RunGame:output_type -> google.protobuf.Empty
+	23, // 28: drops.DropsCenter.StopGame:output_type -> google.protobuf.Empty
+	23, // 29: drops.DropsCenter.UpdateAccounts:output_type -> google.protobuf.Empty
+	23, // 30: drops.DropsCenter.AddGame:output_type -> google.protobuf.Empty
+	23, // 31: drops.DropsCenter.AddAccounts:output_type -> google.protobuf.Empty
+	8,  // 32: drops.DropsCenter.GetGames:output_type -> drops.GetGamesResponse
+	10, // 33: drops.DropsCenter.GetAccounts:output_type -> drops.GetAccountsResponse
+	23, // 34: drops.DropsCenter.UpdateGameWorkers:output_type -> google.protobuf.Empty
+	23, // 35: drops.DropsCenter.UpdateGameChannels:output_type -> google.protobuf.Empty
+	23, // 36: drops.DropsCenter.UpdateGameAutoFarm:output_type -> google.protobuf.Empty
+	3,  // 37: drops.DropsCenter.GetAllGameNames:output_type -> drops.GetAllGameNamesResponse
+	23, // 38: drops.DropsCenter.DeleteAccount:output_type -> google.protobuf.Empty
+	1,  // 39: drops.DropsCenter.GetFunPayGames:output_type -> drops.GetFunPayGamesResponse
+	23, // [23:40] is the sub-list for method output_type
+	6,  // [6:23] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
 	6,  // [6:6] is the sub-list for extension extendee
 	0,  // [0:6] is the sub-list for field type_name
@@ -1601,7 +1659,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteAccountRequest); i {
+			switch v := v.(*GetFunPayGamesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1613,7 +1671,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAllGameNamesResponse); i {
+			switch v := v.(*DeleteAccountRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1625,7 +1683,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateGameWorkersRequest); i {
+			switch v := v.(*GetAllGameNamesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1637,7 +1695,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateGameChannelsRequest); i {
+			switch v := v.(*UpdateGameWorkersRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1649,7 +1707,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateGameAutoFarmRequest); i {
+			switch v := v.(*UpdateGameChannelsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1661,7 +1719,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGamesRequest); i {
+			switch v := v.(*UpdateGameAutoFarmRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1673,7 +1731,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetGamesResponse); i {
+			switch v := v.(*GetGamesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1685,7 +1743,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAccountsRequest); i {
+			switch v := v.(*GetGamesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1697,7 +1755,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetAccountsResponse); i {
+			switch v := v.(*GetAccountsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1709,7 +1767,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Game); i {
+			switch v := v.(*GetAccountsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1721,7 +1779,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateAccountsRequest); i {
+			switch v := v.(*Game); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1733,7 +1791,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddGameRequest); i {
+			switch v := v.(*UpdateAccountsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1745,7 +1803,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Token); i {
+			switch v := v.(*AddGameRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1757,7 +1815,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AccountWithData); i {
+			switch v := v.(*Token); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1769,7 +1827,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddAccountsRequest); i {
+			switch v := v.(*AccountWithData); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1781,7 +1839,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RunGameRequest); i {
+			switch v := v.(*AddAccountsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1793,7 +1851,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*RunChannelsRequest); i {
+			switch v := v.(*RunGameRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1805,7 +1863,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StopRequest); i {
+			switch v := v.(*RunChannelsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1817,7 +1875,7 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetActiveGamesInfoResponse); i {
+			switch v := v.(*StopRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1829,6 +1887,18 @@ func file_drops_drops_proto_init() {
 			}
 		}
 		file_drops_drops_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetActiveGamesInfoResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_drops_drops_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GameInfo); i {
 			case 0:
 				return &v.state
@@ -1847,7 +1917,7 @@ func file_drops_drops_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_drops_drops_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

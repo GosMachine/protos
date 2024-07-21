@@ -229,6 +229,7 @@ type DropsCenterClient interface {
 	UpdateGameAutoFarm(ctx context.Context, in *UpdateGameAutoFarmRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetFunPayGames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayGamesResponse, error)
 }
 
 type dropsCenterClient struct {
@@ -347,6 +348,15 @@ func (c *dropsCenterClient) DeleteAccount(ctx context.Context, in *DeleteAccount
 	return out, nil
 }
 
+func (c *dropsCenterClient) GetFunPayGames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayGamesResponse, error) {
+	out := new(GetFunPayGamesResponse)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/GetFunPayGames", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsCenterServer is the server API for DropsCenter service.
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility
@@ -363,6 +373,7 @@ type DropsCenterServer interface {
 	UpdateGameAutoFarm(context.Context, *UpdateGameAutoFarmRequest) (*emptypb.Empty, error)
 	GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
+	GetFunPayGames(context.Context, *emptypb.Empty) (*GetFunPayGamesResponse, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -405,6 +416,9 @@ func (UnimplementedDropsCenterServer) GetAllGameNames(context.Context, *emptypb.
 }
 func (UnimplementedDropsCenterServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
+}
+func (UnimplementedDropsCenterServer) GetFunPayGames(context.Context, *emptypb.Empty) (*GetFunPayGamesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayGames not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 
@@ -635,6 +649,24 @@ func _DropsCenter_DeleteAccount_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_GetFunPayGames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).GetFunPayGames(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/drops.DropsCenter/GetFunPayGames",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).GetFunPayGames(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -689,6 +721,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAccount",
 			Handler:    _DropsCenter_DeleteAccount_Handler,
+		},
+		{
+			MethodName: "GetFunPayGames",
+			Handler:    _DropsCenter_GetFunPayGames_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

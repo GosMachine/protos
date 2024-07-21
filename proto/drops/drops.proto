@@ -91,6 +91,7 @@ message Game {
   int64 workers = 3;
   repeated string channels = 4;
   bool autoFarm = 5;
+  string funPayName = 6;
 }
 
 message UpdateAccountsRequest {

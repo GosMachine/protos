@@ -50,6 +50,10 @@ message InputFields {
 }
 
 message GetCategoriesResponse {
-  repeated string names = 1;
-  repeated string slugs = 2;
+  repeated Category categories = 1;
+}
+
+message Category {
+  string name = 1;
+  string slug = 2;
 }

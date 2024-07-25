@@ -28,7 +28,7 @@ type AuthClient interface {
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	OAuth(ctx context.Context, in *OAuthRequest, opts ...grpc.CallOption) (*OAuthResponse, error)
 	EmailVerified(ctx context.Context, in *EmailVerifiedRequest, opts ...grpc.CallOption) (*EmailVerifiedResponse, error)
-	IsAuthenticated(ctx context.Context, in *IsAuthenticatedRequest, opts ...grpc.CallOption) (*IsAuthenticatedResponse, error)
+	GetUserEmail(ctx context.Context, in *GetUserEmailRequest, opts ...grpc.CallOption) (*GetUserEmailResponse, error)
 	EmailVerify(ctx context.Context, in *EmailVerifyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ChangePass(ctx context.Context, in *ChangePassRequest, opts ...grpc.CallOption) (*ChangePassResponse, error)
 	ChangeEmail(ctx context.Context, in *ChangeEmailRequest, opts ...grpc.CallOption) (*ChangeEmailResponse, error)
@@ -87,9 +87,9 @@ func (c *authClient) EmailVerified(ctx context.Context, in *EmailVerifiedRequest
 	return out, nil
 }
 
-func (c *authClient) IsAuthenticated(ctx context.Context, in *IsAuthenticatedRequest, opts ...grpc.CallOption) (*IsAuthenticatedResponse, error) {
-	out := new(IsAuthenticatedResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/IsAuthenticated", in, out, opts...)
+func (c *authClient) GetUserEmail(ctx context.Context, in *GetUserEmailRequest, opts ...grpc.CallOption) (*GetUserEmailResponse, error) {
+	out := new(GetUserEmailResponse)
+	err := c.cc.Invoke(ctx, "/auth.Auth/GetUserEmail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ type AuthServer interface {
 	Logout(context.Context, *LogoutRequest) (*emptypb.Empty, error)
 	OAuth(context.Context, *OAuthRequest) (*OAuthResponse, error)
 	EmailVerified(context.Context, *EmailVerifiedRequest) (*EmailVerifiedResponse, error)
-	IsAuthenticated(context.Context, *IsAuthenticatedRequest) (*IsAuthenticatedResponse, error)
+	GetUserEmail(context.Context, *GetUserEmailRequest) (*GetUserEmailResponse, error)
 	EmailVerify(context.Context, *EmailVerifyRequest) (*emptypb.Empty, error)
 	ChangePass(context.Context, *ChangePassRequest) (*ChangePassResponse, error)
 	ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error)
@@ -158,8 +158,8 @@ func (UnimplementedAuthServer) OAuth(context.Context, *OAuthRequest) (*OAuthResp
 func (UnimplementedAuthServer) EmailVerified(context.Context, *EmailVerifiedRequest) (*EmailVerifiedResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmailVerified not implemented")
 }
-func (UnimplementedAuthServer) IsAuthenticated(context.Context, *IsAuthenticatedRequest) (*IsAuthenticatedResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsAuthenticated not implemented")
+func (UnimplementedAuthServer) GetUserEmail(context.Context, *GetUserEmailRequest) (*GetUserEmailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserEmail not implemented")
 }
 func (UnimplementedAuthServer) EmailVerify(context.Context, *EmailVerifyRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmailVerify not implemented")
@@ -273,20 +273,20 @@ func _Auth_EmailVerified_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_IsAuthenticated_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(IsAuthenticatedRequest)
+func _Auth_GetUserEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserEmailRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServer).IsAuthenticated(ctx, in)
+		return srv.(AuthServer).GetUserEmail(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/auth.Auth/IsAuthenticated",
+		FullMethod: "/auth.Auth/GetUserEmail",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).IsAuthenticated(ctx, req.(*IsAuthenticatedRequest))
+		return srv.(AuthServer).GetUserEmail(ctx, req.(*GetUserEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -373,8 +373,8 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Auth_EmailVerified_Handler,
 		},
 		{
-			MethodName: "IsAuthenticated",
-			Handler:    _Auth_IsAuthenticated_Handler,
+			MethodName: "GetUserEmail",
+			Handler:    _Auth_GetUserEmail_Handler,
 		},
 		{
 			MethodName: "EmailVerify",

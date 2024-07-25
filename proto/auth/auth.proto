@@ -18,7 +18,7 @@ service Auth {
   rpc ChangeEmail(ChangeEmailRequest) returns (ChangeEmailResponse);
 }
 
-message IsAuthenticatedRequest { string email = 1; }
+message IsAuthenticatedRequest { string token = 1; }
 
 message IsAuthenticatedResponse { bool isAuthenticated = 1; }
 

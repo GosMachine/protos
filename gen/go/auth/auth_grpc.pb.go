@@ -32,6 +32,7 @@ type AuthClient interface {
 	EmailVerify(ctx context.Context, in *EmailVerifyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ChangePass(ctx context.Context, in *ChangePassRequest, opts ...grpc.CallOption) (*ChangePassResponse, error)
 	ChangeEmail(ctx context.Context, in *ChangeEmailRequest, opts ...grpc.CallOption) (*ChangeEmailResponse, error)
+	GetTokenTTL(ctx context.Context, in *GetTokenTTLRequest, opts ...grpc.CallOption) (*GetTokenTTLResponse, error)
 }
 
 type authClient struct {
@@ -123,6 +124,15 @@ func (c *authClient) ChangeEmail(ctx context.Context, in *ChangeEmailRequest, op
 	return out, nil
 }
 
+func (c *authClient) GetTokenTTL(ctx context.Context, in *GetTokenTTLRequest, opts ...grpc.CallOption) (*GetTokenTTLResponse, error) {
+	out := new(GetTokenTTLResponse)
+	err := c.cc.Invoke(ctx, "/auth.Auth/GetTokenTTL", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
@@ -136,6 +146,7 @@ type AuthServer interface {
 	EmailVerify(context.Context, *EmailVerifyRequest) (*emptypb.Empty, error)
 	ChangePass(context.Context, *ChangePassRequest) (*ChangePassResponse, error)
 	ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error)
+	GetTokenTTL(context.Context, *GetTokenTTLRequest) (*GetTokenTTLResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -169,6 +180,9 @@ func (UnimplementedAuthServer) ChangePass(context.Context, *ChangePassRequest) (
 }
 func (UnimplementedAuthServer) ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeEmail not implemented")
+}
+func (UnimplementedAuthServer) GetTokenTTL(context.Context, *GetTokenTTLRequest) (*GetTokenTTLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTokenTTL not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -345,6 +359,24 @@ func _Auth_ChangeEmail_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_GetTokenTTL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTokenTTLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).GetTokenTTL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/GetTokenTTL",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).GetTokenTTL(ctx, req.(*GetTokenTTLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -387,6 +419,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeEmail",
 			Handler:    _Auth_ChangeEmail_Handler,
+		},
+		{
+			MethodName: "GetTokenTTL",
+			Handler:    _Auth_GetTokenTTL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

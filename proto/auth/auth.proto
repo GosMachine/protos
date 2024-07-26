@@ -16,7 +16,12 @@ service Auth {
   rpc EmailVerify(EmailVerifyRequest) returns (google.protobuf.Empty);
   rpc ChangePass(ChangePassRequest) returns (ChangePassResponse);
   rpc ChangeEmail(ChangeEmailRequest) returns (ChangeEmailResponse);
+  rpc GetTokenTTL(GetTokenTTLRequest) returns (GetTokenTTLResponse);
 }
+
+message GetTokenTTLRequest { string token = 1; }
+
+message GetTokenTTLResponse { int64 unixTokenTTL = 1; }
 
 message GetUserEmailRequest { string token = 1; }
 

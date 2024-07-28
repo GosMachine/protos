@@ -33,6 +33,7 @@ type AuthClient interface {
 	ChangePass(ctx context.Context, in *ChangePassRequest, opts ...grpc.CallOption) (*ChangePassResponse, error)
 	ChangeEmail(ctx context.Context, in *ChangeEmailRequest, opts ...grpc.CallOption) (*ChangeEmailResponse, error)
 	GetTokenTTL(ctx context.Context, in *GetTokenTTLRequest, opts ...grpc.CallOption) (*GetTokenTTLResponse, error)
+	CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error)
 }
 
 type authClient struct {
@@ -133,6 +134,15 @@ func (c *authClient) GetTokenTTL(ctx context.Context, in *GetTokenTTLRequest, op
 	return out, nil
 }
 
+func (c *authClient) CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error) {
+	out := new(CreateTokenResponse)
+	err := c.cc.Invoke(ctx, "/auth.Auth/CreateToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServer is the server API for Auth service.
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
@@ -147,6 +157,7 @@ type AuthServer interface {
 	ChangePass(context.Context, *ChangePassRequest) (*ChangePassResponse, error)
 	ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error)
 	GetTokenTTL(context.Context, *GetTokenTTLRequest) (*GetTokenTTLResponse, error)
+	CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
 
@@ -183,6 +194,9 @@ func (UnimplementedAuthServer) ChangeEmail(context.Context, *ChangeEmailRequest)
 }
 func (UnimplementedAuthServer) GetTokenTTL(context.Context, *GetTokenTTLRequest) (*GetTokenTTLResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTokenTTL not implemented")
+}
+func (UnimplementedAuthServer) CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateToken not implemented")
 }
 func (UnimplementedAuthServer) mustEmbedUnimplementedAuthServer() {}
 
@@ -377,6 +391,24 @@ func _Auth_GetTokenTTL_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_CreateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).CreateToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/auth.Auth/CreateToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).CreateToken(ctx, req.(*CreateTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Auth_ServiceDesc is the grpc.ServiceDesc for Auth service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -423,6 +455,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTokenTTL",
 			Handler:    _Auth_GetTokenTTL_Handler,
+		},
+		{
+			MethodName: "CreateToken",
+			Handler:    _Auth_CreateToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

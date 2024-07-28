@@ -17,6 +17,16 @@ service Auth {
   rpc ChangePass(ChangePassRequest) returns (ChangePassResponse);
   rpc ChangeEmail(ChangeEmailRequest) returns (ChangeEmailResponse);
   rpc GetTokenTTL(GetTokenTTLRequest) returns (GetTokenTTLResponse);
+  rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse);
+}
+
+message CreateTokenRequest {
+  string email = 1;
+  string remember = 2;
+}
+message CreateTokenResponse {
+  string token = 1;
+  int64 tokenTTL = 2;
 }
 
 message GetTokenTTLRequest { string token = 1; }

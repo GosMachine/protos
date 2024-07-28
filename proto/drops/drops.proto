@@ -95,7 +95,7 @@ message Game {
 }
 
 message UpdateAccountsRequest {
-  string campaign = 1;
+  repeated string campaigns = 1;
   repeated string tokens = 2;
   repeated string drops = 3;
 }

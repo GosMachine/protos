@@ -20,6 +20,10 @@ message GetCartRequest {
 }
 
 message GetCartResponse {
+  repeated CartItem cart = 1;
+}
+
+message CartItem {
   int64 id = 1;
   int64 quantity = 2;
   int64 stock = 3;

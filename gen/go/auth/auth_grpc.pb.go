@@ -32,7 +32,6 @@ type AuthClient interface {
 	EmailVerify(ctx context.Context, in *EmailVerifyRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ChangePass(ctx context.Context, in *ChangePassRequest, opts ...grpc.CallOption) (*ChangePassResponse, error)
 	ChangeEmail(ctx context.Context, in *ChangeEmailRequest, opts ...grpc.CallOption) (*ChangeEmailResponse, error)
-	GetTokenTTL(ctx context.Context, in *GetTokenTTLRequest, opts ...grpc.CallOption) (*GetTokenTTLResponse, error)
 	CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error)
 }
 
@@ -125,15 +124,6 @@ func (c *authClient) ChangeEmail(ctx context.Context, in *ChangeEmailRequest, op
 	return out, nil
 }
 
-func (c *authClient) GetTokenTTL(ctx context.Context, in *GetTokenTTLRequest, opts ...grpc.CallOption) (*GetTokenTTLResponse, error) {
-	out := new(GetTokenTTLResponse)
-	err := c.cc.Invoke(ctx, "/auth.Auth/GetTokenTTL", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *authClient) CreateToken(ctx context.Context, in *CreateTokenRequest, opts ...grpc.CallOption) (*CreateTokenResponse, error) {
 	out := new(CreateTokenResponse)
 	err := c.cc.Invoke(ctx, "/auth.Auth/CreateToken", in, out, opts...)
@@ -156,7 +146,6 @@ type AuthServer interface {
 	EmailVerify(context.Context, *EmailVerifyRequest) (*emptypb.Empty, error)
 	ChangePass(context.Context, *ChangePassRequest) (*ChangePassResponse, error)
 	ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error)
-	GetTokenTTL(context.Context, *GetTokenTTLRequest) (*GetTokenTTLResponse, error)
 	CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error)
 	mustEmbedUnimplementedAuthServer()
 }
@@ -191,9 +180,6 @@ func (UnimplementedAuthServer) ChangePass(context.Context, *ChangePassRequest) (
 }
 func (UnimplementedAuthServer) ChangeEmail(context.Context, *ChangeEmailRequest) (*ChangeEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeEmail not implemented")
-}
-func (UnimplementedAuthServer) GetTokenTTL(context.Context, *GetTokenTTLRequest) (*GetTokenTTLResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTokenTTL not implemented")
 }
 func (UnimplementedAuthServer) CreateToken(context.Context, *CreateTokenRequest) (*CreateTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateToken not implemented")
@@ -373,24 +359,6 @@ func _Auth_ChangeEmail_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Auth_GetTokenTTL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTokenTTLRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AuthServer).GetTokenTTL(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/auth.Auth/GetTokenTTL",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetTokenTTL(ctx, req.(*GetTokenTTLRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Auth_CreateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateTokenRequest)
 	if err := dec(in); err != nil {
@@ -451,10 +419,6 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeEmail",
 			Handler:    _Auth_ChangeEmail_Handler,
-		},
-		{
-			MethodName: "GetTokenTTL",
-			Handler:    _Auth_GetTokenTTL_Handler,
 		},
 		{
 			MethodName: "CreateToken",

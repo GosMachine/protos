@@ -16,7 +16,6 @@ service Auth {
   rpc EmailVerify(EmailVerifyRequest) returns (google.protobuf.Empty);
   rpc ChangePass(ChangePassRequest) returns (ChangePassResponse);
   rpc ChangeEmail(ChangeEmailRequest) returns (ChangeEmailResponse);
-  rpc GetTokenTTL(GetTokenTTLRequest) returns (GetTokenTTLResponse);
   rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse);
 }
 
@@ -29,10 +28,6 @@ message CreateTokenResponse {
   int64 tokenTTL = 2;
 }
 
-message GetTokenTTLRequest { string token = 1; }
-
-message GetTokenTTLResponse { int64 tokenTTL = 1; }
-
 message GetUserEmailRequest { string token = 1; }
 
 message GetUserEmailResponse { string email = 1; }
@@ -44,7 +39,7 @@ message ChangePassRequest {
   string IP = 4;
 }
 
-message ChangePassResponse { string token = 1; }
+message ChangePassResponse { string token = 1; int64 tokenTTL = 2; }
 
 message LogoutRequest { string token = 1; }
 
@@ -54,7 +49,7 @@ message ChangeEmailRequest {
   string oldToken = 3;
 }
 
-message ChangeEmailResponse { string token = 1; }
+message ChangeEmailResponse { string token = 1; int64 tokenTTL = 2; }
 
 message RegisterRequest {
   string email = 1;
@@ -63,7 +58,7 @@ message RegisterRequest {
   string rememberMe = 4;
 }
 
-message RegisterResponse { string token = 1; }
+message RegisterResponse { string token = 1; int64 tokenTTL = 2; }
 
 message LoginRequest {
   string email = 1;
@@ -72,7 +67,7 @@ message LoginRequest {
   string rememberMe = 4;
 }
 
-message LoginResponse { string token = 1; }
+message LoginResponse { string token = 1; int64 tokenTTL =2; }
 
 message EmailVerifiedRequest { string email = 1; }
 
@@ -85,4 +80,4 @@ message OAuthRequest {
   string IP = 2;
 }
 
-message OAuthResponse { string token = 1; }
+message OAuthResponse { string token = 1; int64 tokenTTL =2; }

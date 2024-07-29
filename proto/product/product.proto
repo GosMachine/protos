@@ -63,6 +63,7 @@ message GetProductRequest {
 message InputFields {
   string label = 1;
   string type = 2;
+  string uniqueName = 3;
 }
 
 message GetCategoriesResponse {

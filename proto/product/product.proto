@@ -12,7 +12,12 @@ service Product {
   rpc CreateTicket(CreateTicketRequest) returns (google.protobuf.Empty);
   rpc GetCategories(google.protobuf.Empty) returns (GetCategoriesResponse);
   rpc GetCart(GetCartRequest) returns (GetCartResponse);
-  rpc Checkout(CheckoutRequest) returns (CheckoutResponse);
+  rpc AddToCart(AddToCartRequest) returns (google.protobuf.Empty);
+}
+
+message AddToCartRequest {
+  string email = 1;
+  map<string, string> data = 2;
 }
 
 message GetCartRequest {
@@ -38,18 +43,6 @@ message CreateTicketRequest {
   string email = 2;
   string message = 3;
   string IP = 4;
-}
-
-message CheckoutRequest {
-  string quantity = 1;
-  string channel = 2;
-  string product = 3;
-  string messages = 4;
-  string duration = 5;
-}
-
-message CheckoutResponse {
-  string url = 1;
 }
 
 message GetCategoryRequest {

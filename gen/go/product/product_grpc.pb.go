@@ -27,7 +27,7 @@ type ProductClient interface {
 	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*GetProductResponse, error)
 	CreateTicket(ctx context.Context, in *CreateTicketRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetCategories(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
-	Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error)
+	BuyProduct(ctx context.Context, in *BuyProductRequest, opts ...grpc.CallOption) (*BuyProductResponse, error)
 }
 
 type productClient struct {
@@ -74,9 +74,9 @@ func (c *productClient) GetCategories(ctx context.Context, in *emptypb.Empty, op
 	return out, nil
 }
 
-func (c *productClient) Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error) {
-	out := new(CheckoutResponse)
-	err := c.cc.Invoke(ctx, "/product.Product/Checkout", in, out, opts...)
+func (c *productClient) BuyProduct(ctx context.Context, in *BuyProductRequest, opts ...grpc.CallOption) (*BuyProductResponse, error) {
+	out := new(BuyProductResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/BuyProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -91,7 +91,7 @@ type ProductServer interface {
 	GetProduct(context.Context, *GetProductRequest) (*GetProductResponse, error)
 	CreateTicket(context.Context, *CreateTicketRequest) (*emptypb.Empty, error)
 	GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error)
-	Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error)
+	BuyProduct(context.Context, *BuyProductRequest) (*BuyProductResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -111,8 +111,8 @@ func (UnimplementedProductServer) CreateTicket(context.Context, *CreateTicketReq
 func (UnimplementedProductServer) GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategories not implemented")
 }
-func (UnimplementedProductServer) Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Checkout not implemented")
+func (UnimplementedProductServer) BuyProduct(context.Context, *BuyProductRequest) (*BuyProductResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BuyProduct not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -199,20 +199,20 @@ func _Product_GetCategories_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_Checkout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckoutRequest)
+func _Product_BuyProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BuyProductRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).Checkout(ctx, in)
+		return srv.(ProductServer).BuyProduct(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.Product/Checkout",
+		FullMethod: "/product.Product/BuyProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).Checkout(ctx, req.(*CheckoutRequest))
+		return srv.(ProductServer).BuyProduct(ctx, req.(*BuyProductRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -241,8 +241,8 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Product_GetCategories_Handler,
 		},
 		{
-			MethodName: "Checkout",
-			Handler:    _Product_Checkout_Handler,
+			MethodName: "BuyProduct",
+			Handler:    _Product_BuyProduct_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

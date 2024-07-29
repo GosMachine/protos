@@ -11,15 +11,15 @@ service Product {
   rpc GetProduct(GetProductRequest) returns (GetProductResponse);
   rpc CreateTicket(CreateTicketRequest) returns (google.protobuf.Empty);
   rpc GetCategories(google.protobuf.Empty) returns (GetCategoriesResponse);
-  rpc Checkout(CheckoutRequest) returns (CheckoutResponse);
+  rpc BuyProduct(BuyProductRequest) returns (BuyProductResponse);
 }
 
-message CheckoutRequest {
+message BuyProductRequest {
   string email = 1;
   map<string, string> data = 2;
 }
 
-message CheckoutResponse {
+message BuyProductResponse {
   string url = 1;
   bool paid = 2;
 }

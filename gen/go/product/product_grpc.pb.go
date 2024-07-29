@@ -27,8 +27,7 @@ type ProductClient interface {
 	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*GetProductResponse, error)
 	CreateTicket(ctx context.Context, in *CreateTicketRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetCategories(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetCategoriesResponse, error)
-	GetCart(ctx context.Context, in *GetCartRequest, opts ...grpc.CallOption) (*GetCartResponse, error)
-	AddToCart(ctx context.Context, in *AddToCartRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error)
 }
 
 type productClient struct {
@@ -75,18 +74,9 @@ func (c *productClient) GetCategories(ctx context.Context, in *emptypb.Empty, op
 	return out, nil
 }
 
-func (c *productClient) GetCart(ctx context.Context, in *GetCartRequest, opts ...grpc.CallOption) (*GetCartResponse, error) {
-	out := new(GetCartResponse)
-	err := c.cc.Invoke(ctx, "/product.Product/GetCart", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *productClient) AddToCart(ctx context.Context, in *AddToCartRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/product.Product/AddToCart", in, out, opts...)
+func (c *productClient) Checkout(ctx context.Context, in *CheckoutRequest, opts ...grpc.CallOption) (*CheckoutResponse, error) {
+	out := new(CheckoutResponse)
+	err := c.cc.Invoke(ctx, "/product.Product/Checkout", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,8 +91,7 @@ type ProductServer interface {
 	GetProduct(context.Context, *GetProductRequest) (*GetProductResponse, error)
 	CreateTicket(context.Context, *CreateTicketRequest) (*emptypb.Empty, error)
 	GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error)
-	GetCart(context.Context, *GetCartRequest) (*GetCartResponse, error)
-	AddToCart(context.Context, *AddToCartRequest) (*emptypb.Empty, error)
+	Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -122,11 +111,8 @@ func (UnimplementedProductServer) CreateTicket(context.Context, *CreateTicketReq
 func (UnimplementedProductServer) GetCategories(context.Context, *emptypb.Empty) (*GetCategoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategories not implemented")
 }
-func (UnimplementedProductServer) GetCart(context.Context, *GetCartRequest) (*GetCartResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCart not implemented")
-}
-func (UnimplementedProductServer) AddToCart(context.Context, *AddToCartRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddToCart not implemented")
+func (UnimplementedProductServer) Checkout(context.Context, *CheckoutRequest) (*CheckoutResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Checkout not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -213,38 +199,20 @@ func _Product_GetCategories_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Product_GetCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCartRequest)
+func _Product_Checkout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckoutRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductServer).GetCart(ctx, in)
+		return srv.(ProductServer).Checkout(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/product.Product/GetCart",
+		FullMethod: "/product.Product/Checkout",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).GetCart(ctx, req.(*GetCartRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Product_AddToCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddToCartRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ProductServer).AddToCart(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/product.Product/AddToCart",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductServer).AddToCart(ctx, req.(*AddToCartRequest))
+		return srv.(ProductServer).Checkout(ctx, req.(*CheckoutRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -273,12 +241,8 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Product_GetCategories_Handler,
 		},
 		{
-			MethodName: "GetCart",
-			Handler:    _Product_GetCart_Handler,
-		},
-		{
-			MethodName: "AddToCart",
-			Handler:    _Product_AddToCart_Handler,
+			MethodName: "Checkout",
+			Handler:    _Product_Checkout_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -20,7 +20,7 @@ message BuyProductRequest {
 }
 
 message BuyProductResponse {
-  string url = 1;
+  string orderID = 1;
   bool paid = 2;
 }
 

@@ -227,10 +227,10 @@ type DropsCenterClient interface {
 	UpdateGameWorkers(ctx context.Context, in *UpdateGameWorkersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateGameChannels(ctx context.Context, in *UpdateGameChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateGameAutoFarm(ctx context.Context, in *UpdateGameAutoFarmRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	UpdateGameFunPayName(ctx context.Context, in *UpdateGameFunPayNameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetFunPayLots(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error)
+	UpdateFunPayLots(ctx context.Context, in *UpdateFunPayLotsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsCenterClient struct {
@@ -331,15 +331,6 @@ func (c *dropsCenterClient) UpdateGameAutoFarm(ctx context.Context, in *UpdateGa
 	return out, nil
 }
 
-func (c *dropsCenterClient) UpdateGameFunPayName(ctx context.Context, in *UpdateGameFunPayNameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/drops.DropsCenter/UpdateGameFunPayName", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *dropsCenterClient) GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error) {
 	out := new(GetAllGameNamesResponse)
 	err := c.cc.Invoke(ctx, "/drops.DropsCenter/GetAllGameNames", in, out, opts...)
@@ -367,6 +358,15 @@ func (c *dropsCenterClient) GetFunPayLots(ctx context.Context, in *emptypb.Empty
 	return out, nil
 }
 
+func (c *dropsCenterClient) UpdateFunPayLots(ctx context.Context, in *UpdateFunPayLotsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/UpdateFunPayLots", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsCenterServer is the server API for DropsCenter service.
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility
@@ -381,10 +381,10 @@ type DropsCenterServer interface {
 	UpdateGameWorkers(context.Context, *UpdateGameWorkersRequest) (*emptypb.Empty, error)
 	UpdateGameChannels(context.Context, *UpdateGameChannelsRequest) (*emptypb.Empty, error)
 	UpdateGameAutoFarm(context.Context, *UpdateGameAutoFarmRequest) (*emptypb.Empty, error)
-	UpdateGameFunPayName(context.Context, *UpdateGameFunPayNameRequest) (*emptypb.Empty, error)
 	GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
 	GetFunPayLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error)
+	UpdateFunPayLots(context.Context, *UpdateFunPayLotsRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -422,9 +422,6 @@ func (UnimplementedDropsCenterServer) UpdateGameChannels(context.Context, *Updat
 func (UnimplementedDropsCenterServer) UpdateGameAutoFarm(context.Context, *UpdateGameAutoFarmRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameAutoFarm not implemented")
 }
-func (UnimplementedDropsCenterServer) UpdateGameFunPayName(context.Context, *UpdateGameFunPayNameRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameFunPayName not implemented")
-}
 func (UnimplementedDropsCenterServer) GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllGameNames not implemented")
 }
@@ -433,6 +430,9 @@ func (UnimplementedDropsCenterServer) DeleteAccount(context.Context, *DeleteAcco
 }
 func (UnimplementedDropsCenterServer) GetFunPayLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayLots not implemented")
+}
+func (UnimplementedDropsCenterServer) UpdateFunPayLots(context.Context, *UpdateFunPayLotsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFunPayLots not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 
@@ -627,24 +627,6 @@ func _DropsCenter_UpdateGameAutoFarm_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DropsCenter_UpdateGameFunPayName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateGameFunPayNameRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DropsCenterServer).UpdateGameFunPayName(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/drops.DropsCenter/UpdateGameFunPayName",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsCenterServer).UpdateGameFunPayName(ctx, req.(*UpdateGameFunPayNameRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _DropsCenter_GetAllGameNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
@@ -699,6 +681,24 @@ func _DropsCenter_GetFunPayLots_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_UpdateFunPayLots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFunPayLotsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).UpdateFunPayLots(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/drops.DropsCenter/UpdateFunPayLots",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).UpdateFunPayLots(ctx, req.(*UpdateFunPayLotsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -747,10 +747,6 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DropsCenter_UpdateGameAutoFarm_Handler,
 		},
 		{
-			MethodName: "UpdateGameFunPayName",
-			Handler:    _DropsCenter_UpdateGameFunPayName_Handler,
-		},
-		{
 			MethodName: "GetAllGameNames",
 			Handler:    _DropsCenter_GetAllGameNames_Handler,
 		},
@@ -761,6 +757,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFunPayLots",
 			Handler:    _DropsCenter_GetFunPayLots_Handler,
+		},
+		{
+			MethodName: "UpdateFunPayLots",
+			Handler:    _DropsCenter_UpdateFunPayLots_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

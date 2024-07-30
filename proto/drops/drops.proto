@@ -28,11 +28,10 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc UpdateGameAutoFarm(UpdateGameAutoFarmRequest)
       returns (google.protobuf.Empty);
-  rpc UpdateGameFunPayName(UpdateGameFunPayNameRequest)
-      returns (google.protobuf.Empty);
   rpc GetAllGameNames(google.protobuf.Empty) returns (GetAllGameNamesResponse);
   rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
   rpc GetFunPayLots(google.protobuf.Empty) returns (GetFunPayLotsResponse);
+  rpc UpdateFunPayLots(UpdateFunPayLotsRequest) returns (google.protobuf.Empty);
 }
 
 message GameCenterRequest { string name = 1; }
@@ -53,10 +52,7 @@ message UpdateGameChannelsRequest {
   repeated string channels = 2;
 }
 
-message UpdateGameFunPayNameRequest {
-  string game = 1;
-  string funPayName = 2;
-}
+message UpdateFunPayLotsRequest { repeated string lots = 1; }
 
 message UpdateGameAutoFarmRequest {
   string game = 1;

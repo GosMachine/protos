@@ -230,7 +230,7 @@ type DropsCenterClient interface {
 	UpdateGameFunPayName(ctx context.Context, in *UpdateGameFunPayNameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetFunPayGames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayGamesResponse, error)
+	GetFunPayLots(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error)
 }
 
 type dropsCenterClient struct {
@@ -358,9 +358,9 @@ func (c *dropsCenterClient) DeleteAccount(ctx context.Context, in *DeleteAccount
 	return out, nil
 }
 
-func (c *dropsCenterClient) GetFunPayGames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayGamesResponse, error) {
-	out := new(GetFunPayGamesResponse)
-	err := c.cc.Invoke(ctx, "/drops.DropsCenter/GetFunPayGames", in, out, opts...)
+func (c *dropsCenterClient) GetFunPayLots(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error) {
+	out := new(GetFunPayLotsResponse)
+	err := c.cc.Invoke(ctx, "/drops.DropsCenter/GetFunPayLots", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -384,7 +384,7 @@ type DropsCenterServer interface {
 	UpdateGameFunPayName(context.Context, *UpdateGameFunPayNameRequest) (*emptypb.Empty, error)
 	GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
-	GetFunPayGames(context.Context, *emptypb.Empty) (*GetFunPayGamesResponse, error)
+	GetFunPayLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -431,8 +431,8 @@ func (UnimplementedDropsCenterServer) GetAllGameNames(context.Context, *emptypb.
 func (UnimplementedDropsCenterServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
 }
-func (UnimplementedDropsCenterServer) GetFunPayGames(context.Context, *emptypb.Empty) (*GetFunPayGamesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayGames not implemented")
+func (UnimplementedDropsCenterServer) GetFunPayLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayLots not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 
@@ -681,20 +681,20 @@ func _DropsCenter_DeleteAccount_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DropsCenter_GetFunPayGames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DropsCenter_GetFunPayLots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DropsCenterServer).GetFunPayGames(ctx, in)
+		return srv.(DropsCenterServer).GetFunPayLots(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/drops.DropsCenter/GetFunPayGames",
+		FullMethod: "/drops.DropsCenter/GetFunPayLots",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsCenterServer).GetFunPayGames(ctx, req.(*emptypb.Empty))
+		return srv.(DropsCenterServer).GetFunPayLots(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -759,8 +759,8 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DropsCenter_DeleteAccount_Handler,
 		},
 		{
-			MethodName: "GetFunPayGames",
-			Handler:    _DropsCenter_GetFunPayGames_Handler,
+			MethodName: "GetFunPayLots",
+			Handler:    _DropsCenter_GetFunPayLots_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

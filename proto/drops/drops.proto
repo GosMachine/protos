@@ -110,7 +110,7 @@ message Token {
 message AccountWithData {
   Token token = 1;
   repeated string Campaigns = 2;
-  map<string, int32> drops = 3;
+  repeated string drops = 3;
   string game = 4;
 }
 

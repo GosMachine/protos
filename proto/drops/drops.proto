@@ -112,6 +112,7 @@ message AccountWithData {
   repeated string Campaigns = 2;
   repeated string drops = 3;
   string game = 4;
+  int64 id = 5;
 }
 
 message AddAccountsRequest {

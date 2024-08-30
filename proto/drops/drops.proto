@@ -117,6 +117,7 @@ message AccountWithData {
   repeated string drops = 3;
   string game = 4;
   int64 id = 5;
+  bool isPreOrdered = 6;
 }
 
 message AddAccountsRequest {

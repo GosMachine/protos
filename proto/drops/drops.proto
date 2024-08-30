@@ -78,6 +78,7 @@ message GetAccountsRequest {
   string game = 2;
   int64 limit = 3;
   string search = 4;
+  bool onlyPreOrdered = 5;
 }
 
 message GetAccountsResponse {

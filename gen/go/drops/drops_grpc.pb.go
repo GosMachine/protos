@@ -236,22 +236,23 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	DropsCenter_RunGame_FullMethodName             = "/drops.DropsCenter/RunGame"
-	DropsCenter_StopGame_FullMethodName            = "/drops.DropsCenter/StopGame"
-	DropsCenter_UpdateAccounts_FullMethodName      = "/drops.DropsCenter/UpdateAccounts"
-	DropsCenter_AddGame_FullMethodName             = "/drops.DropsCenter/AddGame"
-	DropsCenter_AddAccounts_FullMethodName         = "/drops.DropsCenter/AddAccounts"
-	DropsCenter_GetGames_FullMethodName            = "/drops.DropsCenter/GetGames"
-	DropsCenter_GetAccounts_FullMethodName         = "/drops.DropsCenter/GetAccounts"
-	DropsCenter_UpdateGameWorkers_FullMethodName   = "/drops.DropsCenter/UpdateGameWorkers"
-	DropsCenter_UpdateGameChannels_FullMethodName  = "/drops.DropsCenter/UpdateGameChannels"
-	DropsCenter_UpdateGameAutoFarm_FullMethodName  = "/drops.DropsCenter/UpdateGameAutoFarm"
-	DropsCenter_GetAllGameNames_FullMethodName     = "/drops.DropsCenter/GetAllGameNames"
-	DropsCenter_DeleteAccount_FullMethodName       = "/drops.DropsCenter/DeleteAccount"
-	DropsCenter_MovePreOrderAccount_FullMethodName = "/drops.DropsCenter/MovePreOrderAccount"
-	DropsCenter_GetFunPayLots_FullMethodName       = "/drops.DropsCenter/GetFunPayLots"
-	DropsCenter_GetPreOrderLots_FullMethodName     = "/drops.DropsCenter/GetPreOrderLots"
-	DropsCenter_UpdateFunPayLots_FullMethodName    = "/drops.DropsCenter/UpdateFunPayLots"
+	DropsCenter_RunGame_FullMethodName                  = "/drops.DropsCenter/RunGame"
+	DropsCenter_StopGame_FullMethodName                 = "/drops.DropsCenter/StopGame"
+	DropsCenter_UpdateAccounts_FullMethodName           = "/drops.DropsCenter/UpdateAccounts"
+	DropsCenter_AddGame_FullMethodName                  = "/drops.DropsCenter/AddGame"
+	DropsCenter_AddAccounts_FullMethodName              = "/drops.DropsCenter/AddAccounts"
+	DropsCenter_GetGames_FullMethodName                 = "/drops.DropsCenter/GetGames"
+	DropsCenter_GetAccounts_FullMethodName              = "/drops.DropsCenter/GetAccounts"
+	DropsCenter_UpdateGameWorkers_FullMethodName        = "/drops.DropsCenter/UpdateGameWorkers"
+	DropsCenter_UpdateGameChannels_FullMethodName       = "/drops.DropsCenter/UpdateGameChannels"
+	DropsCenter_UpdateGameAutoFarm_FullMethodName       = "/drops.DropsCenter/UpdateGameAutoFarm"
+	DropsCenter_GetAllGameNames_FullMethodName          = "/drops.DropsCenter/GetAllGameNames"
+	DropsCenter_DeleteAccount_FullMethodName            = "/drops.DropsCenter/DeleteAccount"
+	DropsCenter_MovePreOrderAccount_FullMethodName      = "/drops.DropsCenter/MovePreOrderAccount"
+	DropsCenter_GetFunPayLots_FullMethodName            = "/drops.DropsCenter/GetFunPayLots"
+	DropsCenter_GetPreOrderLots_FullMethodName          = "/drops.DropsCenter/GetPreOrderLots"
+	DropsCenter_UpdateFunPayLots_FullMethodName         = "/drops.DropsCenter/UpdateFunPayLots"
+	DropsCenter_DeletePreOrderedAccounts_FullMethodName = "/drops.DropsCenter/DeletePreOrderedAccounts"
 )
 
 // DropsCenterClient is the client API for DropsCenter service.
@@ -274,6 +275,7 @@ type DropsCenterClient interface {
 	GetFunPayLots(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error)
 	GetPreOrderLots(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error)
 	UpdateFunPayLots(ctx context.Context, in *UpdateFunPayLotsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeletePreOrderedAccounts(ctx context.Context, in *DeletePreOrderedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsCenterClient struct {
@@ -444,6 +446,16 @@ func (c *dropsCenterClient) UpdateFunPayLots(ctx context.Context, in *UpdateFunP
 	return out, nil
 }
 
+func (c *dropsCenterClient) DeletePreOrderedAccounts(ctx context.Context, in *DeletePreOrderedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, DropsCenter_DeletePreOrderedAccounts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsCenterServer is the server API for DropsCenter service.
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility.
@@ -464,6 +476,7 @@ type DropsCenterServer interface {
 	GetFunPayLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error)
 	GetPreOrderLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error)
 	UpdateFunPayLots(context.Context, *UpdateFunPayLotsRequest) (*emptypb.Empty, error)
+	DeletePreOrderedAccounts(context.Context, *DeletePreOrderedAccountsRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -521,6 +534,9 @@ func (UnimplementedDropsCenterServer) GetPreOrderLots(context.Context, *emptypb.
 }
 func (UnimplementedDropsCenterServer) UpdateFunPayLots(context.Context, *UpdateFunPayLotsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFunPayLots not implemented")
+}
+func (UnimplementedDropsCenterServer) DeletePreOrderedAccounts(context.Context, *DeletePreOrderedAccountsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeletePreOrderedAccounts not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 func (UnimplementedDropsCenterServer) testEmbeddedByValue()                     {}
@@ -831,6 +847,24 @@ func _DropsCenter_UpdateFunPayLots_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_DeletePreOrderedAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePreOrderedAccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).DeletePreOrderedAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_DeletePreOrderedAccounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).DeletePreOrderedAccounts(ctx, req.(*DeletePreOrderedAccountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -901,6 +935,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateFunPayLots",
 			Handler:    _DropsCenter_UpdateFunPayLots_Handler,
+		},
+		{
+			MethodName: "DeletePreOrderedAccounts",
+			Handler:    _DropsCenter_DeletePreOrderedAccounts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

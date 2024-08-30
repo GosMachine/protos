@@ -30,6 +30,7 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc GetAllGameNames(google.protobuf.Empty) returns (GetAllGameNamesResponse);
   rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
+  rpc MovePreOrderAccount(MovePreOrderAccountRequest) returns (google.protobuf.Empty);
   rpc GetFunPayLots(google.protobuf.Empty) returns (GetFunPayLotsResponse);
   rpc GetPreOrderLots(google.protobuf.Empty) returns (GetFunPayLotsResponse);
   rpc UpdateFunPayLots(UpdateFunPayLotsRequest) returns (google.protobuf.Empty);
@@ -40,6 +41,8 @@ message GameCenterRequest { string name = 1; }
 message GetFunPayLotsResponse { repeated string lots = 1; }
 
 message DeleteAccountRequest { string username = 1; }
+
+message MovePreOrderAccountRequest { string username = 1; }
 
 message GetAllGameNamesResponse { repeated string games = 1; }
 

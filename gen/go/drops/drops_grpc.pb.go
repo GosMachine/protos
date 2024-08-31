@@ -272,7 +272,7 @@ type DropsCenterClient interface {
 	GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MovePreOrderAccount(ctx context.Context, in *MovePreOrderAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetFunPayLots(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error)
+	GetFunPayLots(ctx context.Context, in *GetFunPayLotsRequest, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error)
 	UpdateFunPayLot(ctx context.Context, in *UpdateFunPayLotRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteFunPayLot(ctx context.Context, in *DeleteFunPayLotRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeletePreOrderedAccounts(ctx context.Context, in *DeletePreOrderedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -416,7 +416,7 @@ func (c *dropsCenterClient) MovePreOrderAccount(ctx context.Context, in *MovePre
 	return out, nil
 }
 
-func (c *dropsCenterClient) GetFunPayLots(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error) {
+func (c *dropsCenterClient) GetFunPayLots(ctx context.Context, in *GetFunPayLotsRequest, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetFunPayLotsResponse)
 	err := c.cc.Invoke(ctx, DropsCenter_GetFunPayLots_FullMethodName, in, out, cOpts...)
@@ -473,7 +473,7 @@ type DropsCenterServer interface {
 	GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
 	MovePreOrderAccount(context.Context, *MovePreOrderAccountRequest) (*emptypb.Empty, error)
-	GetFunPayLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error)
+	GetFunPayLots(context.Context, *GetFunPayLotsRequest) (*GetFunPayLotsResponse, error)
 	UpdateFunPayLot(context.Context, *UpdateFunPayLotRequest) (*emptypb.Empty, error)
 	DeleteFunPayLot(context.Context, *DeleteFunPayLotRequest) (*emptypb.Empty, error)
 	DeletePreOrderedAccounts(context.Context, *DeletePreOrderedAccountsRequest) (*emptypb.Empty, error)
@@ -526,7 +526,7 @@ func (UnimplementedDropsCenterServer) DeleteAccount(context.Context, *DeleteAcco
 func (UnimplementedDropsCenterServer) MovePreOrderAccount(context.Context, *MovePreOrderAccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MovePreOrderAccount not implemented")
 }
-func (UnimplementedDropsCenterServer) GetFunPayLots(context.Context, *emptypb.Empty) (*GetFunPayLotsResponse, error) {
+func (UnimplementedDropsCenterServer) GetFunPayLots(context.Context, *GetFunPayLotsRequest) (*GetFunPayLotsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayLots not implemented")
 }
 func (UnimplementedDropsCenterServer) UpdateFunPayLot(context.Context, *UpdateFunPayLotRequest) (*emptypb.Empty, error) {
@@ -794,7 +794,7 @@ func _DropsCenter_MovePreOrderAccount_Handler(srv interface{}, ctx context.Conte
 }
 
 func _DropsCenter_GetFunPayLots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(GetFunPayLotsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -806,7 +806,7 @@ func _DropsCenter_GetFunPayLots_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: DropsCenter_GetFunPayLots_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsCenterServer).GetFunPayLots(ctx, req.(*emptypb.Empty))
+		return srv.(DropsCenterServer).GetFunPayLots(ctx, req.(*GetFunPayLotsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

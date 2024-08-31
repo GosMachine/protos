@@ -30,20 +30,24 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc GetAllGameNames(google.protobuf.Empty) returns (GetAllGameNamesResponse);
   rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
-  rpc MovePreOrderAccount(MovePreOrderAccountRequest) returns (google.protobuf.Empty);
+  rpc MovePreOrderAccount(MovePreOrderAccountRequest)
+      returns (google.protobuf.Empty);
   rpc GetFunPayLots(google.protobuf.Empty) returns (GetFunPayLotsResponse);
   rpc GetPreOrderLots(google.protobuf.Empty) returns (GetFunPayLotsResponse);
-  rpc UpdateFunPayLots(UpdateFunPayLotsRequest) returns (google.protobuf.Empty);
-  rpc DeletePreOrderedAccounts(DeletePreOrderedAccountsRequest) returns (google.protobuf.Empty);
+  rpc UpdateFunPayLot(UpdateFunPayLotRequest) returns (google.protobuf.Empty);
+  rpc DeleteFunPayLot(DeleteFunPayLotRequest) returns (google.protobuf.Empty);
+  rpc DeletePreOrderedAccounts(DeletePreOrderedAccountsRequest)
+      returns (google.protobuf.Empty);
 }
 
-message DeletePreOrderedAccountsRequest {
-  string game = 1;
-}
+message DeletePreOrderedAccountsRequest { string game = 1; }
 
 message GameCenterRequest { string name = 1; }
 
-message GetFunPayLotsResponse { repeated string lots = 1; }
+message GetFunPayLotsResponse {
+  repeated string lots = 1;
+  int64 quantity = 2;
+}
 
 message DeleteAccountRequest { string username = 1; }
 
@@ -61,7 +65,12 @@ message UpdateGameChannelsRequest {
   repeated string channels = 2;
 }
 
-message UpdateFunPayLotsRequest { repeated string lots = 1; }
+message UpdateFunPayLotRequest {
+  string oldName = 1;
+  string newName = 2;
+}
+
+message DeleteFunPayLotRequest { string name = 1; }
 
 message UpdateGameAutoFarmRequest {
   string game = 1;

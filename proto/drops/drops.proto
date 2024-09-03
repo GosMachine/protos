@@ -12,6 +12,7 @@ service Drops {
   rpc Stop(StopRequest) returns (google.protobuf.Empty);
   rpc GetActiveGamesInfo(google.protobuf.Empty)
       returns (GetActiveGamesInfoResponse);
+  rpc UpdateAccountsInfo(Token) returns (google.protobuf.Empty);
 }
 
 service DropsCenter {
@@ -38,8 +39,11 @@ service DropsCenter {
   rpc AddFunPayLot(AddFunPayLotRequest) returns (google.protobuf.Empty);
   rpc DeletePreOrderedAccounts(DeletePreOrderedAccountsRequest)
       returns (google.protobuf.Empty);
-  rpc UpdateAccountsInfo(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc UpdateAccountsInfo(UpdateAccountsInfoRequest)
+      returns (google.protobuf.Empty);
 }
+
+message UpdateAccountsInfoRequest { string game = 1; }
 
 message AddFunPayLotRequest {
   string name = 1;

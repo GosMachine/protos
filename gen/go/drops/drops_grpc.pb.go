@@ -24,6 +24,7 @@ const (
 	Drops_RunChannels_FullMethodName        = "/drops.Drops/RunChannels"
 	Drops_Stop_FullMethodName               = "/drops.Drops/Stop"
 	Drops_GetActiveGamesInfo_FullMethodName = "/drops.Drops/GetActiveGamesInfo"
+	Drops_UpdateAccountsInfo_FullMethodName = "/drops.Drops/UpdateAccountsInfo"
 )
 
 // DropsClient is the client API for Drops service.
@@ -34,6 +35,7 @@ type DropsClient interface {
 	RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetActiveGamesInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetActiveGamesInfoResponse, error)
+	UpdateAccountsInfo(ctx context.Context, in *Token, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsClient struct {
@@ -84,6 +86,16 @@ func (c *dropsClient) GetActiveGamesInfo(ctx context.Context, in *emptypb.Empty,
 	return out, nil
 }
 
+func (c *dropsClient) UpdateAccountsInfo(ctx context.Context, in *Token, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Drops_UpdateAccountsInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsServer is the server API for Drops service.
 // All implementations must embed UnimplementedDropsServer
 // for forward compatibility.
@@ -92,6 +104,7 @@ type DropsServer interface {
 	RunChannels(context.Context, *RunChannelsRequest) (*emptypb.Empty, error)
 	Stop(context.Context, *StopRequest) (*emptypb.Empty, error)
 	GetActiveGamesInfo(context.Context, *emptypb.Empty) (*GetActiveGamesInfoResponse, error)
+	UpdateAccountsInfo(context.Context, *Token) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsServer()
 }
 
@@ -113,6 +126,9 @@ func (UnimplementedDropsServer) Stop(context.Context, *StopRequest) (*emptypb.Em
 }
 func (UnimplementedDropsServer) GetActiveGamesInfo(context.Context, *emptypb.Empty) (*GetActiveGamesInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActiveGamesInfo not implemented")
+}
+func (UnimplementedDropsServer) UpdateAccountsInfo(context.Context, *Token) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccountsInfo not implemented")
 }
 func (UnimplementedDropsServer) mustEmbedUnimplementedDropsServer() {}
 func (UnimplementedDropsServer) testEmbeddedByValue()               {}
@@ -207,6 +223,24 @@ func _Drops_GetActiveGamesInfo_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Drops_UpdateAccountsInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Token)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsServer).UpdateAccountsInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Drops_UpdateAccountsInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsServer).UpdateAccountsInfo(ctx, req.(*Token))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Drops_ServiceDesc is the grpc.ServiceDesc for Drops service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,6 +263,10 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetActiveGamesInfo",
 			Handler:    _Drops_GetActiveGamesInfo_Handler,
+		},
+		{
+			MethodName: "UpdateAccountsInfo",
+			Handler:    _Drops_UpdateAccountsInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -279,7 +317,7 @@ type DropsCenterClient interface {
 	DeleteFunPayLot(ctx context.Context, in *DeleteFunPayLotRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddFunPayLot(ctx context.Context, in *AddFunPayLotRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeletePreOrderedAccounts(ctx context.Context, in *DeletePreOrderedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	UpdateAccountsInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateAccountsInfo(ctx context.Context, in *UpdateAccountsInfoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsCenterClient struct {
@@ -470,7 +508,7 @@ func (c *dropsCenterClient) DeletePreOrderedAccounts(ctx context.Context, in *De
 	return out, nil
 }
 
-func (c *dropsCenterClient) UpdateAccountsInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dropsCenterClient) UpdateAccountsInfo(ctx context.Context, in *UpdateAccountsInfoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, DropsCenter_UpdateAccountsInfo_FullMethodName, in, out, cOpts...)
@@ -502,7 +540,7 @@ type DropsCenterServer interface {
 	DeleteFunPayLot(context.Context, *DeleteFunPayLotRequest) (*emptypb.Empty, error)
 	AddFunPayLot(context.Context, *AddFunPayLotRequest) (*emptypb.Empty, error)
 	DeletePreOrderedAccounts(context.Context, *DeletePreOrderedAccountsRequest) (*emptypb.Empty, error)
-	UpdateAccountsInfo(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	UpdateAccountsInfo(context.Context, *UpdateAccountsInfoRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -567,7 +605,7 @@ func (UnimplementedDropsCenterServer) AddFunPayLot(context.Context, *AddFunPayLo
 func (UnimplementedDropsCenterServer) DeletePreOrderedAccounts(context.Context, *DeletePreOrderedAccountsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePreOrderedAccounts not implemented")
 }
-func (UnimplementedDropsCenterServer) UpdateAccountsInfo(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+func (UnimplementedDropsCenterServer) UpdateAccountsInfo(context.Context, *UpdateAccountsInfoRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccountsInfo not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
@@ -916,7 +954,7 @@ func _DropsCenter_DeletePreOrderedAccounts_Handler(srv interface{}, ctx context.
 }
 
 func _DropsCenter_UpdateAccountsInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(UpdateAccountsInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -928,7 +966,7 @@ func _DropsCenter_UpdateAccountsInfo_Handler(srv interface{}, ctx context.Contex
 		FullMethod: DropsCenter_UpdateAccountsInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsCenterServer).UpdateAccountsInfo(ctx, req.(*emptypb.Empty))
+		return srv.(DropsCenterServer).UpdateAccountsInfo(ctx, req.(*UpdateAccountsInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

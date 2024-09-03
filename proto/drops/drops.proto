@@ -42,7 +42,15 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc UpdateAccountsInfo(UpdateAccountsInfoRequest)
       returns (google.protobuf.Empty);
+  rpc SaveAccountsInfo(SaveAccountsInfoRequest) returns (google.protobuf.Empty);
 }
+
+message AccountWithDrops {
+  int64 dbId = 1;
+  map<string, int64> drops = 2;
+}
+
+message SaveAccountsInfoRequest { repeated AccountWithDrops accounts = 1; }
 
 message UpdateAccountsInfoRequest { string game = 1; }
 

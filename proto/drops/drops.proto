@@ -142,6 +142,7 @@ message Token {
   string username = 1;
   string password = 2;
   string oauth = 3;
+  string dbId = 4;
 }
 
 message AccountWithData {

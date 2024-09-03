@@ -135,9 +135,8 @@ message Game {
 }
 
 message UpdateAccountsRequest {
-  repeated string campaigns = 1;
-  repeated string tokens = 2;
-  repeated string drops = 3;
+  repeated string tokens = 1;
+  repeated string drops = 2;
 }
 
 message AddGameRequest {
@@ -155,11 +154,10 @@ message Token {
 
 message AccountWithData {
   Token token = 1;
-  repeated string Campaigns = 2;
-  repeated string drops = 3;
-  string game = 4;
-  int64 id = 5;
-  bool isPreOrdered = 6;
+  repeated string drops = 2;
+  string game = 3;
+  int64 id = 4;
+  bool isPreOrdered = 5;
 }
 
 message AddAccountsRequest {

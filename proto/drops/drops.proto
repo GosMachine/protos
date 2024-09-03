@@ -12,7 +12,8 @@ service Drops {
   rpc Stop(StopRequest) returns (google.protobuf.Empty);
   rpc GetActiveGamesInfo(google.protobuf.Empty)
       returns (GetActiveGamesInfoResponse);
-  rpc UpdateAccountsInfo(Token) returns (google.protobuf.Empty);
+  rpc UpdateAccountsInfo(UpdateDropsAccountsInfoRequest)
+      returns (google.protobuf.Empty);
 }
 
 service DropsCenter {
@@ -44,6 +45,8 @@ service DropsCenter {
 }
 
 message UpdateAccountsInfoRequest { string game = 1; }
+
+message UpdateDropsAccountsInfoRequest { repeated Token accounts = 1; }
 
 message AddFunPayLotRequest {
   string name = 1;

@@ -1854,7 +1854,7 @@ var file_drops_drops_proto_rawDesc = []byte{
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x1a,
 	0x21, 0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x47, 0x65, 0x74, 0x41, 0x63, 0x74, 0x69, 0x76,
 	0x65, 0x47, 0x61, 0x6d, 0x65, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x32, 0xa0, 0x0a, 0x0a, 0x0b, 0x44, 0x72, 0x6f, 0x70, 0x73, 0x43, 0x65, 0x6e, 0x74,
+	0x73, 0x65, 0x32, 0xe6, 0x0a, 0x0a, 0x0b, 0x44, 0x72, 0x6f, 0x70, 0x73, 0x43, 0x65, 0x6e, 0x74,
 	0x65, 0x72, 0x12, 0x3b, 0x0a, 0x07, 0x52, 0x75, 0x6e, 0x47, 0x61, 0x6d, 0x65, 0x12, 0x18, 0x2e,
 	0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x47, 0x61, 0x6d, 0x65, 0x43, 0x65, 0x6e, 0x74, 0x65, 0x72,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65,
@@ -1936,9 +1936,14 @@ var file_drops_drops_proto_rawDesc = []byte{
 	0x6c, 0x65, 0x74, 0x65, 0x50, 0x72, 0x65, 0x4f, 0x72, 0x64, 0x65, 0x72, 0x65, 0x64, 0x41, 0x63,
 	0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e,
 	0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e,
-	0x45, 0x6d, 0x70, 0x74, 0x79, 0x42, 0x1d, 0x5a, 0x1b, 0x67, 0x6f, 0x73, 0x6d, 0x61, 0x63, 0x68,
-	0x31, 0x6e, 0x65, 0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e, 0x76, 0x31, 0x3b, 0x64, 0x72, 0x6f,
-	0x70, 0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x45, 0x6d, 0x70, 0x74, 0x79, 0x12, 0x44, 0x0a, 0x12, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x41,
+	0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x73, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x16, 0x2e, 0x67, 0x6f,
+	0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d,
+	0x70, 0x74, 0x79, 0x1a, 0x16, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x42, 0x1d, 0x5a, 0x1b, 0x67,
+	0x6f, 0x73, 0x6d, 0x61, 0x63, 0x68, 0x31, 0x6e, 0x65, 0x2e, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x2e,
+	0x76, 0x31, 0x3b, 0x64, 0x72, 0x6f, 0x70, 0x73, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -2013,30 +2018,32 @@ var file_drops_drops_proto_depIdxs = []int32{
 	11, // 24: drops.DropsCenter.DeleteFunPayLot:input_type -> drops.DeleteFunPayLotRequest
 	0,  // 25: drops.DropsCenter.AddFunPayLot:input_type -> drops.AddFunPayLotRequest
 	1,  // 26: drops.DropsCenter.DeletePreOrderedAccounts:input_type -> drops.DeletePreOrderedAccountsRequest
-	28, // 27: drops.Drops.RunGame:output_type -> google.protobuf.Empty
-	28, // 28: drops.Drops.RunChannels:output_type -> google.protobuf.Empty
-	28, // 29: drops.Drops.Stop:output_type -> google.protobuf.Empty
-	26, // 30: drops.Drops.GetActiveGamesInfo:output_type -> drops.GetActiveGamesInfoResponse
-	28, // 31: drops.DropsCenter.RunGame:output_type -> google.protobuf.Empty
-	28, // 32: drops.DropsCenter.StopGame:output_type -> google.protobuf.Empty
-	28, // 33: drops.DropsCenter.UpdateAccounts:output_type -> google.protobuf.Empty
-	28, // 34: drops.DropsCenter.AddGame:output_type -> google.protobuf.Empty
-	28, // 35: drops.DropsCenter.AddAccounts:output_type -> google.protobuf.Empty
-	14, // 36: drops.DropsCenter.GetGames:output_type -> drops.GetGamesResponse
-	16, // 37: drops.DropsCenter.GetAccounts:output_type -> drops.GetAccountsResponse
-	28, // 38: drops.DropsCenter.UpdateGameWorkers:output_type -> google.protobuf.Empty
-	28, // 39: drops.DropsCenter.UpdateGameChannels:output_type -> google.protobuf.Empty
-	28, // 40: drops.DropsCenter.UpdateGameAutoFarm:output_type -> google.protobuf.Empty
-	7,  // 41: drops.DropsCenter.GetAllGameNames:output_type -> drops.GetAllGameNamesResponse
-	28, // 42: drops.DropsCenter.DeleteAccount:output_type -> google.protobuf.Empty
-	28, // 43: drops.DropsCenter.MovePreOrderAccount:output_type -> google.protobuf.Empty
-	4,  // 44: drops.DropsCenter.GetFunPayLots:output_type -> drops.GetFunPayLotsResponse
-	28, // 45: drops.DropsCenter.UpdateFunPayLot:output_type -> google.protobuf.Empty
-	28, // 46: drops.DropsCenter.DeleteFunPayLot:output_type -> google.protobuf.Empty
-	28, // 47: drops.DropsCenter.AddFunPayLot:output_type -> google.protobuf.Empty
-	28, // 48: drops.DropsCenter.DeletePreOrderedAccounts:output_type -> google.protobuf.Empty
-	27, // [27:49] is the sub-list for method output_type
-	5,  // [5:27] is the sub-list for method input_type
+	28, // 27: drops.DropsCenter.UpdateAccountsInfo:input_type -> google.protobuf.Empty
+	28, // 28: drops.Drops.RunGame:output_type -> google.protobuf.Empty
+	28, // 29: drops.Drops.RunChannels:output_type -> google.protobuf.Empty
+	28, // 30: drops.Drops.Stop:output_type -> google.protobuf.Empty
+	26, // 31: drops.Drops.GetActiveGamesInfo:output_type -> drops.GetActiveGamesInfoResponse
+	28, // 32: drops.DropsCenter.RunGame:output_type -> google.protobuf.Empty
+	28, // 33: drops.DropsCenter.StopGame:output_type -> google.protobuf.Empty
+	28, // 34: drops.DropsCenter.UpdateAccounts:output_type -> google.protobuf.Empty
+	28, // 35: drops.DropsCenter.AddGame:output_type -> google.protobuf.Empty
+	28, // 36: drops.DropsCenter.AddAccounts:output_type -> google.protobuf.Empty
+	14, // 37: drops.DropsCenter.GetGames:output_type -> drops.GetGamesResponse
+	16, // 38: drops.DropsCenter.GetAccounts:output_type -> drops.GetAccountsResponse
+	28, // 39: drops.DropsCenter.UpdateGameWorkers:output_type -> google.protobuf.Empty
+	28, // 40: drops.DropsCenter.UpdateGameChannels:output_type -> google.protobuf.Empty
+	28, // 41: drops.DropsCenter.UpdateGameAutoFarm:output_type -> google.protobuf.Empty
+	7,  // 42: drops.DropsCenter.GetAllGameNames:output_type -> drops.GetAllGameNamesResponse
+	28, // 43: drops.DropsCenter.DeleteAccount:output_type -> google.protobuf.Empty
+	28, // 44: drops.DropsCenter.MovePreOrderAccount:output_type -> google.protobuf.Empty
+	4,  // 45: drops.DropsCenter.GetFunPayLots:output_type -> drops.GetFunPayLotsResponse
+	28, // 46: drops.DropsCenter.UpdateFunPayLot:output_type -> google.protobuf.Empty
+	28, // 47: drops.DropsCenter.DeleteFunPayLot:output_type -> google.protobuf.Empty
+	28, // 48: drops.DropsCenter.AddFunPayLot:output_type -> google.protobuf.Empty
+	28, // 49: drops.DropsCenter.DeletePreOrderedAccounts:output_type -> google.protobuf.Empty
+	28, // 50: drops.DropsCenter.UpdateAccountsInfo:output_type -> google.protobuf.Empty
+	28, // [28:51] is the sub-list for method output_type
+	5,  // [5:28] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
 	5,  // [5:5] is the sub-list for extension extendee
 	0,  // [0:5] is the sub-list for field type_name

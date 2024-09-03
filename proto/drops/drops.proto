@@ -38,6 +38,7 @@ service DropsCenter {
   rpc AddFunPayLot(AddFunPayLotRequest) returns (google.protobuf.Empty);
   rpc DeletePreOrderedAccounts(DeletePreOrderedAccountsRequest)
       returns (google.protobuf.Empty);
+  rpc UpdateAccountsInfo(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
 
 message AddFunPayLotRequest {

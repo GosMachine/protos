@@ -254,6 +254,7 @@ const (
 	DropsCenter_DeleteFunPayLot_FullMethodName          = "/drops.DropsCenter/DeleteFunPayLot"
 	DropsCenter_AddFunPayLot_FullMethodName             = "/drops.DropsCenter/AddFunPayLot"
 	DropsCenter_DeletePreOrderedAccounts_FullMethodName = "/drops.DropsCenter/DeletePreOrderedAccounts"
+	DropsCenter_UpdateAccountsInfo_FullMethodName       = "/drops.DropsCenter/UpdateAccountsInfo"
 )
 
 // DropsCenterClient is the client API for DropsCenter service.
@@ -278,6 +279,7 @@ type DropsCenterClient interface {
 	DeleteFunPayLot(ctx context.Context, in *DeleteFunPayLotRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddFunPayLot(ctx context.Context, in *AddFunPayLotRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeletePreOrderedAccounts(ctx context.Context, in *DeletePreOrderedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateAccountsInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsCenterClient struct {
@@ -468,6 +470,16 @@ func (c *dropsCenterClient) DeletePreOrderedAccounts(ctx context.Context, in *De
 	return out, nil
 }
 
+func (c *dropsCenterClient) UpdateAccountsInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, DropsCenter_UpdateAccountsInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsCenterServer is the server API for DropsCenter service.
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility.
@@ -490,6 +502,7 @@ type DropsCenterServer interface {
 	DeleteFunPayLot(context.Context, *DeleteFunPayLotRequest) (*emptypb.Empty, error)
 	AddFunPayLot(context.Context, *AddFunPayLotRequest) (*emptypb.Empty, error)
 	DeletePreOrderedAccounts(context.Context, *DeletePreOrderedAccountsRequest) (*emptypb.Empty, error)
+	UpdateAccountsInfo(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -553,6 +566,9 @@ func (UnimplementedDropsCenterServer) AddFunPayLot(context.Context, *AddFunPayLo
 }
 func (UnimplementedDropsCenterServer) DeletePreOrderedAccounts(context.Context, *DeletePreOrderedAccountsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePreOrderedAccounts not implemented")
+}
+func (UnimplementedDropsCenterServer) UpdateAccountsInfo(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccountsInfo not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 func (UnimplementedDropsCenterServer) testEmbeddedByValue()                     {}
@@ -899,6 +915,24 @@ func _DropsCenter_DeletePreOrderedAccounts_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_UpdateAccountsInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).UpdateAccountsInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_UpdateAccountsInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).UpdateAccountsInfo(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -977,6 +1011,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePreOrderedAccounts",
 			Handler:    _DropsCenter_DeletePreOrderedAccounts_Handler,
+		},
+		{
+			MethodName: "UpdateAccountsInfo",
+			Handler:    _DropsCenter_UpdateAccountsInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

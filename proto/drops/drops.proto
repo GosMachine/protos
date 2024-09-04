@@ -68,6 +68,8 @@ message GameCenterRequest { string name = 1; }
 message GetFunPayLotsRequest {
   string search = 1;
   string lotsType = 2;
+  int64 limit = 3;
+  int64 page = 4;
 }
 
 message GetFunPayLotsResponse {

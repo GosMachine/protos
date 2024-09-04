@@ -77,7 +77,10 @@ message GetFunPayLotsResponse {
   int64 quantity = 2;
 }
 
-message DeleteAccountRequest { string username = 1; }
+message DeleteAccountRequest {
+  string username = 1;
+  bool dontDeletePreOrdered = 2;
+}
 
 message MovePreOrderAccountRequest { string username = 1; }
 

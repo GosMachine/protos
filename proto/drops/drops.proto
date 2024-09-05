@@ -62,10 +62,7 @@ message AddFunPayLotRequest {
 
 message DeletePreOrderedAccountsRequest { string game = 1; }
 
-message GameCenterRequest {
-  string name = 1;
-  string ranges = 2;
-}
+message GameCenterRequest { string name = 1; }
 
 message GetFunPayLotsRequest {
   string search = 1;

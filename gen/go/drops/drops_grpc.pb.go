@@ -281,7 +281,7 @@ const (
 	DropsCenter_AddAccounts_FullMethodName              = "/drops.DropsCenter/AddAccounts"
 	DropsCenter_GetGames_FullMethodName                 = "/drops.DropsCenter/GetGames"
 	DropsCenter_GetAccounts_FullMethodName              = "/drops.DropsCenter/GetAccounts"
-	DropsCenter_UpdateGameWorkers_FullMethodName        = "/drops.DropsCenter/UpdateGameWorkers"
+	DropsCenter_UpdateGameRanges_FullMethodName         = "/drops.DropsCenter/UpdateGameRanges"
 	DropsCenter_UpdateGameChannels_FullMethodName       = "/drops.DropsCenter/UpdateGameChannels"
 	DropsCenter_UpdateGameAutoFarm_FullMethodName       = "/drops.DropsCenter/UpdateGameAutoFarm"
 	DropsCenter_GetAllGameNames_FullMethodName          = "/drops.DropsCenter/GetAllGameNames"
@@ -307,7 +307,7 @@ type DropsCenterClient interface {
 	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetGames(ctx context.Context, in *GetGamesRequest, opts ...grpc.CallOption) (*GetGamesResponse, error)
 	GetAccounts(ctx context.Context, in *GetAccountsRequest, opts ...grpc.CallOption) (*GetAccountsResponse, error)
-	UpdateGameWorkers(ctx context.Context, in *UpdateGameWorkersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateGameRanges(ctx context.Context, in *UpdateGameRangesRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateGameChannels(ctx context.Context, in *UpdateGameChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateGameAutoFarm(ctx context.Context, in *UpdateGameAutoFarmRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error)
@@ -400,10 +400,10 @@ func (c *dropsCenterClient) GetAccounts(ctx context.Context, in *GetAccountsRequ
 	return out, nil
 }
 
-func (c *dropsCenterClient) UpdateGameWorkers(ctx context.Context, in *UpdateGameWorkersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dropsCenterClient) UpdateGameRanges(ctx context.Context, in *UpdateGameRangesRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, DropsCenter_UpdateGameWorkers_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DropsCenter_UpdateGameRanges_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -541,7 +541,7 @@ type DropsCenterServer interface {
 	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
 	GetGames(context.Context, *GetGamesRequest) (*GetGamesResponse, error)
 	GetAccounts(context.Context, *GetAccountsRequest) (*GetAccountsResponse, error)
-	UpdateGameWorkers(context.Context, *UpdateGameWorkersRequest) (*emptypb.Empty, error)
+	UpdateGameRanges(context.Context, *UpdateGameRangesRequest) (*emptypb.Empty, error)
 	UpdateGameChannels(context.Context, *UpdateGameChannelsRequest) (*emptypb.Empty, error)
 	UpdateGameAutoFarm(context.Context, *UpdateGameAutoFarmRequest) (*emptypb.Empty, error)
 	GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error)
@@ -585,8 +585,8 @@ func (UnimplementedDropsCenterServer) GetGames(context.Context, *GetGamesRequest
 func (UnimplementedDropsCenterServer) GetAccounts(context.Context, *GetAccountsRequest) (*GetAccountsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccounts not implemented")
 }
-func (UnimplementedDropsCenterServer) UpdateGameWorkers(context.Context, *UpdateGameWorkersRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameWorkers not implemented")
+func (UnimplementedDropsCenterServer) UpdateGameRanges(context.Context, *UpdateGameRangesRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameRanges not implemented")
 }
 func (UnimplementedDropsCenterServer) UpdateGameChannels(context.Context, *UpdateGameChannelsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateGameChannels not implemented")
@@ -771,20 +771,20 @@ func _DropsCenter_GetAccounts_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DropsCenter_UpdateGameWorkers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateGameWorkersRequest)
+func _DropsCenter_UpdateGameRanges_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateGameRangesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DropsCenterServer).UpdateGameWorkers(ctx, in)
+		return srv.(DropsCenterServer).UpdateGameRanges(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DropsCenter_UpdateGameWorkers_FullMethodName,
+		FullMethod: DropsCenter_UpdateGameRanges_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsCenterServer).UpdateGameWorkers(ctx, req.(*UpdateGameWorkersRequest))
+		return srv.(DropsCenterServer).UpdateGameRanges(ctx, req.(*UpdateGameRangesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1041,8 +1041,8 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DropsCenter_GetAccounts_Handler,
 		},
 		{
-			MethodName: "UpdateGameWorkers",
-			Handler:    _DropsCenter_UpdateGameWorkers_Handler,
+			MethodName: "UpdateGameRanges",
+			Handler:    _DropsCenter_UpdateGameRanges_Handler,
 		},
 		{
 			MethodName: "UpdateGameChannels",

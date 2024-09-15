@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package gosboost;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "gosmach1ne.gosboost.v1;gosboostv1";
+
+service GosBoostDB {
+  rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
+}
+
+message AddAccountsRequest { repeated Account accounts = 1; }
+
+message Account {
+  string Username = 1;
+  string Oauth = 2;
+  string Password = 3;
+}

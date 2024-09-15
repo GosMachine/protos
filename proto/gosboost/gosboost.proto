@@ -17,3 +17,5 @@ message Account {
   string Oauth = 2;
   string Password = 3;
 }
+
+service GosBoost {}

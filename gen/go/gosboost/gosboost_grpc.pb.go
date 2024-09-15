@@ -120,3 +120,63 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "gosboost/gosboost.proto",
 }
+
+// GosBoostClient is the client API for GosBoost service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type GosBoostClient interface {
+}
+
+type gosBoostClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewGosBoostClient(cc grpc.ClientConnInterface) GosBoostClient {
+	return &gosBoostClient{cc}
+}
+
+// GosBoostServer is the server API for GosBoost service.
+// All implementations must embed UnimplementedGosBoostServer
+// for forward compatibility.
+type GosBoostServer interface {
+	mustEmbedUnimplementedGosBoostServer()
+}
+
+// UnimplementedGosBoostServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedGosBoostServer struct{}
+
+func (UnimplementedGosBoostServer) mustEmbedUnimplementedGosBoostServer() {}
+func (UnimplementedGosBoostServer) testEmbeddedByValue()                  {}
+
+// UnsafeGosBoostServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GosBoostServer will
+// result in compilation errors.
+type UnsafeGosBoostServer interface {
+	mustEmbedUnimplementedGosBoostServer()
+}
+
+func RegisterGosBoostServer(s grpc.ServiceRegistrar, srv GosBoostServer) {
+	// If the following call pancis, it indicates UnimplementedGosBoostServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&GosBoost_ServiceDesc, srv)
+}
+
+// GosBoost_ServiceDesc is the grpc.ServiceDesc for GosBoost service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var GosBoost_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "gosboost.GosBoost",
+	HandlerType: (*GosBoostServer)(nil),
+	Methods:     []grpc.MethodDesc{},
+	Streams:     []grpc.StreamDesc{},
+	Metadata:    "gosboost/gosboost.proto",
+}

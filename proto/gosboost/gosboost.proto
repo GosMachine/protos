@@ -18,6 +18,7 @@ service GosBoostDB {
 message UpdateSuccessfullyFollowedAccountsRequest {
   repeated string tokens = 1;
   int64 channelId = 2;
+  string username = 3;
 }
 
 message GetTokensForFollowRequest {

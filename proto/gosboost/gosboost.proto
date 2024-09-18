@@ -10,6 +10,14 @@ service GosBoostDB {
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
   rpc GetTokensForFollow(GetTokensForFollowRequest)
       returns (GetTokensForFollowResponse);
+  rpc UpdateSuccessfullyFollowedAccounts(
+      UpdateSuccessfullyFollowedAccountsRequest)
+      returns (google.protobuf.Empty);
+}
+
+message UpdateSuccessfullyFollowedAccountsRequest {
+  repeated string tokens = 1;
+  int64 channelId = 2;
 }
 
 message GetTokensForFollowRequest {

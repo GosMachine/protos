@@ -20,8 +20,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GosBoostDB_AddAccounts_FullMethodName        = "/gosboost.GosBoostDB/AddAccounts"
-	GosBoostDB_GetTokensForFollow_FullMethodName = "/gosboost.GosBoostDB/GetTokensForFollow"
+	GosBoostDB_AddAccounts_FullMethodName                        = "/gosboost.GosBoostDB/AddAccounts"
+	GosBoostDB_GetTokensForFollow_FullMethodName                 = "/gosboost.GosBoostDB/GetTokensForFollow"
+	GosBoostDB_UpdateSuccessfullyFollowedAccounts_FullMethodName = "/gosboost.GosBoostDB/UpdateSuccessfullyFollowedAccounts"
 )
 
 // GosBoostDBClient is the client API for GosBoostDB service.
@@ -30,6 +31,7 @@ const (
 type GosBoostDBClient interface {
 	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetTokensForFollow(ctx context.Context, in *GetTokensForFollowRequest, opts ...grpc.CallOption) (*GetTokensForFollowResponse, error)
+	UpdateSuccessfullyFollowedAccounts(ctx context.Context, in *UpdateSuccessfullyFollowedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gosBoostDBClient struct {
@@ -60,12 +62,23 @@ func (c *gosBoostDBClient) GetTokensForFollow(ctx context.Context, in *GetTokens
 	return out, nil
 }
 
+func (c *gosBoostDBClient) UpdateSuccessfullyFollowedAccounts(ctx context.Context, in *UpdateSuccessfullyFollowedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GosBoostDB_UpdateSuccessfullyFollowedAccounts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GosBoostDBServer is the server API for GosBoostDB service.
 // All implementations must embed UnimplementedGosBoostDBServer
 // for forward compatibility.
 type GosBoostDBServer interface {
 	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
 	GetTokensForFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error)
+	UpdateSuccessfullyFollowedAccounts(context.Context, *UpdateSuccessfullyFollowedAccountsRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGosBoostDBServer()
 }
 
@@ -81,6 +94,9 @@ func (UnimplementedGosBoostDBServer) AddAccounts(context.Context, *AddAccountsRe
 }
 func (UnimplementedGosBoostDBServer) GetTokensForFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTokensForFollow not implemented")
+}
+func (UnimplementedGosBoostDBServer) UpdateSuccessfullyFollowedAccounts(context.Context, *UpdateSuccessfullyFollowedAccountsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSuccessfullyFollowedAccounts not implemented")
 }
 func (UnimplementedGosBoostDBServer) mustEmbedUnimplementedGosBoostDBServer() {}
 func (UnimplementedGosBoostDBServer) testEmbeddedByValue()                    {}
@@ -139,6 +155,24 @@ func _GosBoostDB_GetTokensForFollow_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GosBoostDB_UpdateSuccessfullyFollowedAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateSuccessfullyFollowedAccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostDBServer).UpdateSuccessfullyFollowedAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoostDB_UpdateSuccessfullyFollowedAccounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostDBServer).UpdateSuccessfullyFollowedAccounts(ctx, req.(*UpdateSuccessfullyFollowedAccountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GosBoostDB_ServiceDesc is the grpc.ServiceDesc for GosBoostDB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -153,6 +187,10 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTokensForFollow",
 			Handler:    _GosBoostDB_GetTokensForFollow_Handler,
+		},
+		{
+			MethodName: "UpdateSuccessfullyFollowedAccounts",
+			Handler:    _GosBoostDB_UpdateSuccessfullyFollowedAccounts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -8,7 +8,16 @@ option go_package = "gosmach1ne.gosboost.v1;gosboostv1";
 
 service GosBoostDB {
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
+  rpc GetTokensForFollow(GetTokensForFollowRequest)
+      returns (GetTokensForFollowResponse);
 }
+
+message GetTokensForFollowRequest {
+  int64 channelId = 1;
+  int64 quantity = 2;
+}
+
+message GetTokensForFollowResponse { repeated string tokens = 1; }
 
 message AddAccountsRequest { repeated Account accounts = 1; }
 

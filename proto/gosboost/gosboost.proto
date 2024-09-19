@@ -39,9 +39,38 @@ message Account {
 service GosBoost {
   rpc TwitchFollowChannel(TwitchFollowChannelRequest)
       returns (google.protobuf.Empty);
+  rpc TwitchClipViewers(TwitchClipViewersRequest)
+      returns (google.protobuf.Empty);
+  rpc TwitchVODViewers(TwitchVODViewersRequest) returns (google.protobuf.Empty);
+  rpc TwitchLiveViewers(TwitchLiveViewersRequest)
+      returns (google.protobuf.Empty);
+  rpc TwitchChatters(TwitchChattersRequest) returns (google.protobuf.Empty);
 }
 
 message TwitchFollowChannelRequest {
-  string Username = 1;
-  int64 Quantity = 2;
+  string username = 1;
+  int64 quantity = 2;
+}
+
+message TwitchClipViewersRequest {
+  string clipUrl = 1;
+  int64 quantity = 2;
+}
+
+message TwitchVODViewersRequest {
+  string vodId = 1;
+  int64 quantity = 2;
+}
+
+message TwitchLiveViewersRequest {
+  string username = 1;
+  int64 quantity = 2;
+  int64 minutes = 3;
+}
+
+message TwitchChattersRequest {
+  string username = 1;
+  int64 quantity = 2;
+  repeated string messages = 3;
+  int64 minutes = 4;
 }

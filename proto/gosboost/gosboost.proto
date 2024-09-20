@@ -24,6 +24,7 @@ message UpdateSuccessfullyFollowedAccountsRequest {
 message GetTokensForFollowRequest {
   int64 channelId = 1;
   int64 quantity = 2;
+  string username = 3;
 }
 
 message GetTokensForFollowResponse { repeated string tokens = 1; }

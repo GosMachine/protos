@@ -20,9 +20,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GosBoostDB_AddAccounts_FullMethodName                        = "/gosboost.GosBoostDB/AddAccounts"
-	GosBoostDB_GetTokensForFollow_FullMethodName                 = "/gosboost.GosBoostDB/GetTokensForFollow"
-	GosBoostDB_UpdateSuccessfullyFollowedAccounts_FullMethodName = "/gosboost.GosBoostDB/UpdateSuccessfullyFollowedAccounts"
+	GosBoostDB_AddAccounts_FullMethodName                       = "/gosboost.GosBoostDB/AddAccounts"
+	GosBoostDB_GetTokensForFollow_FullMethodName                = "/gosboost.GosBoostDB/GetTokensForFollow"
+	GosBoostDB_UpdateFollowSuccessAndErrorTokens_FullMethodName = "/gosboost.GosBoostDB/UpdateFollowSuccessAndErrorTokens"
 )
 
 // GosBoostDBClient is the client API for GosBoostDB service.
@@ -31,7 +31,7 @@ const (
 type GosBoostDBClient interface {
 	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetTokensForFollow(ctx context.Context, in *GetTokensForFollowRequest, opts ...grpc.CallOption) (*GetTokensForFollowResponse, error)
-	UpdateSuccessfullyFollowedAccounts(ctx context.Context, in *UpdateSuccessfullyFollowedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateFollowSuccessAndErrorTokens(ctx context.Context, in *UpdateFollowSuccessAndErrorTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gosBoostDBClient struct {
@@ -62,10 +62,10 @@ func (c *gosBoostDBClient) GetTokensForFollow(ctx context.Context, in *GetTokens
 	return out, nil
 }
 
-func (c *gosBoostDBClient) UpdateSuccessfullyFollowedAccounts(ctx context.Context, in *UpdateSuccessfullyFollowedAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostDBClient) UpdateFollowSuccessAndErrorTokens(ctx context.Context, in *UpdateFollowSuccessAndErrorTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, GosBoostDB_UpdateSuccessfullyFollowedAccounts_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, GosBoostDB_UpdateFollowSuccessAndErrorTokens_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (c *gosBoostDBClient) UpdateSuccessfullyFollowedAccounts(ctx context.Contex
 type GosBoostDBServer interface {
 	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
 	GetTokensForFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error)
-	UpdateSuccessfullyFollowedAccounts(context.Context, *UpdateSuccessfullyFollowedAccountsRequest) (*emptypb.Empty, error)
+	UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGosBoostDBServer()
 }
 
@@ -95,8 +95,8 @@ func (UnimplementedGosBoostDBServer) AddAccounts(context.Context, *AddAccountsRe
 func (UnimplementedGosBoostDBServer) GetTokensForFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTokensForFollow not implemented")
 }
-func (UnimplementedGosBoostDBServer) UpdateSuccessfullyFollowedAccounts(context.Context, *UpdateSuccessfullyFollowedAccountsRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateSuccessfullyFollowedAccounts not implemented")
+func (UnimplementedGosBoostDBServer) UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFollowSuccessAndErrorTokens not implemented")
 }
 func (UnimplementedGosBoostDBServer) mustEmbedUnimplementedGosBoostDBServer() {}
 func (UnimplementedGosBoostDBServer) testEmbeddedByValue()                    {}
@@ -155,20 +155,20 @@ func _GosBoostDB_GetTokensForFollow_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GosBoostDB_UpdateSuccessfullyFollowedAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateSuccessfullyFollowedAccountsRequest)
+func _GosBoostDB_UpdateFollowSuccessAndErrorTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFollowSuccessAndErrorTokensRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GosBoostDBServer).UpdateSuccessfullyFollowedAccounts(ctx, in)
+		return srv.(GosBoostDBServer).UpdateFollowSuccessAndErrorTokens(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GosBoostDB_UpdateSuccessfullyFollowedAccounts_FullMethodName,
+		FullMethod: GosBoostDB_UpdateFollowSuccessAndErrorTokens_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostDBServer).UpdateSuccessfullyFollowedAccounts(ctx, req.(*UpdateSuccessfullyFollowedAccountsRequest))
+		return srv.(GosBoostDBServer).UpdateFollowSuccessAndErrorTokens(ctx, req.(*UpdateFollowSuccessAndErrorTokensRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -189,8 +189,8 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GosBoostDB_GetTokensForFollow_Handler,
 		},
 		{
-			MethodName: "UpdateSuccessfullyFollowedAccounts",
-			Handler:    _GosBoostDB_UpdateSuccessfullyFollowedAccounts_Handler,
+			MethodName: "UpdateFollowSuccessAndErrorTokens",
+			Handler:    _GosBoostDB_UpdateFollowSuccessAndErrorTokens_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

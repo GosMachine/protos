@@ -7,4 +7,6 @@ drops:
 dropscenter:
 	@protoc -I proto proto/drops/*.proto -I proto proto/dropscenter/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
 gosboost:
-	@protoc -I proto proto/drops/*.proto -I proto proto/gosboost/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+	@protoc -I proto proto/gosboost/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
+payments:
+	@protoc -I proto proto/payments/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative

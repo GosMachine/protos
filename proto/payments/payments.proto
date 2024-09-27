@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package payments;
+
+// import "google/protobuf/empty.proto";
+
+option go_package = "gosmach1ne.payments.v1;paymentsv1";
+
+service Payments {
+  rpc CreatePaymentURL(CreatePaymentURLRequest) returns (CreatePaymentURLResponse);
+}
+
+message CreatePaymentURLRequest {}
+
+message CreatePaymentURLResponse {}

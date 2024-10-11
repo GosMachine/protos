@@ -42,6 +42,7 @@ service DropsCenter {
   rpc UpdateAccountsInfo(UpdateAccountsInfoRequest)
       returns (google.protobuf.Empty);
   rpc SaveAccountsInfo(SaveAccountsInfoRequest) returns (google.protobuf.Empty);
+  rpc GetTokensForGame(GetTokensForGameRequest) returns (GetTokensForGameResponse);
 }
 
 message AccountWithDrops {
@@ -153,6 +154,14 @@ message Token {
   string password = 2;
   string oauth = 3;
   int64 dbId = 4;
+}
+
+message GetTokensForGameRequest {
+  string game = 1;
+}
+
+message GetTokensForGameResponse {
+  repeated string tokens = 1;
 }
 
 message AccountWithData {

@@ -53,6 +53,8 @@ message FarmListGame {
   repeated string channels = 3;
   bool watchChannelsAfterDropsClaiming = 4;
   repeated string tokens = 5;
+  string ranges = 6;
+  bool farm = 7;
 }
 
 message AccountWithDrops {

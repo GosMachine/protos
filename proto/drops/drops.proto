@@ -7,13 +7,11 @@ import "google/protobuf/empty.proto";
 option go_package = "gosmach1ne.drops.v1;dropsv1";
 
 service Drops {
-  rpc RunGame(RunGameRequest) returns (google.protobuf.Empty);
-  rpc RunChannels(RunChannelsRequest) returns (google.protobuf.Empty);
-  rpc Stop(StopRequest) returns (google.protobuf.Empty);
   rpc GetActiveGamesInfo(google.protobuf.Empty)
       returns (GetActiveGamesInfoResponse);
   rpc UpdateAccountsInfo(UpdateDropsAccountsInfoRequest)
       returns (google.protobuf.Empty);
+  rpc UpdateFarmList(UpdateFarmListRequest) returns (google.protobuf.Empty);
 }
 
 service DropsCenter {
@@ -43,6 +41,20 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc SaveAccountsInfo(SaveAccountsInfoRequest) returns (google.protobuf.Empty);
   rpc GetTokensForGame(GetTokensForGameRequest) returns (GetTokensForGameResponse);
+}
+
+message UpdateFarmListRequest {
+  repeated Game games = 1;
+}
+
+message Game {
+  string slug = 1;
+  string name = 2;
+  string ranges = 3;
+  repeated string channels = 4;
+  bool watchChannelsAfterDropsClaiming = 5;
+  bool farm = 6;
+  repeated string tokens = 7;
 }
 
 message AccountWithDrops {
@@ -131,14 +143,6 @@ message GetAccountsResponse {
   int64 totalGameCount = 2;
 }
 
-message Game {
-  string game = 1;
-  string slug = 2;
-  string ranges = 3;
-  repeated string channels = 4;
-  bool autoFarm = 5;
-}
-
 message UpdateAccountsRequest {
   repeated string tokens = 1;
   repeated string drops = 2;
@@ -176,21 +180,6 @@ message AddAccountsRequest {
   repeated Token accounts = 1;
   string game = 2;
 }
-
-message RunGameRequest {
-  string slug = 1;
-  repeated string tokens = 2;
-  bool autoFarm = 3;
-}
-
-message RunChannelsRequest {
-  repeated string channels = 1;
-  repeated string tokens = 2;
-  bool watchChannelsAfterDropsClaiming = 3;
-  string slug = 4;
-}
-
-message StopRequest { string slug = 1; }
 
 message GetActiveGamesInfoResponse { repeated GameInfo games = 1; }
 

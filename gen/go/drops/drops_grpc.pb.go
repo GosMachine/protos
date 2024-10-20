@@ -20,22 +20,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Drops_RunGame_FullMethodName            = "/drops.Drops/RunGame"
-	Drops_RunChannels_FullMethodName        = "/drops.Drops/RunChannels"
-	Drops_Stop_FullMethodName               = "/drops.Drops/Stop"
 	Drops_GetActiveGamesInfo_FullMethodName = "/drops.Drops/GetActiveGamesInfo"
 	Drops_UpdateAccountsInfo_FullMethodName = "/drops.Drops/UpdateAccountsInfo"
+	Drops_UpdateFarmList_FullMethodName     = "/drops.Drops/UpdateFarmList"
 )
 
 // DropsClient is the client API for Drops service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DropsClient interface {
-	RunGame(ctx context.Context, in *RunGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetActiveGamesInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetActiveGamesInfoResponse, error)
 	UpdateAccountsInfo(ctx context.Context, in *UpdateDropsAccountsInfoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsClient struct {
@@ -44,36 +40,6 @@ type dropsClient struct {
 
 func NewDropsClient(cc grpc.ClientConnInterface) DropsClient {
 	return &dropsClient{cc}
-}
-
-func (c *dropsClient) RunGame(ctx context.Context, in *RunGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Drops_RunGame_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *dropsClient) RunChannels(ctx context.Context, in *RunChannelsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Drops_RunChannels_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *dropsClient) Stop(ctx context.Context, in *StopRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, Drops_Stop_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *dropsClient) GetActiveGamesInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetActiveGamesInfoResponse, error) {
@@ -96,15 +62,23 @@ func (c *dropsClient) UpdateAccountsInfo(ctx context.Context, in *UpdateDropsAcc
 	return out, nil
 }
 
+func (c *dropsClient) UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Drops_UpdateFarmList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsServer is the server API for Drops service.
 // All implementations must embed UnimplementedDropsServer
 // for forward compatibility.
 type DropsServer interface {
-	RunGame(context.Context, *RunGameRequest) (*emptypb.Empty, error)
-	RunChannels(context.Context, *RunChannelsRequest) (*emptypb.Empty, error)
-	Stop(context.Context, *StopRequest) (*emptypb.Empty, error)
 	GetActiveGamesInfo(context.Context, *emptypb.Empty) (*GetActiveGamesInfoResponse, error)
 	UpdateAccountsInfo(context.Context, *UpdateDropsAccountsInfoRequest) (*emptypb.Empty, error)
+	UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsServer()
 }
 
@@ -115,20 +89,14 @@ type DropsServer interface {
 // pointer dereference when methods are called.
 type UnimplementedDropsServer struct{}
 
-func (UnimplementedDropsServer) RunGame(context.Context, *RunGameRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RunGame not implemented")
-}
-func (UnimplementedDropsServer) RunChannels(context.Context, *RunChannelsRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RunChannels not implemented")
-}
-func (UnimplementedDropsServer) Stop(context.Context, *StopRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
-}
 func (UnimplementedDropsServer) GetActiveGamesInfo(context.Context, *emptypb.Empty) (*GetActiveGamesInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetActiveGamesInfo not implemented")
 }
 func (UnimplementedDropsServer) UpdateAccountsInfo(context.Context, *UpdateDropsAccountsInfoRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccountsInfo not implemented")
+}
+func (UnimplementedDropsServer) UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFarmList not implemented")
 }
 func (UnimplementedDropsServer) mustEmbedUnimplementedDropsServer() {}
 func (UnimplementedDropsServer) testEmbeddedByValue()               {}
@@ -149,60 +117,6 @@ func RegisterDropsServer(s grpc.ServiceRegistrar, srv DropsServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Drops_ServiceDesc, srv)
-}
-
-func _Drops_RunGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RunGameRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DropsServer).RunGame(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Drops_RunGame_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsServer).RunGame(ctx, req.(*RunGameRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Drops_RunChannels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RunChannelsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DropsServer).RunChannels(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Drops_RunChannels_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsServer).RunChannels(ctx, req.(*RunChannelsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _Drops_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StopRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DropsServer).Stop(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: Drops_Stop_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsServer).Stop(ctx, req.(*StopRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Drops_GetActiveGamesInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -241,6 +155,24 @@ func _Drops_UpdateAccountsInfo_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Drops_UpdateFarmList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFarmListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsServer).UpdateFarmList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Drops_UpdateFarmList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsServer).UpdateFarmList(ctx, req.(*UpdateFarmListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Drops_ServiceDesc is the grpc.ServiceDesc for Drops service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -249,24 +181,16 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DropsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RunGame",
-			Handler:    _Drops_RunGame_Handler,
-		},
-		{
-			MethodName: "RunChannels",
-			Handler:    _Drops_RunChannels_Handler,
-		},
-		{
-			MethodName: "Stop",
-			Handler:    _Drops_Stop_Handler,
-		},
-		{
 			MethodName: "GetActiveGamesInfo",
 			Handler:    _Drops_GetActiveGamesInfo_Handler,
 		},
 		{
 			MethodName: "UpdateAccountsInfo",
 			Handler:    _Drops_UpdateAccountsInfo_Handler,
+		},
+		{
+			MethodName: "UpdateFarmList",
+			Handler:    _Drops_UpdateFarmList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

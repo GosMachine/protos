@@ -44,17 +44,15 @@ service DropsCenter {
 }
 
 message UpdateFarmListRequest {
-  repeated Game games = 1;
+  repeated FarmListGame games = 1;
 }
 
-message Game {
+message FarmListGame {
   string slug = 1;
   string name = 2;
-  string ranges = 3;
-  repeated string channels = 4;
-  bool watchChannelsAfterDropsClaiming = 5;
-  bool farm = 6;
-  repeated string tokens = 7;
+  repeated string channels = 3;
+  bool watchChannelsAfterDropsClaiming = 4;
+  repeated string tokens = 5;
 }
 
 message AccountWithDrops {
@@ -128,6 +126,14 @@ message GetGamesRequest {
 message GetGamesResponse {
   repeated Game games = 1;
   int64 totalGameCount = 2;
+}
+
+message Game {
+  string name = 1;
+  string slug = 2;
+  string ranges = 3;
+  repeated string channels = 4;
+  bool farm = 5;
 }
 
 message GetAccountsRequest {

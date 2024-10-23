@@ -12,6 +12,36 @@ service Drops {
   rpc UpdateAccountsInfo(UpdateDropsAccountsInfoRequest)
       returns (google.protobuf.Empty);
   rpc UpdateFarmList(UpdateFarmListRequest) returns (google.protobuf.Empty);
+  rpc ClearCollectedCampaigns(ClearCollectedCampaignsRequest) returns (google.protobuf.Empty);
+}
+
+message GetActiveGamesInfoResponse { repeated GameInfo games = 1; }
+
+message GameInfo {
+  int64 activeWorkers = 1;
+  string currentChannel = 2;
+  int64 leftToWatch = 3;
+  int64 successCount = 4;
+  string name = 5;
+  string slug = 6;
+}
+
+message UpdateDropsAccountsInfoRequest { repeated Token accounts = 1; }
+
+message UpdateFarmListRequest {
+  repeated FarmListGame games = 1;
+}
+
+message FarmListGame {
+  string slug = 1;
+  string name = 2;
+  repeated string channels = 3;
+  bool watchChannelsAfterDropsClaiming = 4;
+  bool farm = 5;
+}
+
+message ClearCollectedCampaignsRequest {
+  string gameSlug = 1;
 }
 
 service DropsCenter {
@@ -43,20 +73,6 @@ service DropsCenter {
   rpc GetTokensForGame(GetTokensForGameRequest) returns (GetTokensForGameResponse);
 }
 
-message UpdateFarmListRequest {
-  repeated FarmListGame games = 1;
-}
-
-message FarmListGame {
-  string slug = 1;
-  string name = 2;
-  repeated string channels = 3;
-  bool watchChannelsAfterDropsClaiming = 4;
-  repeated string tokens = 5;
-  string ranges = 6;
-  bool farm = 7;
-}
-
 message AccountWithDrops {
   int64 dbId = 1;
   map<string, int64> drops = 2;
@@ -65,8 +81,6 @@ message AccountWithDrops {
 message SaveAccountsInfoRequest { repeated AccountWithDrops accounts = 1; }
 
 message UpdateAccountsInfoRequest { string game = 1; }
-
-message UpdateDropsAccountsInfoRequest { repeated Token accounts = 1; }
 
 message AddFunPayLotRequest {
   string name = 1;
@@ -188,15 +202,4 @@ message AccountWithData {
 message AddAccountsRequest {
   repeated Token accounts = 1;
   string game = 2;
-}
-
-message GetActiveGamesInfoResponse { repeated GameInfo games = 1; }
-
-message GameInfo {
-  int64 activeWorkers = 1;
-  string currentChannel = 2;
-  int64 leftToWatch = 3;
-  int64 successCount = 4;
-  string name = 5;
-  string slug = 6;
 }

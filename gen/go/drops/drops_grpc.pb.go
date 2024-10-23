@@ -20,9 +20,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Drops_GetActiveGamesInfo_FullMethodName = "/drops.Drops/GetActiveGamesInfo"
-	Drops_UpdateAccountsInfo_FullMethodName = "/drops.Drops/UpdateAccountsInfo"
-	Drops_UpdateFarmList_FullMethodName     = "/drops.Drops/UpdateFarmList"
+	Drops_GetActiveGamesInfo_FullMethodName      = "/drops.Drops/GetActiveGamesInfo"
+	Drops_UpdateAccountsInfo_FullMethodName      = "/drops.Drops/UpdateAccountsInfo"
+	Drops_UpdateFarmList_FullMethodName          = "/drops.Drops/UpdateFarmList"
+	Drops_ClearCollectedCampaigns_FullMethodName = "/drops.Drops/ClearCollectedCampaigns"
 )
 
 // DropsClient is the client API for Drops service.
@@ -32,6 +33,7 @@ type DropsClient interface {
 	GetActiveGamesInfo(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetActiveGamesInfoResponse, error)
 	UpdateAccountsInfo(ctx context.Context, in *UpdateDropsAccountsInfoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ClearCollectedCampaigns(ctx context.Context, in *ClearCollectedCampaignsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsClient struct {
@@ -72,6 +74,16 @@ func (c *dropsClient) UpdateFarmList(ctx context.Context, in *UpdateFarmListRequ
 	return out, nil
 }
 
+func (c *dropsClient) ClearCollectedCampaigns(ctx context.Context, in *ClearCollectedCampaignsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Drops_ClearCollectedCampaigns_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsServer is the server API for Drops service.
 // All implementations must embed UnimplementedDropsServer
 // for forward compatibility.
@@ -79,6 +91,7 @@ type DropsServer interface {
 	GetActiveGamesInfo(context.Context, *emptypb.Empty) (*GetActiveGamesInfoResponse, error)
 	UpdateAccountsInfo(context.Context, *UpdateDropsAccountsInfoRequest) (*emptypb.Empty, error)
 	UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error)
+	ClearCollectedCampaigns(context.Context, *ClearCollectedCampaignsRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsServer()
 }
 
@@ -97,6 +110,9 @@ func (UnimplementedDropsServer) UpdateAccountsInfo(context.Context, *UpdateDrops
 }
 func (UnimplementedDropsServer) UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFarmList not implemented")
+}
+func (UnimplementedDropsServer) ClearCollectedCampaigns(context.Context, *ClearCollectedCampaignsRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClearCollectedCampaigns not implemented")
 }
 func (UnimplementedDropsServer) mustEmbedUnimplementedDropsServer() {}
 func (UnimplementedDropsServer) testEmbeddedByValue()               {}
@@ -173,6 +189,24 @@ func _Drops_UpdateFarmList_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Drops_ClearCollectedCampaigns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClearCollectedCampaignsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsServer).ClearCollectedCampaigns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Drops_ClearCollectedCampaigns_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsServer).ClearCollectedCampaigns(ctx, req.(*ClearCollectedCampaignsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Drops_ServiceDesc is the grpc.ServiceDesc for Drops service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -191,6 +225,10 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateFarmList",
 			Handler:    _Drops_UpdateFarmList_Handler,
+		},
+		{
+			MethodName: "ClearCollectedCampaigns",
+			Handler:    _Drops_ClearCollectedCampaigns_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

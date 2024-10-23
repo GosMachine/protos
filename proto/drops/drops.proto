@@ -169,7 +169,7 @@ message Token {
 }
 
 message GetTokensForGameRequest {
-  string game = 1;
+  string slug = 1;
 }
 
 message GetTokensForGameResponse {

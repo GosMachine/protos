@@ -45,8 +45,6 @@ message ClearCollectedCampaignsRequest {
 }
 
 service DropsCenter {
-  rpc RunGame(GameCenterRequest) returns (google.protobuf.Empty);
-  rpc StopGame(GameCenterRequest) returns (google.protobuf.Empty);
   rpc UpdateAccounts(UpdateAccountsRequest) returns (google.protobuf.Empty);
   rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
@@ -88,8 +86,6 @@ message AddFunPayLotRequest {
 }
 
 message DeletePreOrderedAccountsRequest { string game = 1; }
-
-message GameCenterRequest { string name = 1; }
 
 message GetFunPayLotsRequest {
   string search = 1;

@@ -159,6 +159,7 @@ message UpdateAccountsRequest {
 message AddGameRequest {
   string game = 1;
   string slug = 2;
+  int64 accountsQuantity = 3;
 }
 
 message Token {

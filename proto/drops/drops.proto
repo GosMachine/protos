@@ -45,6 +45,8 @@ message ClearCollectedCampaignsRequest {
 }
 
 service DropsCenter {
+  rpc ConnectAccountsWithGame(ConnectAccountsWithGameRequest) returns (google.protobuf.Empty);
+  rpc UpdateFarmList(UpdateFarmListRequest) returns (google.protobuf.Empty);
   rpc UpdateAccounts(UpdateAccountsRequest) returns (google.protobuf.Empty);
   rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
@@ -69,6 +71,11 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc SaveAccountsInfo(SaveAccountsInfoRequest) returns (google.protobuf.Empty);
   rpc GetTokensForGame(GetTokensForGameRequest) returns (GetTokensForGameResponse);
+}
+
+message ConnectAccountsWithGameRequest {
+  string game = 1;
+  int64 accountsQuantity = 2;
 }
 
 message AccountWithDrops {
@@ -197,5 +204,4 @@ message AccountWithData {
 
 message AddAccountsRequest {
   repeated Token accounts = 1;
-  string game = 2;
 }

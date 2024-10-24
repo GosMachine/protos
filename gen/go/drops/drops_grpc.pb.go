@@ -236,6 +236,8 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
+	DropsCenter_ConnectAccountsWithGame_FullMethodName  = "/drops.DropsCenter/ConnectAccountsWithGame"
+	DropsCenter_UpdateFarmList_FullMethodName           = "/drops.DropsCenter/UpdateFarmList"
 	DropsCenter_UpdateAccounts_FullMethodName           = "/drops.DropsCenter/UpdateAccounts"
 	DropsCenter_AddGame_FullMethodName                  = "/drops.DropsCenter/AddGame"
 	DropsCenter_AddAccounts_FullMethodName              = "/drops.DropsCenter/AddAccounts"
@@ -261,6 +263,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DropsCenterClient interface {
+	ConnectAccountsWithGame(ctx context.Context, in *ConnectAccountsWithGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateAccounts(ctx context.Context, in *UpdateAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddGame(ctx context.Context, in *AddGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -288,6 +292,26 @@ type dropsCenterClient struct {
 
 func NewDropsCenterClient(cc grpc.ClientConnInterface) DropsCenterClient {
 	return &dropsCenterClient{cc}
+}
+
+func (c *dropsCenterClient) ConnectAccountsWithGame(ctx context.Context, in *ConnectAccountsWithGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, DropsCenter_ConnectAccountsWithGame_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *dropsCenterClient) UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, DropsCenter_UpdateFarmList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *dropsCenterClient) UpdateAccounts(ctx context.Context, in *UpdateAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
@@ -484,6 +508,8 @@ func (c *dropsCenterClient) GetTokensForGame(ctx context.Context, in *GetTokensF
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility.
 type DropsCenterServer interface {
+	ConnectAccountsWithGame(context.Context, *ConnectAccountsWithGameRequest) (*emptypb.Empty, error)
+	UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error)
 	UpdateAccounts(context.Context, *UpdateAccountsRequest) (*emptypb.Empty, error)
 	AddGame(context.Context, *AddGameRequest) (*emptypb.Empty, error)
 	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
@@ -513,6 +539,12 @@ type DropsCenterServer interface {
 // pointer dereference when methods are called.
 type UnimplementedDropsCenterServer struct{}
 
+func (UnimplementedDropsCenterServer) ConnectAccountsWithGame(context.Context, *ConnectAccountsWithGameRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConnectAccountsWithGame not implemented")
+}
+func (UnimplementedDropsCenterServer) UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateFarmList not implemented")
+}
 func (UnimplementedDropsCenterServer) UpdateAccounts(context.Context, *UpdateAccountsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAccounts not implemented")
 }
@@ -589,6 +621,42 @@ func RegisterDropsCenterServer(s grpc.ServiceRegistrar, srv DropsCenterServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&DropsCenter_ServiceDesc, srv)
+}
+
+func _DropsCenter_ConnectAccountsWithGame_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConnectAccountsWithGameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).ConnectAccountsWithGame(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_ConnectAccountsWithGame_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).ConnectAccountsWithGame(ctx, req.(*ConnectAccountsWithGameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _DropsCenter_UpdateFarmList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateFarmListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).UpdateFarmList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_UpdateFarmList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).UpdateFarmList(ctx, req.(*UpdateFarmListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _DropsCenter_UpdateAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -940,6 +1008,14 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "drops.DropsCenter",
 	HandlerType: (*DropsCenterServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ConnectAccountsWithGame",
+			Handler:    _DropsCenter_ConnectAccountsWithGame_Handler,
+		},
+		{
+			MethodName: "UpdateFarmList",
+			Handler:    _DropsCenter_UpdateFarmList_Handler,
+		},
 		{
 			MethodName: "UpdateAccounts",
 			Handler:    _DropsCenter_UpdateAccounts_Handler,

@@ -264,7 +264,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DropsCenterClient interface {
 	ConnectAccountsWithGame(ctx context.Context, in *ConnectAccountsWithGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateFarmList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateAccounts(ctx context.Context, in *UpdateAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddGame(ctx context.Context, in *AddGameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -304,7 +304,7 @@ func (c *dropsCenterClient) ConnectAccountsWithGame(ctx context.Context, in *Con
 	return out, nil
 }
 
-func (c *dropsCenterClient) UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dropsCenterClient) UpdateFarmList(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, DropsCenter_UpdateFarmList_FullMethodName, in, out, cOpts...)
@@ -509,7 +509,7 @@ func (c *dropsCenterClient) GetTokensForGame(ctx context.Context, in *GetTokensF
 // for forward compatibility.
 type DropsCenterServer interface {
 	ConnectAccountsWithGame(context.Context, *ConnectAccountsWithGameRequest) (*emptypb.Empty, error)
-	UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error)
+	UpdateFarmList(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	UpdateAccounts(context.Context, *UpdateAccountsRequest) (*emptypb.Empty, error)
 	AddGame(context.Context, *AddGameRequest) (*emptypb.Empty, error)
 	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
@@ -542,7 +542,7 @@ type UnimplementedDropsCenterServer struct{}
 func (UnimplementedDropsCenterServer) ConnectAccountsWithGame(context.Context, *ConnectAccountsWithGameRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConnectAccountsWithGame not implemented")
 }
-func (UnimplementedDropsCenterServer) UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error) {
+func (UnimplementedDropsCenterServer) UpdateFarmList(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFarmList not implemented")
 }
 func (UnimplementedDropsCenterServer) UpdateAccounts(context.Context, *UpdateAccountsRequest) (*emptypb.Empty, error) {
@@ -642,7 +642,7 @@ func _DropsCenter_ConnectAccountsWithGame_Handler(srv interface{}, ctx context.C
 }
 
 func _DropsCenter_UpdateFarmList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateFarmListRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -654,7 +654,7 @@ func _DropsCenter_UpdateFarmList_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: DropsCenter_UpdateFarmList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsCenterServer).UpdateFarmList(ctx, req.(*UpdateFarmListRequest))
+		return srv.(DropsCenterServer).UpdateFarmList(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

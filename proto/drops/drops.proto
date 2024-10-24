@@ -46,7 +46,7 @@ message ClearCollectedCampaignsRequest {
 
 service DropsCenter {
   rpc ConnectAccountsWithGame(ConnectAccountsWithGameRequest) returns (google.protobuf.Empty);
-  rpc UpdateFarmList(UpdateFarmListRequest) returns (google.protobuf.Empty);
+  rpc UpdateFarmList(google.protobuf.Empty) returns (google.protobuf.Empty);
   rpc UpdateAccounts(UpdateAccountsRequest) returns (google.protobuf.Empty);
   rpc AddGame(AddGameRequest) returns (google.protobuf.Empty);
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);

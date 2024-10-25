@@ -81,6 +81,7 @@ message GetFunPayAccountsResponse {
 message FunPayAccount {
   string name = 1;
   string goldenKey = 2;
+  string proxy = 3;
 }
 
 message ConnectAccountsWithGameRequest {

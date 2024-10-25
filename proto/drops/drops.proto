@@ -100,6 +100,7 @@ message UpdateAccountsInfoRequest { string game = 1; }
 message AddFunPayLotRequest {
   string name = 1;
   string lotType = 2;
+  string accountName = 3;
 }
 
 message DeletePreOrderedAccountsRequest { string game = 1; }

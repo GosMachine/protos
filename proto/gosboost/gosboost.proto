@@ -12,6 +12,16 @@ service GosBoostDB {
       returns (GetTokensForFollowResponse);
   rpc UpdateFollowSuccessAndErrorTokens(
       UpdateFollowSuccessAndErrorTokensRequest) returns (google.protobuf.Empty);
+  rpc GetTokensForUnFollow(GetTokensForFollowRequest)
+      returns (GetTokensForFollowResponse);
+  rpc UpdateUnfollowedTokens(
+    UpdateUnfollowedTokensRequest) returns (google.protobuf.Empty);
+}
+
+message UpdateUnfollowedTokensRequest {
+  repeated string tokens = 1;
+  int64 channelId = 2;
+  string username = 3;
 }
 
 message UpdateFollowSuccessAndErrorTokensRequest {

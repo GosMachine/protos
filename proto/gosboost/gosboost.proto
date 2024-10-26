@@ -50,7 +50,7 @@ message Account {
 service GosBoost {
   rpc TwitchFollowChannel(TwitchFollowChannelRequest)
       returns (google.protobuf.Empty);
-  rpc TwitchUnFollowChannel(TwitchFollowChannelRequest)
+  rpc TwitchUnfollowChannel(TwitchFollowChannelRequest)
       returns (google.protobuf.Empty);
   rpc TwitchClipViewers(TwitchClipViewersRequest)
       returns (google.protobuf.Empty);

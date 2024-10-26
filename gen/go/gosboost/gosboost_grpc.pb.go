@@ -275,7 +275,7 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 
 const (
 	GosBoost_TwitchFollowChannel_FullMethodName   = "/gosboost.GosBoost/TwitchFollowChannel"
-	GosBoost_TwitchUnFollowChannel_FullMethodName = "/gosboost.GosBoost/TwitchUnFollowChannel"
+	GosBoost_TwitchUnfollowChannel_FullMethodName = "/gosboost.GosBoost/TwitchUnfollowChannel"
 	GosBoost_TwitchClipViewers_FullMethodName     = "/gosboost.GosBoost/TwitchClipViewers"
 	GosBoost_TwitchVODViewers_FullMethodName      = "/gosboost.GosBoost/TwitchVODViewers"
 	GosBoost_TwitchLiveViewers_FullMethodName     = "/gosboost.GosBoost/TwitchLiveViewers"
@@ -287,7 +287,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GosBoostClient interface {
 	TwitchFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchUnFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	TwitchUnfollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchClipViewers(ctx context.Context, in *TwitchClipViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchVODViewers(ctx context.Context, in *TwitchVODViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -312,10 +312,10 @@ func (c *gosBoostClient) TwitchFollowChannel(ctx context.Context, in *TwitchFoll
 	return out, nil
 }
 
-func (c *gosBoostClient) TwitchUnFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchUnfollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, GosBoost_TwitchUnFollowChannel_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, GosBoost_TwitchUnfollowChannel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -367,7 +367,7 @@ func (c *gosBoostClient) TwitchChatters(ctx context.Context, in *TwitchChattersR
 // for forward compatibility.
 type GosBoostServer interface {
 	TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error)
-	TwitchUnFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error)
+	TwitchUnfollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error)
 	TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*emptypb.Empty, error)
 	TwitchVODViewers(context.Context, *TwitchVODViewersRequest) (*emptypb.Empty, error)
 	TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*emptypb.Empty, error)
@@ -385,8 +385,8 @@ type UnimplementedGosBoostServer struct{}
 func (UnimplementedGosBoostServer) TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchFollowChannel not implemented")
 }
-func (UnimplementedGosBoostServer) TwitchUnFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TwitchUnFollowChannel not implemented")
+func (UnimplementedGosBoostServer) TwitchUnfollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TwitchUnfollowChannel not implemented")
 }
 func (UnimplementedGosBoostServer) TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchClipViewers not implemented")
@@ -439,20 +439,20 @@ func _GosBoost_TwitchFollowChannel_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GosBoost_TwitchUnFollowChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _GosBoost_TwitchUnfollowChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TwitchFollowChannelRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GosBoostServer).TwitchUnFollowChannel(ctx, in)
+		return srv.(GosBoostServer).TwitchUnfollowChannel(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GosBoost_TwitchUnFollowChannel_FullMethodName,
+		FullMethod: GosBoost_TwitchUnfollowChannel_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostServer).TwitchUnFollowChannel(ctx, req.(*TwitchFollowChannelRequest))
+		return srv.(GosBoostServer).TwitchUnfollowChannel(ctx, req.(*TwitchFollowChannelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -541,8 +541,8 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GosBoost_TwitchFollowChannel_Handler,
 		},
 		{
-			MethodName: "TwitchUnFollowChannel",
-			Handler:    _GosBoost_TwitchUnFollowChannel_Handler,
+			MethodName: "TwitchUnfollowChannel",
+			Handler:    _GosBoost_TwitchUnfollowChannel_Handler,
 		},
 		{
 			MethodName: "TwitchClipViewers",

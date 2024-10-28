@@ -23,8 +23,6 @@ const (
 	GosBoostDB_AddAccounts_FullMethodName                       = "/gosboost.GosBoostDB/AddAccounts"
 	GosBoostDB_GetTokensForFollow_FullMethodName                = "/gosboost.GosBoostDB/GetTokensForFollow"
 	GosBoostDB_UpdateFollowSuccessAndErrorTokens_FullMethodName = "/gosboost.GosBoostDB/UpdateFollowSuccessAndErrorTokens"
-	GosBoostDB_GetTokensForUnFollow_FullMethodName              = "/gosboost.GosBoostDB/GetTokensForUnFollow"
-	GosBoostDB_UpdateUnfollowedTokens_FullMethodName            = "/gosboost.GosBoostDB/UpdateUnfollowedTokens"
 )
 
 // GosBoostDBClient is the client API for GosBoostDB service.
@@ -34,8 +32,6 @@ type GosBoostDBClient interface {
 	AddAccounts(ctx context.Context, in *AddAccountsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetTokensForFollow(ctx context.Context, in *GetTokensForFollowRequest, opts ...grpc.CallOption) (*GetTokensForFollowResponse, error)
 	UpdateFollowSuccessAndErrorTokens(ctx context.Context, in *UpdateFollowSuccessAndErrorTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetTokensForUnFollow(ctx context.Context, in *GetTokensForFollowRequest, opts ...grpc.CallOption) (*GetTokensForFollowResponse, error)
-	UpdateUnfollowedTokens(ctx context.Context, in *UpdateUnfollowedTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gosBoostDBClient struct {
@@ -76,26 +72,6 @@ func (c *gosBoostDBClient) UpdateFollowSuccessAndErrorTokens(ctx context.Context
 	return out, nil
 }
 
-func (c *gosBoostDBClient) GetTokensForUnFollow(ctx context.Context, in *GetTokensForFollowRequest, opts ...grpc.CallOption) (*GetTokensForFollowResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetTokensForFollowResponse)
-	err := c.cc.Invoke(ctx, GosBoostDB_GetTokensForUnFollow_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *gosBoostDBClient) UpdateUnfollowedTokens(ctx context.Context, in *UpdateUnfollowedTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, GosBoostDB_UpdateUnfollowedTokens_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // GosBoostDBServer is the server API for GosBoostDB service.
 // All implementations must embed UnimplementedGosBoostDBServer
 // for forward compatibility.
@@ -103,8 +79,6 @@ type GosBoostDBServer interface {
 	AddAccounts(context.Context, *AddAccountsRequest) (*emptypb.Empty, error)
 	GetTokensForFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error)
 	UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error)
-	GetTokensForUnFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error)
-	UpdateUnfollowedTokens(context.Context, *UpdateUnfollowedTokensRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGosBoostDBServer()
 }
 
@@ -123,12 +97,6 @@ func (UnimplementedGosBoostDBServer) GetTokensForFollow(context.Context, *GetTok
 }
 func (UnimplementedGosBoostDBServer) UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFollowSuccessAndErrorTokens not implemented")
-}
-func (UnimplementedGosBoostDBServer) GetTokensForUnFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTokensForUnFollow not implemented")
-}
-func (UnimplementedGosBoostDBServer) UpdateUnfollowedTokens(context.Context, *UpdateUnfollowedTokensRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUnfollowedTokens not implemented")
 }
 func (UnimplementedGosBoostDBServer) mustEmbedUnimplementedGosBoostDBServer() {}
 func (UnimplementedGosBoostDBServer) testEmbeddedByValue()                    {}
@@ -205,42 +173,6 @@ func _GosBoostDB_UpdateFollowSuccessAndErrorTokens_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GosBoostDB_GetTokensForUnFollow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTokensForFollowRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GosBoostDBServer).GetTokensForUnFollow(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GosBoostDB_GetTokensForUnFollow_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostDBServer).GetTokensForUnFollow(ctx, req.(*GetTokensForFollowRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GosBoostDB_UpdateUnfollowedTokens_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateUnfollowedTokensRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GosBoostDBServer).UpdateUnfollowedTokens(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GosBoostDB_UpdateUnfollowedTokens_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostDBServer).UpdateUnfollowedTokens(ctx, req.(*UpdateUnfollowedTokensRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // GosBoostDB_ServiceDesc is the grpc.ServiceDesc for GosBoostDB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -260,26 +192,17 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "UpdateFollowSuccessAndErrorTokens",
 			Handler:    _GosBoostDB_UpdateFollowSuccessAndErrorTokens_Handler,
 		},
-		{
-			MethodName: "GetTokensForUnFollow",
-			Handler:    _GosBoostDB_GetTokensForUnFollow_Handler,
-		},
-		{
-			MethodName: "UpdateUnfollowedTokens",
-			Handler:    _GosBoostDB_UpdateUnfollowedTokens_Handler,
-		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "gosboost/gosboost.proto",
 }
 
 const (
-	GosBoost_TwitchFollowChannel_FullMethodName   = "/gosboost.GosBoost/TwitchFollowChannel"
-	GosBoost_TwitchUnfollowChannel_FullMethodName = "/gosboost.GosBoost/TwitchUnfollowChannel"
-	GosBoost_TwitchClipViewers_FullMethodName     = "/gosboost.GosBoost/TwitchClipViewers"
-	GosBoost_TwitchVODViewers_FullMethodName      = "/gosboost.GosBoost/TwitchVODViewers"
-	GosBoost_TwitchLiveViewers_FullMethodName     = "/gosboost.GosBoost/TwitchLiveViewers"
-	GosBoost_TwitchChatters_FullMethodName        = "/gosboost.GosBoost/TwitchChatters"
+	GosBoost_TwitchFollowChannel_FullMethodName = "/gosboost.GosBoost/TwitchFollowChannel"
+	GosBoost_TwitchClipViewers_FullMethodName   = "/gosboost.GosBoost/TwitchClipViewers"
+	GosBoost_TwitchVODViewers_FullMethodName    = "/gosboost.GosBoost/TwitchVODViewers"
+	GosBoost_TwitchLiveViewers_FullMethodName   = "/gosboost.GosBoost/TwitchLiveViewers"
+	GosBoost_TwitchChatters_FullMethodName      = "/gosboost.GosBoost/TwitchChatters"
 )
 
 // GosBoostClient is the client API for GosBoost service.
@@ -287,7 +210,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GosBoostClient interface {
 	TwitchFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchUnfollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchClipViewers(ctx context.Context, in *TwitchClipViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchVODViewers(ctx context.Context, in *TwitchVODViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -306,16 +228,6 @@ func (c *gosBoostClient) TwitchFollowChannel(ctx context.Context, in *TwitchFoll
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, GosBoost_TwitchFollowChannel_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *gosBoostClient) TwitchUnfollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, GosBoost_TwitchUnfollowChannel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -367,7 +279,6 @@ func (c *gosBoostClient) TwitchChatters(ctx context.Context, in *TwitchChattersR
 // for forward compatibility.
 type GosBoostServer interface {
 	TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error)
-	TwitchUnfollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error)
 	TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*emptypb.Empty, error)
 	TwitchVODViewers(context.Context, *TwitchVODViewersRequest) (*emptypb.Empty, error)
 	TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*emptypb.Empty, error)
@@ -384,9 +295,6 @@ type UnimplementedGosBoostServer struct{}
 
 func (UnimplementedGosBoostServer) TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchFollowChannel not implemented")
-}
-func (UnimplementedGosBoostServer) TwitchUnfollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TwitchUnfollowChannel not implemented")
 }
 func (UnimplementedGosBoostServer) TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchClipViewers not implemented")
@@ -435,24 +343,6 @@ func _GosBoost_TwitchFollowChannel_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GosBoostServer).TwitchFollowChannel(ctx, req.(*TwitchFollowChannelRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _GosBoost_TwitchUnfollowChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TwitchFollowChannelRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GosBoostServer).TwitchUnfollowChannel(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GosBoost_TwitchUnfollowChannel_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostServer).TwitchUnfollowChannel(ctx, req.(*TwitchFollowChannelRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -539,10 +429,6 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TwitchFollowChannel",
 			Handler:    _GosBoost_TwitchFollowChannel_Handler,
-		},
-		{
-			MethodName: "TwitchUnfollowChannel",
-			Handler:    _GosBoost_TwitchUnfollowChannel_Handler,
 		},
 		{
 			MethodName: "TwitchClipViewers",

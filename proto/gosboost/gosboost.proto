@@ -12,16 +12,6 @@ service GosBoostDB {
       returns (GetTokensForFollowResponse);
   rpc UpdateFollowSuccessAndErrorTokens(
       UpdateFollowSuccessAndErrorTokensRequest) returns (google.protobuf.Empty);
-  rpc GetTokensForUnFollow(GetTokensForFollowRequest)
-      returns (GetTokensForFollowResponse);
-  rpc UpdateUnfollowedTokens(
-    UpdateUnfollowedTokensRequest) returns (google.protobuf.Empty);
-}
-
-message UpdateUnfollowedTokensRequest {
-  repeated string tokens = 1;
-  int64 channelId = 2;
-  string username = 3;
 }
 
 message UpdateFollowSuccessAndErrorTokensRequest {
@@ -29,12 +19,14 @@ message UpdateFollowSuccessAndErrorTokensRequest {
   int64 channelId = 2;
   string username = 3;
   repeated string errorTokens = 4;
+  bool follow = 5;
 }
 
 message GetTokensForFollowRequest {
   int64 channelId = 1;
   int64 quantity = 2;
   string username = 3;
+  bool follow = 4;
 }
 
 message GetTokensForFollowResponse { repeated string tokens = 1; }
@@ -50,8 +42,6 @@ message Account {
 service GosBoost {
   rpc TwitchFollowChannel(TwitchFollowChannelRequest)
       returns (google.protobuf.Empty);
-  rpc TwitchUnfollowChannel(TwitchFollowChannelRequest)
-      returns (google.protobuf.Empty);
   rpc TwitchClipViewers(TwitchClipViewersRequest)
       returns (google.protobuf.Empty);
   rpc TwitchVODViewers(TwitchVODViewersRequest) returns (google.protobuf.Empty);
@@ -63,6 +53,7 @@ service GosBoost {
 message TwitchFollowChannelRequest {
   string username = 1;
   int64 quantity = 2;
+  bool follow = 3;
 }
 
 message TwitchClipViewersRequest {

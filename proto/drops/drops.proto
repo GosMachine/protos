@@ -117,9 +117,13 @@ message GetFunPayLotsRequest {
 }
 
 message GetFunPayLotsResponse {
-  repeated string lots = 1;
+  repeated Lot lots = 1;
   int64 quantity = 2;
-  string lotsType = 3;
+}
+
+message Lot {
+  string name = 1;
+  string type = 2;
 }
 
 message DeleteAccountRequest {

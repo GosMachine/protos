@@ -249,6 +249,7 @@ const (
 	DropsCenter_GetAllGameNames_FullMethodName          = "/drops.DropsCenter/GetAllGameNames"
 	DropsCenter_DeleteAccount_FullMethodName            = "/drops.DropsCenter/DeleteAccount"
 	DropsCenter_MovePreOrderAccount_FullMethodName      = "/drops.DropsCenter/MovePreOrderAccount"
+	DropsCenter_SetEndTimeForAccount_FullMethodName     = "/drops.DropsCenter/SetEndTimeForAccount"
 	DropsCenter_GetFunPayLots_FullMethodName            = "/drops.DropsCenter/GetFunPayLots"
 	DropsCenter_GetFunPayAccounts_FullMethodName        = "/drops.DropsCenter/GetFunPayAccounts"
 	DropsCenter_UpdateFunPayLot_FullMethodName          = "/drops.DropsCenter/UpdateFunPayLot"
@@ -277,6 +278,7 @@ type DropsCenterClient interface {
 	GetAllGameNames(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllGameNamesResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MovePreOrderAccount(ctx context.Context, in *MovePreOrderAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SetEndTimeForAccount(ctx context.Context, in *SetEndTimeForAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetFunPayLots(ctx context.Context, in *GetFunPayLotsRequest, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error)
 	GetFunPayAccounts(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetFunPayAccountsResponse, error)
 	UpdateFunPayLot(ctx context.Context, in *UpdateFunPayLotRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -426,6 +428,16 @@ func (c *dropsCenterClient) MovePreOrderAccount(ctx context.Context, in *MovePre
 	return out, nil
 }
 
+func (c *dropsCenterClient) SetEndTimeForAccount(ctx context.Context, in *SetEndTimeForAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, DropsCenter_SetEndTimeForAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *dropsCenterClient) GetFunPayLots(ctx context.Context, in *GetFunPayLotsRequest, opts ...grpc.CallOption) (*GetFunPayLotsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetFunPayLotsResponse)
@@ -533,6 +545,7 @@ type DropsCenterServer interface {
 	GetAllGameNames(context.Context, *emptypb.Empty) (*GetAllGameNamesResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*emptypb.Empty, error)
 	MovePreOrderAccount(context.Context, *MovePreOrderAccountRequest) (*emptypb.Empty, error)
+	SetEndTimeForAccount(context.Context, *SetEndTimeForAccountRequest) (*emptypb.Empty, error)
 	GetFunPayLots(context.Context, *GetFunPayLotsRequest) (*GetFunPayLotsResponse, error)
 	GetFunPayAccounts(context.Context, *emptypb.Empty) (*GetFunPayAccountsResponse, error)
 	UpdateFunPayLot(context.Context, *UpdateFunPayLotRequest) (*emptypb.Empty, error)
@@ -590,6 +603,9 @@ func (UnimplementedDropsCenterServer) DeleteAccount(context.Context, *DeleteAcco
 }
 func (UnimplementedDropsCenterServer) MovePreOrderAccount(context.Context, *MovePreOrderAccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MovePreOrderAccount not implemented")
+}
+func (UnimplementedDropsCenterServer) SetEndTimeForAccount(context.Context, *SetEndTimeForAccountRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetEndTimeForAccount not implemented")
 }
 func (UnimplementedDropsCenterServer) GetFunPayLots(context.Context, *GetFunPayLotsRequest) (*GetFunPayLotsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayLots not implemented")
@@ -873,6 +889,24 @@ func _DropsCenter_MovePreOrderAccount_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_SetEndTimeForAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetEndTimeForAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).SetEndTimeForAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_SetEndTimeForAccount_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).SetEndTimeForAccount(ctx, req.(*SetEndTimeForAccountRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _DropsCenter_GetFunPayLots_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetFunPayLotsRequest)
 	if err := dec(in); err != nil {
@@ -1093,6 +1127,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MovePreOrderAccount",
 			Handler:    _DropsCenter_MovePreOrderAccount_Handler,
+		},
+		{
+			MethodName: "SetEndTimeForAccount",
+			Handler:    _DropsCenter_SetEndTimeForAccount_Handler,
 		},
 		{
 			MethodName: "GetFunPayLots",

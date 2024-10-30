@@ -61,6 +61,8 @@ service DropsCenter {
   rpc DeleteAccount(DeleteAccountRequest) returns (google.protobuf.Empty);
   rpc MovePreOrderAccount(MovePreOrderAccountRequest)
       returns (google.protobuf.Empty);
+  rpc SetEndTimeForAccount(SetEndTimeForAccountRequest)
+      returns (google.protobuf.Empty);
   rpc GetFunPayLots(GetFunPayLotsRequest) returns (GetFunPayLotsResponse);
   rpc GetFunPayAccounts(google.protobuf.Empty) returns (GetFunPayAccountsResponse);
   rpc UpdateFunPayLot(UpdateFunPayLotRequest) returns (google.protobuf.Empty);
@@ -125,6 +127,8 @@ message DeleteAccountRequest {
 }
 
 message MovePreOrderAccountRequest { string username = 1; }
+
+message SetEndTimeForAccountRequest { string username = 1;}
 
 message GetAllGameNamesResponse { repeated string games = 1; }
 

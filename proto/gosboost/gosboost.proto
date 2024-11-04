@@ -27,6 +27,7 @@ message GetTokensForFollowRequest {
   int64 quantity = 2;
   string username = 3;
   bool follow = 4;
+  repeated string skipTokens = 5;
 }
 
 message GetTokensForFollowResponse { repeated string tokens = 1; }

@@ -70,6 +70,8 @@ message TwitchLiveViewersRequest {
   string username = 1;
   int64 quantity = 2;
   int64 minutes = 3;
+  bool statisticViewers = 4;
+  bool chatAuth =5;
 }
 
 message TwitchChattersRequest {

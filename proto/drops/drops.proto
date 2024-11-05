@@ -3,6 +3,7 @@ syntax = "proto3";
 package drops;
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "gosmach1ne.drops.v1;dropsv1";
 
@@ -225,6 +226,7 @@ message AccountWithData {
   string game = 3;
   int64 id = 4;
   bool isPreOrdered = 5;
+  google.protobuf.Timestamp endFarm = 6;
 }
 
 message AddAccountsRequest {

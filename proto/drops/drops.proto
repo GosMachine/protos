@@ -124,6 +124,7 @@ message GetFunPayLotsResponse {
 message Lot {
   string name = 1;
   string type = 2;
+  int64 farmTime = 3;
 }
 
 message DeleteAccountRequest {

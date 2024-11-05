@@ -134,7 +134,9 @@ message DeleteAccountRequest {
 
 message MovePreOrderAccountRequest { string username = 1; }
 
-message SetEndTimeForAccountRequest { string username = 1;}
+message SetEndTimeForAccountRequest { string username = 1;
+  int64 duration = 2;
+}
 
 message GetAllGameNamesResponse { repeated string games = 1; }
 

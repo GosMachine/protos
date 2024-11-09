@@ -85,6 +85,7 @@ message FunPayAccount {
   string name = 1;
   string goldenKey = 2;
   string proxy = 3;
+  string userAgent = 4;
 }
 
 message ConnectAccountsWithGameRequest {

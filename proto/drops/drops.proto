@@ -8,17 +8,17 @@ import "google/protobuf/timestamp.proto";
 option go_package = "gosmach1ne.drops.v1;dropsv1";
 
 service DropsViewers {
-  rpc StartWatchChannel(StartWatchChannelRequest) returns (google.protobuf.Empty);
-  rpc StopWatchChannel(StopWatchChannelRequest) returns (google.protobuf.Empty);
+  rpc StartWatch(StartWatchRequest) returns (google.protobuf.Empty);
+  rpc StopWatch(StopWatchRequest) returns (google.protobuf.Empty);
 }
 
-message StartWatchChannelRequest {
+message StartWatchRequest {
   string channel = 1;
-  repeated string tokens = 2;
+  string token = 2;
 }
 
-message StopWatchChannelRequest {
-  string channel = 1;
+message StopWatchRequest {
+  string token = 1;
 }
 
 service Drops {

@@ -20,16 +20,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DropsViewers_StartWatchChannel_FullMethodName = "/drops.DropsViewers/StartWatchChannel"
-	DropsViewers_StopWatchChannel_FullMethodName  = "/drops.DropsViewers/StopWatchChannel"
+	DropsViewers_StartWatch_FullMethodName = "/drops.DropsViewers/StartWatch"
+	DropsViewers_StopWatch_FullMethodName  = "/drops.DropsViewers/StopWatch"
 )
 
 // DropsViewersClient is the client API for DropsViewers service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DropsViewersClient interface {
-	StartWatchChannel(ctx context.Context, in *StartWatchChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	StopWatchChannel(ctx context.Context, in *StopWatchChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	StartWatch(ctx context.Context, in *StartWatchRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	StopWatch(ctx context.Context, in *StopWatchRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type dropsViewersClient struct {
@@ -40,20 +40,20 @@ func NewDropsViewersClient(cc grpc.ClientConnInterface) DropsViewersClient {
 	return &dropsViewersClient{cc}
 }
 
-func (c *dropsViewersClient) StartWatchChannel(ctx context.Context, in *StartWatchChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dropsViewersClient) StartWatch(ctx context.Context, in *StartWatchRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, DropsViewers_StartWatchChannel_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DropsViewers_StartWatch_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dropsViewersClient) StopWatchChannel(ctx context.Context, in *StopWatchChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *dropsViewersClient) StopWatch(ctx context.Context, in *StopWatchRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, DropsViewers_StopWatchChannel_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, DropsViewers_StopWatch_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,8 +64,8 @@ func (c *dropsViewersClient) StopWatchChannel(ctx context.Context, in *StopWatch
 // All implementations must embed UnimplementedDropsViewersServer
 // for forward compatibility.
 type DropsViewersServer interface {
-	StartWatchChannel(context.Context, *StartWatchChannelRequest) (*emptypb.Empty, error)
-	StopWatchChannel(context.Context, *StopWatchChannelRequest) (*emptypb.Empty, error)
+	StartWatch(context.Context, *StartWatchRequest) (*emptypb.Empty, error)
+	StopWatch(context.Context, *StopWatchRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsViewersServer()
 }
 
@@ -76,11 +76,11 @@ type DropsViewersServer interface {
 // pointer dereference when methods are called.
 type UnimplementedDropsViewersServer struct{}
 
-func (UnimplementedDropsViewersServer) StartWatchChannel(context.Context, *StartWatchChannelRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartWatchChannel not implemented")
+func (UnimplementedDropsViewersServer) StartWatch(context.Context, *StartWatchRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartWatch not implemented")
 }
-func (UnimplementedDropsViewersServer) StopWatchChannel(context.Context, *StopWatchChannelRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopWatchChannel not implemented")
+func (UnimplementedDropsViewersServer) StopWatch(context.Context, *StopWatchRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StopWatch not implemented")
 }
 func (UnimplementedDropsViewersServer) mustEmbedUnimplementedDropsViewersServer() {}
 func (UnimplementedDropsViewersServer) testEmbeddedByValue()                      {}
@@ -103,38 +103,38 @@ func RegisterDropsViewersServer(s grpc.ServiceRegistrar, srv DropsViewersServer)
 	s.RegisterService(&DropsViewers_ServiceDesc, srv)
 }
 
-func _DropsViewers_StartWatchChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StartWatchChannelRequest)
+func _DropsViewers_StartWatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StartWatchRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DropsViewersServer).StartWatchChannel(ctx, in)
+		return srv.(DropsViewersServer).StartWatch(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DropsViewers_StartWatchChannel_FullMethodName,
+		FullMethod: DropsViewers_StartWatch_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsViewersServer).StartWatchChannel(ctx, req.(*StartWatchChannelRequest))
+		return srv.(DropsViewersServer).StartWatch(ctx, req.(*StartWatchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _DropsViewers_StopWatchChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StopWatchChannelRequest)
+func _DropsViewers_StopWatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StopWatchRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DropsViewersServer).StopWatchChannel(ctx, in)
+		return srv.(DropsViewersServer).StopWatch(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DropsViewers_StopWatchChannel_FullMethodName,
+		FullMethod: DropsViewers_StopWatch_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DropsViewersServer).StopWatchChannel(ctx, req.(*StopWatchChannelRequest))
+		return srv.(DropsViewersServer).StopWatch(ctx, req.(*StopWatchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -147,12 +147,12 @@ var DropsViewers_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DropsViewersServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "StartWatchChannel",
-			Handler:    _DropsViewers_StartWatchChannel_Handler,
+			MethodName: "StartWatch",
+			Handler:    _DropsViewers_StartWatch_Handler,
 		},
 		{
-			MethodName: "StopWatchChannel",
-			Handler:    _DropsViewers_StopWatchChannel_Handler,
+			MethodName: "StopWatch",
+			Handler:    _DropsViewers_StopWatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

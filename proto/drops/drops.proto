@@ -7,6 +7,20 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "gosmach1ne.drops.v1;dropsv1";
 
+service DropsViewers {
+  rpc StartWatchChannel(StartWatchChannelRequest) returns (google.protobuf.Empty);
+  rpc StopWatchChannel(StopWatchChannelRequest) returns (google.protobuf.Empty);
+}
+
+message StartWatchChannelRequest {
+  string channel = 1;
+  repeated string tokens = 2;
+}
+
+message StopWatchChannelRequest {
+  string channel = 1;
+}
+
 service Drops {
   rpc GetActiveGamesInfo(google.protobuf.Empty)
       returns (GetActiveGamesInfoResponse);

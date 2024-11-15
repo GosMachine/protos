@@ -164,6 +164,7 @@ const (
 	Drops_UpdateAccountsInfo_FullMethodName      = "/drops.Drops/UpdateAccountsInfo"
 	Drops_UpdateFarmList_FullMethodName          = "/drops.Drops/UpdateFarmList"
 	Drops_ClearCollectedCampaigns_FullMethodName = "/drops.Drops/ClearCollectedCampaigns"
+	Drops_GetCollectedCampaigns_FullMethodName   = "/drops.Drops/GetCollectedCampaigns"
 )
 
 // DropsClient is the client API for Drops service.
@@ -174,6 +175,7 @@ type DropsClient interface {
 	UpdateAccountsInfo(ctx context.Context, in *UpdateDropsAccountsInfoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UpdateFarmList(ctx context.Context, in *UpdateFarmListRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ClearCollectedCampaigns(ctx context.Context, in *ClearCollectedCampaignsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetCollectedCampaigns(ctx context.Context, in *GetCollectedCampaignsRequest, opts ...grpc.CallOption) (*GetCollectedCampaignsResponse, error)
 }
 
 type dropsClient struct {
@@ -224,6 +226,16 @@ func (c *dropsClient) ClearCollectedCampaigns(ctx context.Context, in *ClearColl
 	return out, nil
 }
 
+func (c *dropsClient) GetCollectedCampaigns(ctx context.Context, in *GetCollectedCampaignsRequest, opts ...grpc.CallOption) (*GetCollectedCampaignsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCollectedCampaignsResponse)
+	err := c.cc.Invoke(ctx, Drops_GetCollectedCampaigns_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsServer is the server API for Drops service.
 // All implementations must embed UnimplementedDropsServer
 // for forward compatibility.
@@ -232,6 +244,7 @@ type DropsServer interface {
 	UpdateAccountsInfo(context.Context, *UpdateDropsAccountsInfoRequest) (*emptypb.Empty, error)
 	UpdateFarmList(context.Context, *UpdateFarmListRequest) (*emptypb.Empty, error)
 	ClearCollectedCampaigns(context.Context, *ClearCollectedCampaignsRequest) (*emptypb.Empty, error)
+	GetCollectedCampaigns(context.Context, *GetCollectedCampaignsRequest) (*GetCollectedCampaignsResponse, error)
 	mustEmbedUnimplementedDropsServer()
 }
 
@@ -253,6 +266,9 @@ func (UnimplementedDropsServer) UpdateFarmList(context.Context, *UpdateFarmListR
 }
 func (UnimplementedDropsServer) ClearCollectedCampaigns(context.Context, *ClearCollectedCampaignsRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ClearCollectedCampaigns not implemented")
+}
+func (UnimplementedDropsServer) GetCollectedCampaigns(context.Context, *GetCollectedCampaignsRequest) (*GetCollectedCampaignsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCollectedCampaigns not implemented")
 }
 func (UnimplementedDropsServer) mustEmbedUnimplementedDropsServer() {}
 func (UnimplementedDropsServer) testEmbeddedByValue()               {}
@@ -347,6 +363,24 @@ func _Drops_ClearCollectedCampaigns_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Drops_GetCollectedCampaigns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCollectedCampaignsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsServer).GetCollectedCampaigns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Drops_GetCollectedCampaigns_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsServer).GetCollectedCampaigns(ctx, req.(*GetCollectedCampaignsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Drops_ServiceDesc is the grpc.ServiceDesc for Drops service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -369,6 +403,10 @@ var Drops_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ClearCollectedCampaigns",
 			Handler:    _Drops_ClearCollectedCampaigns_Handler,
+		},
+		{
+			MethodName: "GetCollectedCampaigns",
+			Handler:    _Drops_GetCollectedCampaigns_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

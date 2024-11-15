@@ -28,6 +28,7 @@ service Drops {
       returns (google.protobuf.Empty);
   rpc UpdateFarmList(UpdateFarmListRequest) returns (google.protobuf.Empty);
   rpc ClearCollectedCampaigns(ClearCollectedCampaignsRequest) returns (google.protobuf.Empty);
+  rpc GetCollectedCampaigns(GetCollectedCampaignsRequest) returns (GetCollectedCampaignsResponse);
 }
 
 message GetActiveGamesInfoResponse { repeated GameInfo games = 1; }
@@ -55,7 +56,16 @@ message FarmListGame {
   bool farm = 5;
 }
 
+message GetCollectedCampaignsResponse {
+  repeated string campaigns = 1;
+}
+
 message ClearCollectedCampaignsRequest {
+  string gameSlug = 1;
+  string campaignId = 2;
+}
+
+message GetCollectedCampaignsRequest {
   string gameSlug = 1;
 }
 

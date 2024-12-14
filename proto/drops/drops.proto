@@ -77,7 +77,6 @@ service DropsCenter {
   rpc AddAccounts(AddAccountsRequest) returns (google.protobuf.Empty);
   rpc GetGames(GetGamesRequest) returns (GetGamesResponse);
   rpc GetAccounts(GetAccountsRequest) returns (GetAccountsResponse);
-  rpc UpdateGameRanges(UpdateGameRangesRequest) returns (google.protobuf.Empty);
   rpc UpdateGameChannels(UpdateGameChannelsRequest)
       returns (google.protobuf.Empty);
   rpc UpdateGameFarm(UpdateGameFarmRequest)
@@ -88,28 +87,52 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc SetEndTimeForAccount(SetEndTimeForAccountRequest)
       returns (google.protobuf.Empty);
-  rpc GetFunPayLots(GetFunPayLotsRequest) returns (GetFunPayLotsResponse);
-  rpc GetFunPayAccounts(google.protobuf.Empty) returns (GetFunPayAccountsResponse);
-  rpc UpdateFunPayLot(UpdateFunPayLotRequest) returns (google.protobuf.Empty);
-  rpc DeleteFunPayLot(DeleteFunPayLotRequest) returns (google.protobuf.Empty);
-  rpc AddFunPayLot(AddFunPayLotRequest) returns (google.protobuf.Empty);
   rpc DeletePreOrderedAccounts(DeletePreOrderedAccountsRequest)
       returns (google.protobuf.Empty);
   rpc UpdateAccountsInfo(UpdateAccountsInfoRequest)
       returns (google.protobuf.Empty);
   rpc SaveAccountsInfo(SaveAccountsInfoRequest) returns (google.protobuf.Empty);
   rpc GetTokensForGame(GetTokensForGameRequest) returns (GetTokensForGameResponse);
+
+  rpc GetMarketplaceOffers(GetMarketplaceOffersRequest) returns (GetMarketplaceOffersResponse);
+  rpc UpdateMarketplaceOffer(UpdateMarketplaceOfferRequest) returns (google.protobuf.Empty);
+  rpc DeleteMarketplaceOffer(DeleteMarketplaceOfferRequest) returns (google.protobuf.Empty);
+  rpc CreateMarketplaceOffer(CreateMarketplaceOfferRequest) returns (google.protobuf.Empty);
 }
 
-message GetFunPayAccountsResponse {
-  repeated FunPayAccount funpayAccounts = 1;
+message UpdateMarketplaceOfferRequest {
+  string oldName = 1;
+  MarketPlaceOffer offer = 2;
 }
 
-message FunPayAccount {
+message DeleteMarketplaceOfferRequest { string name = 1; }
+
+message UpdateGameFarmRequest {
+  string game = 1;
+  bool farm = 2;
+}
+
+message CreateMarketplaceOfferRequest {
+  MarketPlaceOffer offer = 1;
+}
+
+message GetMarketplaceOffersRequest {
+  string search = 1;
+  string offersType = 2;
+  int64 limit = 3;
+  int64 page = 4;
+}
+
+message GetMarketplaceOffersResponse {
+  repeated MarketPlaceOffer offers = 1;
+  int64 quantity = 2;
+}
+
+message MarketPlaceOffer {
   string name = 1;
-  string goldenKey = 2;
-  string proxy = 3;
-  string userAgent = 4;
+  string type = 2;
+  int64 farmTime = 3;
+  string group = 4;
 }
 
 message ConnectAccountsWithGameRequest {
@@ -126,33 +149,7 @@ message SaveAccountsInfoRequest { repeated AccountWithDrops accounts = 1; }
 
 message UpdateAccountsInfoRequest { string game = 1; }
 
-message AddFunPayLotRequest {
-  string name = 1;
-  string lotType = 2;
-  string accountName = 3;
-}
-
 message DeletePreOrderedAccountsRequest { string game = 1; }
-
-message GetFunPayLotsRequest {
-  string search = 1;
-  string lotsType = 2;
-  int64 limit = 3;
-  int64 page = 4;
-  string accountName = 5;
-}
-
-message GetFunPayLotsResponse {
-  repeated Lot lots = 1;
-  int64 quantity = 2;
-}
-
-message Lot {
-  string name = 1;
-  string type = 2;
-  int64 farmTime = 3;
-}
-
 message DeleteAccountRequest {
   string username = 1;
   bool dontDeletePreOrdered = 2;
@@ -166,28 +163,10 @@ message SetEndTimeForAccountRequest { string username = 1;
 
 message GetAllGameNamesResponse { repeated string games = 1; }
 
-message UpdateGameRangesRequest {
-  string game = 1;
-  string ranges = 2;
-}
-
 message UpdateGameChannelsRequest {
   string game = 1;
   repeated string channels = 2;
 }
-
-message UpdateFunPayLotRequest {
-  string oldName = 1;
-  string newName = 2;
-}
-
-message DeleteFunPayLotRequest { string name = 1; }
-
-message UpdateGameFarmRequest {
-  string game = 1;
-  bool farm = 2;
-}
-
 message GetGamesRequest {
   int64 page = 1;
   int64 limit = 2;
@@ -201,9 +180,8 @@ message GetGamesResponse {
 message Game {
   string name = 1;
   string slug = 2;
-  string ranges = 3;
-  repeated string channels = 4;
-  bool farm = 5;
+  repeated string channels = 3;
+  bool farm = 4;
 }
 
 message GetAccountsRequest {

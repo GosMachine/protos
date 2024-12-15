@@ -52,8 +52,7 @@ message FarmListGame {
   string slug = 1;
   string name = 2;
   repeated string channels = 3;
-  bool watchChannelsAfterDropsClaiming = 4;
-  bool farm = 5;
+  bool farm = 4;
 }
 
 message GetCollectedCampaignsResponse {
@@ -113,7 +112,7 @@ message UpdateGameFarmRequest {
 }
 
 message CreateMarketplaceOfferRequest {
-  MarketPlaceOffer offer = 1;
+  string offerType = 1;
 }
 
 message GetMarketplaceOffersRequest {

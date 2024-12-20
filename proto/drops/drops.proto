@@ -100,11 +100,10 @@ service DropsCenter {
 }
 
 message UpdateMarketplaceOfferRequest {
-  string oldName = 1;
-  MarketPlaceOffer offer = 2;
+  MarketPlaceOffer offer = 1;
 }
 
-message DeleteMarketplaceOfferRequest { string name = 1; }
+message DeleteMarketplaceOfferRequest { int64 ID = 1; }
 
 message UpdateGameFarmRequest {
   string game = 1;

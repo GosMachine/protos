@@ -130,8 +130,8 @@ message MarketPlaceOffer {
   string name = 1;
   string type = 2;
   int64 farmTime = 3;
-  int64 groupID = 4;
-  string groupName = 5;
+  string groupName = 4;
+  int64 ID = 5;
 }
 
 message ConnectAccountsWithGameRequest {

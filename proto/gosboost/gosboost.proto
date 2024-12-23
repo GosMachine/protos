@@ -55,6 +55,7 @@ message TwitchFollowChannelRequest {
   string username = 1;
   int64 quantity = 2;
   bool follow = 3;
+  bool extra = 4;
 }
 
 message TwitchClipViewersRequest {

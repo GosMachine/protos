@@ -97,6 +97,17 @@ service DropsCenter {
   rpc UpdateMarketplaceOffer(UpdateMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc DeleteMarketplaceOffer(DeleteMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc CreateMarketplaceOffer(CreateMarketplaceOfferRequest) returns (google.protobuf.Empty);
+  rpc GetFunPayOfferAccounts(GetFunPayOfferAccountsRequest) returns (GetFunPayOfferAccountsResponse);
+}
+
+message GetFunPayOfferAccountsRequest {
+  string offer = 1;
+  repeated string existingAccounts = 2;
+  string accountName = 3;
+}
+
+message GetFunPayOfferAccountsResponse {
+  repeated string accounts = 1;
 }
 
 message UpdateMarketplaceOfferRequest {

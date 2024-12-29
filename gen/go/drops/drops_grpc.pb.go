@@ -435,6 +435,7 @@ const (
 	DropsCenter_UpdateMarketplaceOffer_FullMethodName   = "/drops.DropsCenter/UpdateMarketplaceOffer"
 	DropsCenter_DeleteMarketplaceOffer_FullMethodName   = "/drops.DropsCenter/DeleteMarketplaceOffer"
 	DropsCenter_CreateMarketplaceOffer_FullMethodName   = "/drops.DropsCenter/CreateMarketplaceOffer"
+	DropsCenter_GetFunPayOfferAccounts_FullMethodName   = "/drops.DropsCenter/GetFunPayOfferAccounts"
 )
 
 // DropsCenterClient is the client API for DropsCenter service.
@@ -462,6 +463,7 @@ type DropsCenterClient interface {
 	UpdateMarketplaceOffer(ctx context.Context, in *UpdateMarketplaceOfferRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteMarketplaceOffer(ctx context.Context, in *DeleteMarketplaceOfferRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CreateMarketplaceOffer(ctx context.Context, in *CreateMarketplaceOfferRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetFunPayOfferAccounts(ctx context.Context, in *GetFunPayOfferAccountsRequest, opts ...grpc.CallOption) (*GetFunPayOfferAccountsResponse, error)
 }
 
 type dropsCenterClient struct {
@@ -682,6 +684,16 @@ func (c *dropsCenterClient) CreateMarketplaceOffer(ctx context.Context, in *Crea
 	return out, nil
 }
 
+func (c *dropsCenterClient) GetFunPayOfferAccounts(ctx context.Context, in *GetFunPayOfferAccountsRequest, opts ...grpc.CallOption) (*GetFunPayOfferAccountsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetFunPayOfferAccountsResponse)
+	err := c.cc.Invoke(ctx, DropsCenter_GetFunPayOfferAccounts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DropsCenterServer is the server API for DropsCenter service.
 // All implementations must embed UnimplementedDropsCenterServer
 // for forward compatibility.
@@ -707,6 +719,7 @@ type DropsCenterServer interface {
 	UpdateMarketplaceOffer(context.Context, *UpdateMarketplaceOfferRequest) (*emptypb.Empty, error)
 	DeleteMarketplaceOffer(context.Context, *DeleteMarketplaceOfferRequest) (*emptypb.Empty, error)
 	CreateMarketplaceOffer(context.Context, *CreateMarketplaceOfferRequest) (*emptypb.Empty, error)
+	GetFunPayOfferAccounts(context.Context, *GetFunPayOfferAccountsRequest) (*GetFunPayOfferAccountsResponse, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
 
@@ -779,6 +792,9 @@ func (UnimplementedDropsCenterServer) DeleteMarketplaceOffer(context.Context, *D
 }
 func (UnimplementedDropsCenterServer) CreateMarketplaceOffer(context.Context, *CreateMarketplaceOfferRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMarketplaceOffer not implemented")
+}
+func (UnimplementedDropsCenterServer) GetFunPayOfferAccounts(context.Context, *GetFunPayOfferAccountsRequest) (*GetFunPayOfferAccountsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayOfferAccounts not implemented")
 }
 func (UnimplementedDropsCenterServer) mustEmbedUnimplementedDropsCenterServer() {}
 func (UnimplementedDropsCenterServer) testEmbeddedByValue()                     {}
@@ -1179,6 +1195,24 @@ func _DropsCenter_CreateMarketplaceOffer_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_GetFunPayOfferAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFunPayOfferAccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).GetFunPayOfferAccounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_GetFunPayOfferAccounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).GetFunPayOfferAccounts(ctx, req.(*GetFunPayOfferAccountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DropsCenter_ServiceDesc is the grpc.ServiceDesc for DropsCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1269,6 +1303,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateMarketplaceOffer",
 			Handler:    _DropsCenter_CreateMarketplaceOffer_Handler,
+		},
+		{
+			MethodName: "GetFunPayOfferAccounts",
+			Handler:    _DropsCenter_GetFunPayOfferAccounts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

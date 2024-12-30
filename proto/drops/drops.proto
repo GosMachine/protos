@@ -103,7 +103,7 @@ service DropsCenter {
 message GetFunPayOfferAccountsRequest {
   string offer = 1;
   repeated string existingAccounts = 2;
-  string accountName = 3;
+  int64 totalNeedAccounts = 3;
 }
 
 message GetFunPayOfferAccountsResponse {

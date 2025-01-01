@@ -17,19 +17,19 @@ release: commit tag push
 
 auth:
 	@protoc -I proto proto/auth/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
-	$(MAKE) release
+	@"$(MAKE)" release
 
 product:
 	@protoc -I proto proto/product/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
-	$(MAKE) release
+	@"$(MAKE)" release
 
 drops:
 	@protoc -I proto proto/drops/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
-	$(MAKE) release
+	@"$(MAKE)" release
 
 dropscenter:
 	@protoc -I proto proto/drops/*.proto -I proto proto/dropscenter/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
-	$(MAKE) release
+	@"$(MAKE)" release
 
 gosboost:
 	@protoc -I proto proto/gosboost/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
@@ -37,4 +37,4 @@ gosboost:
 
 payments:
 	@protoc -I proto proto/payments/*.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
-	$(MAKE) release
+	@"$(MAKE)" release

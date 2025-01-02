@@ -105,6 +105,7 @@ message CreateMarketplaceOfferRequest {
   int64 farmTime = 2;
   string group = 3;
   string name = 4;
+  string game = 5;
 }
 
 message GetFunPayOfferAccountsRequest {

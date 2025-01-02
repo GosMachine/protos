@@ -38,7 +38,7 @@ message Account {
   string Username = 1;
   string Oauth = 2;
   string Password = 3;
-  string Chat = 4;
+  bool Chat = 4;
 }
 
 service GosBoost {

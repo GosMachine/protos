@@ -48,7 +48,13 @@ service GosBoost {
   rpc TwitchVODViewers(TwitchVODViewersRequest) returns (google.protobuf.Empty);
   rpc TwitchLiveViewers(TwitchLiveViewersRequest)
       returns (google.protobuf.Empty);
+  rpc TwitchStopLiveViewers(TwitchStopLiveViewersRequest)
+      returns (google.protobuf.Empty);
   rpc TwitchChatters(TwitchChattersRequest) returns (google.protobuf.Empty);
+}
+
+message TwitchStopLiveViewersRequest {
+  string username = 1;
 }
 
 message TwitchFollowChannelRequest {

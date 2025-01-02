@@ -100,6 +100,13 @@ service DropsCenter {
   rpc GetFunPayOfferAccounts(GetFunPayOfferAccountsRequest) returns (GetFunPayOfferAccountsResponse);
 }
 
+message CreateMarketplaceOfferRequest {
+  string offerType = 1;
+  int64 farmTime = 2;
+  string group = 3;
+  string name = 4;
+}
+
 message GetFunPayOfferAccountsRequest {
   string offer = 1;
   repeated string existingAccounts = 2;
@@ -119,10 +126,6 @@ message DeleteMarketplaceOfferRequest { int64 ID = 1; }
 message UpdateGameFarmRequest {
   string game = 1;
   bool farm = 2;
-}
-
-message CreateMarketplaceOfferRequest {
-  string offerType = 1;
 }
 
 message GetMarketplaceOffersRequest {

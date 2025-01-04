@@ -140,6 +140,7 @@ message GetMarketplaceOffersRequest {
   string offersType = 2;
   int64 limit = 3;
   int64 page = 4;
+  string offerID = 5;
 }
 
 message GetMarketplaceOffersResponse {

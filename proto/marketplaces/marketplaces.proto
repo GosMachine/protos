@@ -18,21 +18,21 @@ service Notifications {
 
 message NewMessagesRequest {
   repeated Message messages = 1;
+  string marketplace = 2;
 }
 
 message Message {
   string buyerName = 1;
   string text = 2;
-  string marketplace = 3;
 }
 
 message NewOrdersRequest {
   repeated Order orders = 1;
+  string marketplace = 2;
 }
 
 message Order {
   string buyerName = 1;
   string productName = 2;
-  string marketplace = 3;
-  string price = 4;
+  string price = 3;
 }

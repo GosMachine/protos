@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package marketplaces;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "gosmach1ne.marketplaces.v1;marketplacesv1";
+
+
+service Payments {
+  rpc NewOrders(NewOrdersRequest) returns (google.protobuf.Empty);
+}
+
+service Notifications {
+  rpc NewOrders(NewOrdersRequest) returns (google.protobuf.Empty);
+  rpc NewMessages(NewMessagesRequest) returns (google.protobuf.Empty);
+}
+
+message NewMessagesRequest {
+  repeated Message messages = 1;
+}
+
+message Message {
+  string buyerName = 1;
+  string text = 2;
+  string marketplace = 3;
+}
+
+message NewOrdersRequest {
+  repeated Order orders = 1;
+}
+
+message Order {
+  string buyerName = 1;
+  string productName = 2;
+  string marketplace = 3;
+  string price = 4;
+}

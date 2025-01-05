@@ -67,6 +67,7 @@ service GosBoost {
 
 message TwitchRaidRequest {
   string raidID = 1;
+  int64 quantity = 2;
 }
 
 message TwitchStopLiveViewersRequest {

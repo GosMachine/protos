@@ -242,6 +242,7 @@ const (
 	GosBoost_TwitchLiveViewers_FullMethodName     = "/gosboost.GosBoost/TwitchLiveViewers"
 	GosBoost_TwitchStopLiveViewers_FullMethodName = "/gosboost.GosBoost/TwitchStopLiveViewers"
 	GosBoost_TwitchChatters_FullMethodName        = "/gosboost.GosBoost/TwitchChatters"
+	GosBoost_TwitchRaid_FullMethodName            = "/gosboost.GosBoost/TwitchRaid"
 )
 
 // GosBoostClient is the client API for GosBoost service.
@@ -254,6 +255,7 @@ type GosBoostClient interface {
 	TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchStopLiveViewers(ctx context.Context, in *TwitchStopLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchChatters(ctx context.Context, in *TwitchChattersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	TwitchRaid(ctx context.Context, in *TwitchRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gosBoostClient struct {
@@ -324,6 +326,16 @@ func (c *gosBoostClient) TwitchChatters(ctx context.Context, in *TwitchChattersR
 	return out, nil
 }
 
+func (c *gosBoostClient) TwitchRaid(ctx context.Context, in *TwitchRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GosBoost_TwitchRaid_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GosBoostServer is the server API for GosBoost service.
 // All implementations must embed UnimplementedGosBoostServer
 // for forward compatibility.
@@ -334,6 +346,7 @@ type GosBoostServer interface {
 	TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*emptypb.Empty, error)
 	TwitchStopLiveViewers(context.Context, *TwitchStopLiveViewersRequest) (*emptypb.Empty, error)
 	TwitchChatters(context.Context, *TwitchChattersRequest) (*emptypb.Empty, error)
+	TwitchRaid(context.Context, *TwitchRaidRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGosBoostServer()
 }
 
@@ -361,6 +374,9 @@ func (UnimplementedGosBoostServer) TwitchStopLiveViewers(context.Context, *Twitc
 }
 func (UnimplementedGosBoostServer) TwitchChatters(context.Context, *TwitchChattersRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchChatters not implemented")
+}
+func (UnimplementedGosBoostServer) TwitchRaid(context.Context, *TwitchRaidRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TwitchRaid not implemented")
 }
 func (UnimplementedGosBoostServer) mustEmbedUnimplementedGosBoostServer() {}
 func (UnimplementedGosBoostServer) testEmbeddedByValue()                  {}
@@ -491,6 +507,24 @@ func _GosBoost_TwitchChatters_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GosBoost_TwitchRaid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TwitchRaidRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostServer).TwitchRaid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoost_TwitchRaid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostServer).TwitchRaid(ctx, req.(*TwitchRaidRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GosBoost_ServiceDesc is the grpc.ServiceDesc for GosBoost service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -521,6 +555,10 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TwitchChatters",
 			Handler:    _GosBoost_TwitchChatters_Handler,
+		},
+		{
+			MethodName: "TwitchRaid",
+			Handler:    _GosBoost_TwitchRaid_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

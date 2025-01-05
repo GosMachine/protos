@@ -62,6 +62,11 @@ service GosBoost {
   rpc TwitchStopLiveViewers(TwitchStopLiveViewersRequest)
       returns (google.protobuf.Empty);
   rpc TwitchChatters(TwitchChattersRequest) returns (google.protobuf.Empty);
+  rpc TwitchRaid(TwitchRaidRequest) returns (google.protobuf.Empty);
+}
+
+message TwitchRaidRequest {
+  string raidID = 1;
 }
 
 message TwitchStopLiveViewersRequest {

@@ -436,6 +436,7 @@ const (
 	DropsCenter_DeleteMarketplaceOffer_FullMethodName   = "/drops.DropsCenter/DeleteMarketplaceOffer"
 	DropsCenter_CreateMarketplaceOffer_FullMethodName   = "/drops.DropsCenter/CreateMarketplaceOffer"
 	DropsCenter_GetFunPayOfferAccounts_FullMethodName   = "/drops.DropsCenter/GetFunPayOfferAccounts"
+	DropsCenter_EditMarketplaceOfferName_FullMethodName = "/drops.DropsCenter/EditMarketplaceOfferName"
 	DropsCenter_SaveFunPayOfferID_FullMethodName        = "/drops.DropsCenter/SaveFunPayOfferID"
 )
 
@@ -465,6 +466,7 @@ type DropsCenterClient interface {
 	DeleteMarketplaceOffer(ctx context.Context, in *DeleteMarketplaceOfferRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CreateMarketplaceOffer(ctx context.Context, in *CreateMarketplaceOfferRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetFunPayOfferAccounts(ctx context.Context, in *GetFunPayOfferAccountsRequest, opts ...grpc.CallOption) (*GetFunPayOfferAccountsResponse, error)
+	EditMarketplaceOfferName(ctx context.Context, in *EditMarketplaceOfferNameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	SaveFunPayOfferID(ctx context.Context, in *SaveFunPayOfferIDRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
@@ -696,6 +698,16 @@ func (c *dropsCenterClient) GetFunPayOfferAccounts(ctx context.Context, in *GetF
 	return out, nil
 }
 
+func (c *dropsCenterClient) EditMarketplaceOfferName(ctx context.Context, in *EditMarketplaceOfferNameRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, DropsCenter_EditMarketplaceOfferName_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *dropsCenterClient) SaveFunPayOfferID(ctx context.Context, in *SaveFunPayOfferIDRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
@@ -732,6 +744,7 @@ type DropsCenterServer interface {
 	DeleteMarketplaceOffer(context.Context, *DeleteMarketplaceOfferRequest) (*emptypb.Empty, error)
 	CreateMarketplaceOffer(context.Context, *CreateMarketplaceOfferRequest) (*emptypb.Empty, error)
 	GetFunPayOfferAccounts(context.Context, *GetFunPayOfferAccountsRequest) (*GetFunPayOfferAccountsResponse, error)
+	EditMarketplaceOfferName(context.Context, *EditMarketplaceOfferNameRequest) (*emptypb.Empty, error)
 	SaveFunPayOfferID(context.Context, *SaveFunPayOfferIDRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedDropsCenterServer()
 }
@@ -808,6 +821,9 @@ func (UnimplementedDropsCenterServer) CreateMarketplaceOffer(context.Context, *C
 }
 func (UnimplementedDropsCenterServer) GetFunPayOfferAccounts(context.Context, *GetFunPayOfferAccountsRequest) (*GetFunPayOfferAccountsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFunPayOfferAccounts not implemented")
+}
+func (UnimplementedDropsCenterServer) EditMarketplaceOfferName(context.Context, *EditMarketplaceOfferNameRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditMarketplaceOfferName not implemented")
 }
 func (UnimplementedDropsCenterServer) SaveFunPayOfferID(context.Context, *SaveFunPayOfferIDRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SaveFunPayOfferID not implemented")
@@ -1229,6 +1245,24 @@ func _DropsCenter_GetFunPayOfferAccounts_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_EditMarketplaceOfferName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditMarketplaceOfferNameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).EditMarketplaceOfferName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_EditMarketplaceOfferName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).EditMarketplaceOfferName(ctx, req.(*EditMarketplaceOfferNameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _DropsCenter_SaveFunPayOfferID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SaveFunPayOfferIDRequest)
 	if err := dec(in); err != nil {
@@ -1341,6 +1375,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFunPayOfferAccounts",
 			Handler:    _DropsCenter_GetFunPayOfferAccounts_Handler,
+		},
+		{
+			MethodName: "EditMarketplaceOfferName",
+			Handler:    _DropsCenter_EditMarketplaceOfferName_Handler,
 		},
 		{
 			MethodName: "SaveFunPayOfferID",

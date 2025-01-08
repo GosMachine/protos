@@ -103,7 +103,8 @@ service DropsCenter {
 }
 
 message EditMarketplaceOfferNameRequest {
-  string name = 1;
+  string oldTitle = 1;
+  string newTitle = 2;
 }
 
 message SaveFunPayOfferIDRequest {

@@ -111,6 +111,7 @@ message SaveFunPayOfferIDRequest {
   string title = 1;
   string offerID = 2;
   string nodeID = 3;
+  string funPayAccountName = 4;
 }
 
 message CreateMarketplaceOfferRequest {

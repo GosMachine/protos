@@ -160,8 +160,13 @@ message MarketPlaceOffer {
   int64 farmTime = 3;
   string groupName = 4;
   int64 ID = 5;
-  string funPayOfferID = 6;
+  repeated FunPayOfferID FunPayOfferIDs = 6;
   string funPayNodeID = 7;
+}
+
+message FunPayOfferID {
+  string ID = 1;
+  string accountName = 2;
 }
 
 message ConnectAccountsWithGameRequest {

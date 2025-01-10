@@ -94,7 +94,6 @@ service DropsCenter {
   rpc GetTokensForGame(GetTokensForGameRequest) returns (GetTokensForGameResponse);
 
   rpc GetMarketplaceOffers(GetMarketplaceOffersRequest) returns (GetMarketplaceOffersResponse);
-  rpc UpdateMarketplaceOffer(UpdateMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc DeleteMarketplaceOffer(DeleteMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc CreateMarketplaceOffer(CreateMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc GetFunPayOfferAccounts(GetFunPayOfferAccountsRequest) returns (GetFunPayOfferAccountsResponse);

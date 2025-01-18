@@ -125,6 +125,7 @@ message GetFunPayOfferAccountsRequest {
   string offer = 1;
   repeated string existingAccounts = 2;
   int64 totalNeedAccounts = 3;
+  string funPayName = 4;
 }
 
 message GetFunPayOfferAccountsResponse {

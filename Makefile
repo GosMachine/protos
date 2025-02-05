@@ -2,6 +2,7 @@ VERSION=$(shell git describe --tags --abbrev=0)
 NEW_VERSION=$(shell echo $(VERSION) | awk -F. '{$$NF = $$NF + 1;} 1' OFS=.)
 
 COMMIT_MSG="optimized"
+
 commit:
 	git add .
 	git commit -m "$(COMMIT_MSG)"

@@ -174,7 +174,6 @@ message ConnectAccountsWithGameRequest {
   string game = 1;
   string group = 2;
   int64 accountsQuantity = 3;
-  
 }
 
 message AccountWithDrops {

@@ -10,7 +10,7 @@ commit:
 tag:
 	git tag $(NEW_VERSION)
 
-push:
+push: 
 	git push && git push --tags
 
 release: commit tag push

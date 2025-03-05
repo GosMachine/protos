@@ -103,6 +103,7 @@ service DropsCenter {
 
 message GetAccountsForSaleRequest {
   string groupID = 1;
+  int64 quantity = 2;
 }
 
 message GetAccountsForSaleResponse {

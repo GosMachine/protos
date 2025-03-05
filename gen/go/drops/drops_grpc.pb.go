@@ -431,6 +431,7 @@ const (
 	DropsCenter_UpdateAccountsInfo_FullMethodName       = "/drops.DropsCenter/UpdateAccountsInfo"
 	DropsCenter_SaveAccountsInfo_FullMethodName         = "/drops.DropsCenter/SaveAccountsInfo"
 	DropsCenter_GetTokensForGame_FullMethodName         = "/drops.DropsCenter/GetTokensForGame"
+	DropsCenter_GetAccountsForSale_FullMethodName       = "/drops.DropsCenter/GetAccountsForSale"
 	DropsCenter_GetMarketplaceOffers_FullMethodName     = "/drops.DropsCenter/GetMarketplaceOffers"
 	DropsCenter_DeleteMarketplaceOffer_FullMethodName   = "/drops.DropsCenter/DeleteMarketplaceOffer"
 	DropsCenter_CreateMarketplaceOffer_FullMethodName   = "/drops.DropsCenter/CreateMarketplaceOffer"
@@ -460,6 +461,7 @@ type DropsCenterClient interface {
 	UpdateAccountsInfo(ctx context.Context, in *UpdateAccountsInfoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	SaveAccountsInfo(ctx context.Context, in *SaveAccountsInfoRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetTokensForGame(ctx context.Context, in *GetTokensForGameRequest, opts ...grpc.CallOption) (*GetTokensForGameResponse, error)
+	GetAccountsForSale(ctx context.Context, in *GetAccountsForSaleRequest, opts ...grpc.CallOption) (*GetAccountsForSaleResponse, error)
 	GetMarketplaceOffers(ctx context.Context, in *GetMarketplaceOffersRequest, opts ...grpc.CallOption) (*GetMarketplaceOffersResponse, error)
 	DeleteMarketplaceOffer(ctx context.Context, in *DeleteMarketplaceOfferRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CreateMarketplaceOffer(ctx context.Context, in *CreateMarketplaceOfferRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -646,6 +648,16 @@ func (c *dropsCenterClient) GetTokensForGame(ctx context.Context, in *GetTokensF
 	return out, nil
 }
 
+func (c *dropsCenterClient) GetAccountsForSale(ctx context.Context, in *GetAccountsForSaleRequest, opts ...grpc.CallOption) (*GetAccountsForSaleResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetAccountsForSaleResponse)
+	err := c.cc.Invoke(ctx, DropsCenter_GetAccountsForSale_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *dropsCenterClient) GetMarketplaceOffers(ctx context.Context, in *GetMarketplaceOffersRequest, opts ...grpc.CallOption) (*GetMarketplaceOffersResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetMarketplaceOffersResponse)
@@ -727,6 +739,7 @@ type DropsCenterServer interface {
 	UpdateAccountsInfo(context.Context, *UpdateAccountsInfoRequest) (*emptypb.Empty, error)
 	SaveAccountsInfo(context.Context, *SaveAccountsInfoRequest) (*emptypb.Empty, error)
 	GetTokensForGame(context.Context, *GetTokensForGameRequest) (*GetTokensForGameResponse, error)
+	GetAccountsForSale(context.Context, *GetAccountsForSaleRequest) (*GetAccountsForSaleResponse, error)
 	GetMarketplaceOffers(context.Context, *GetMarketplaceOffersRequest) (*GetMarketplaceOffersResponse, error)
 	DeleteMarketplaceOffer(context.Context, *DeleteMarketplaceOfferRequest) (*emptypb.Empty, error)
 	CreateMarketplaceOffer(context.Context, *CreateMarketplaceOfferRequest) (*emptypb.Empty, error)
@@ -793,6 +806,9 @@ func (UnimplementedDropsCenterServer) SaveAccountsInfo(context.Context, *SaveAcc
 }
 func (UnimplementedDropsCenterServer) GetTokensForGame(context.Context, *GetTokensForGameRequest) (*GetTokensForGameResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTokensForGame not implemented")
+}
+func (UnimplementedDropsCenterServer) GetAccountsForSale(context.Context, *GetAccountsForSaleRequest) (*GetAccountsForSaleResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountsForSale not implemented")
 }
 func (UnimplementedDropsCenterServer) GetMarketplaceOffers(context.Context, *GetMarketplaceOffersRequest) (*GetMarketplaceOffersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMarketplaceOffers not implemented")
@@ -1139,6 +1155,24 @@ func _DropsCenter_GetTokensForGame_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DropsCenter_GetAccountsForSale_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountsForSaleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DropsCenterServer).GetAccountsForSale(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DropsCenter_GetAccountsForSale_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DropsCenterServer).GetAccountsForSale(ctx, req.(*GetAccountsForSaleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _DropsCenter_GetMarketplaceOffers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetMarketplaceOffersRequest)
 	if err := dec(in); err != nil {
@@ -1321,6 +1355,10 @@ var DropsCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetTokensForGame",
 			Handler:    _DropsCenter_GetTokensForGame_Handler,
+		},
+		{
+			MethodName: "GetAccountsForSale",
+			Handler:    _DropsCenter_GetAccountsForSale_Handler,
 		},
 		{
 			MethodName: "GetMarketplaceOffers",

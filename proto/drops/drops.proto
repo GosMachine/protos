@@ -92,13 +92,21 @@ service DropsCenter {
       returns (google.protobuf.Empty);
   rpc SaveAccountsInfo(SaveAccountsInfoRequest) returns (google.protobuf.Empty);
   rpc GetTokensForGame(GetTokensForGameRequest) returns (GetTokensForGameResponse);
-
+  rpc GetAccountsForSale(GetAccountsForSaleRequest) returns (GetAccountsForSaleResponse);
   rpc GetMarketplaceOffers(GetMarketplaceOffersRequest) returns (GetMarketplaceOffersResponse);
   rpc DeleteMarketplaceOffer(DeleteMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc CreateMarketplaceOffer(CreateMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc GetFunPayOfferAccounts(GetFunPayOfferAccountsRequest) returns (GetFunPayOfferAccountsResponse);
   rpc EditMarketplaceOfferName(EditMarketplaceOfferNameRequest) returns (google.protobuf.Empty);
   rpc SaveFunPayOfferID(SaveFunPayOfferIDRequest) returns (google.protobuf.Empty);
+}
+
+message GetAccountsForSaleRequest {
+  string groupID = 1;
+}
+
+message GetAccountsForSaleResponse {
+  repeated string accounts = 1;
 }
 
 message EditMarketplaceOfferNameRequest {
@@ -159,7 +167,7 @@ message MarketPlaceOffer {
   string name = 1;
   string type = 2;
   int64 farmTime = 3;
-  string groupName = 4;
+  string groupID = 4;
   int64 ID = 5;
   repeated FunPayOfferID FunPayOfferIDs = 6;
   string funPayNodeID = 7;

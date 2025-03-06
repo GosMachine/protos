@@ -113,6 +113,7 @@ message GetAccountsForSaleResponse {
 message EditMarketplaceOfferNameRequest {
   string oldTitle = 1;
   string newTitle = 2;
+  string paymentMessage = 3;
 }
 
 message SaveFunPayOfferIDRequest {
@@ -128,6 +129,7 @@ message CreateMarketplaceOfferRequest {
   string group = 3;
   string name = 4;
   string game = 5;
+  string paymentMessage = 6;
 }
 
 message GetFunPayOfferAccountsRequest {

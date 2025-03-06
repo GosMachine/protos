@@ -98,7 +98,7 @@ service DropsCenter {
   rpc CreateMarketplaceOffer(CreateMarketplaceOfferRequest) returns (google.protobuf.Empty);
   rpc GetFunPayOfferAccounts(GetFunPayOfferAccountsRequest) returns (GetFunPayOfferAccountsResponse);
   rpc EditMarketplaceOfferName(EditMarketplaceOfferNameRequest) returns (google.protobuf.Empty);
-  rpc SaveFunPayOfferID(SaveFunPayOfferIDRequest) returns (google.protobuf.Empty);
+  rpc SaveFunPayOfferID(SaveFunPayOfferIDRequest) returns (google.protobuf.Empty); 
 }
 
 message GetAccountsForSaleRequest {

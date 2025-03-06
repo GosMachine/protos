@@ -106,7 +106,7 @@ message GetAccountsForSaleRequest {
   int64 quantity = 2;
 }
 
-message GetAccountsForSaleResponse {
+message GetAccountsForSaleResponse { 
   repeated string accounts = 1;
 }
 

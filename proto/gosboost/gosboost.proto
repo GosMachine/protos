@@ -35,12 +35,13 @@ message FailOperationRequest {
   string errorMsg = 2;
 }
 message OperationInfo {
-  google.protobuf.Timestamp startTime = 1;
-  google.protobuf.Timestamp endTime = 2;  
-  string status = 3;  
-  string data = 4;     
-  string type = 5;   
-  string error = 6;
+  uint64 id = 1;
+  google.protobuf.Timestamp startTime = 2;
+  google.protobuf.Timestamp endTime = 3;  
+  string status = 4;  
+  string data = 5;     
+  string type = 6;   
+  string error = 7;
 }
 
 message GetChatTokensRequest {

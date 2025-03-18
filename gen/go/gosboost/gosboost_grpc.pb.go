@@ -242,7 +242,7 @@ const (
 	GosBoost_TwitchLiveViewers_FullMethodName     = "/gosboost.GosBoost/TwitchLiveViewers"
 	GosBoost_TwitchStopLiveViewers_FullMethodName = "/gosboost.GosBoost/TwitchStopLiveViewers"
 	GosBoost_TwitchChatters_FullMethodName        = "/gosboost.GosBoost/TwitchChatters"
-	GosBoost_TwitchRaid_FullMethodName            = "/gosboost.GosBoost/TwitchRaid"
+	GosBoost_TwitchFakeRaid_FullMethodName        = "/gosboost.GosBoost/TwitchFakeRaid"
 	GosBoost_IsUsernameValid_FullMethodName       = "/gosboost.GosBoost/IsUsernameValid"
 )
 
@@ -256,7 +256,7 @@ type GosBoostClient interface {
 	TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchStopLiveViewers(ctx context.Context, in *TwitchStopLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchChatters(ctx context.Context, in *TwitchChattersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchRaid(ctx context.Context, in *TwitchRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	TwitchFakeRaid(ctx context.Context, in *TwitchFakeRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	IsUsernameValid(ctx context.Context, in *IsUsernameValidRequest, opts ...grpc.CallOption) (*IsUsernameValidResponse, error)
 }
 
@@ -328,10 +328,10 @@ func (c *gosBoostClient) TwitchChatters(ctx context.Context, in *TwitchChattersR
 	return out, nil
 }
 
-func (c *gosBoostClient) TwitchRaid(ctx context.Context, in *TwitchRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchFakeRaid(ctx context.Context, in *TwitchFakeRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, GosBoost_TwitchRaid_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, GosBoost_TwitchFakeRaid_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -358,7 +358,7 @@ type GosBoostServer interface {
 	TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*emptypb.Empty, error)
 	TwitchStopLiveViewers(context.Context, *TwitchStopLiveViewersRequest) (*emptypb.Empty, error)
 	TwitchChatters(context.Context, *TwitchChattersRequest) (*emptypb.Empty, error)
-	TwitchRaid(context.Context, *TwitchRaidRequest) (*emptypb.Empty, error)
+	TwitchFakeRaid(context.Context, *TwitchFakeRaidRequest) (*emptypb.Empty, error)
 	IsUsernameValid(context.Context, *IsUsernameValidRequest) (*IsUsernameValidResponse, error)
 	mustEmbedUnimplementedGosBoostServer()
 }
@@ -388,8 +388,8 @@ func (UnimplementedGosBoostServer) TwitchStopLiveViewers(context.Context, *Twitc
 func (UnimplementedGosBoostServer) TwitchChatters(context.Context, *TwitchChattersRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchChatters not implemented")
 }
-func (UnimplementedGosBoostServer) TwitchRaid(context.Context, *TwitchRaidRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TwitchRaid not implemented")
+func (UnimplementedGosBoostServer) TwitchFakeRaid(context.Context, *TwitchFakeRaidRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TwitchFakeRaid not implemented")
 }
 func (UnimplementedGosBoostServer) IsUsernameValid(context.Context, *IsUsernameValidRequest) (*IsUsernameValidResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsUsernameValid not implemented")
@@ -523,20 +523,20 @@ func _GosBoost_TwitchChatters_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GosBoost_TwitchRaid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TwitchRaidRequest)
+func _GosBoost_TwitchFakeRaid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TwitchFakeRaidRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(GosBoostServer).TwitchRaid(ctx, in)
+		return srv.(GosBoostServer).TwitchFakeRaid(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: GosBoost_TwitchRaid_FullMethodName,
+		FullMethod: GosBoost_TwitchFakeRaid_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostServer).TwitchRaid(ctx, req.(*TwitchRaidRequest))
+		return srv.(GosBoostServer).TwitchFakeRaid(ctx, req.(*TwitchFakeRaidRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -591,8 +591,8 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GosBoost_TwitchChatters_Handler,
 		},
 		{
-			MethodName: "TwitchRaid",
-			Handler:    _GosBoost_TwitchRaid_Handler,
+			MethodName: "TwitchFakeRaid",
+			Handler:    _GosBoost_TwitchFakeRaid_Handler,
 		},
 		{
 			MethodName: "IsUsernameValid",

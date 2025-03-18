@@ -62,7 +62,7 @@ service GosBoost {
   rpc TwitchStopLiveViewers(TwitchStopLiveViewersRequest)
       returns (google.protobuf.Empty);
   rpc TwitchChatters(TwitchChattersRequest) returns (google.protobuf.Empty);
-  rpc TwitchRaid(TwitchRaidRequest) returns (google.protobuf.Empty);
+  rpc TwitchFakeRaid(TwitchFakeRaidRequest) returns (google.protobuf.Empty);
   rpc IsUsernameValid(IsUsernameValidRequest) returns (IsUsernameValidResponse);
 }
 
@@ -74,9 +74,10 @@ message IsUsernameValidResponse {
   bool valid = 1;
 }
 
-message TwitchRaidRequest {
-  string raidID = 1;
-  int64 quantity = 2;
+message TwitchFakeRaidRequest {
+  string raiderChannel = 1;
+  string targetChannel = 2;
+  int64 quantity = 3;
 }
 
 message TwitchStopLiveViewersRequest {

@@ -76,8 +76,7 @@ message IsUsernameValidResponse {
 
 message TwitchFakeRaidRequest {
   string raiderChannel = 1;
-  string targetChannel = 2;
-  int64 quantity = 3;
+  int64 quantity = 2;
 }
 
 message TwitchStopLiveViewersRequest {

@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package gosboost;
 
-import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto"; 
 
 option go_package = "gosmach1ne.gosboost.v1;gosboostv1";
 
@@ -12,14 +13,30 @@ service GosBoostDB {
       returns (GetTokensForFollowResponse);
   rpc GetChatTokens(GetChatTokensRequest)
       returns (GetChatTokensResponse);
-  rpc UpdateFollowSuccessAndErrorTokens(
-      UpdateFollowSuccessAndErrorTokensRequest) returns (google.protobuf.Empty);
+  rpc UpdateFollowSuccessAndErrorTokens(UpdateFollowSuccessAndErrorTokensRequest) returns (google.protobuf.Empty);
+  rpc GetOperation(Operation) returns (OperationInfo);
+  rpc CreateOperation(OperationInfo) returns (google.protobuf.Empty);
+  rpc StartOperation(Operation) returns (google.protobuf.Empty);
+  rpc CompleteOperation(Operation) returns (google.protobuf.Empty);
+  rpc FailOperation(FailOperationRequest) returns (google.protobuf.Empty);
+}
+
+message FailOperationRequest {
+  uint64 id = 1;
+  string errorMsg = 2;
+}
+message OperationInfo {
+  google.protobuf.Timestamp startTime = 1;
+  google.protobuf.Timestamp endTime = 2;  
+  string status = 3;  
+  string data = 4;     
+  string type = 5;   
+  string error = 6;
 }
 
 message GetChatTokensRequest {
   int64 quantity = 1;
 }
-
 
 message GetChatTokensResponse {
   repeated string tokens = 1;
@@ -63,15 +80,10 @@ service GosBoost {
   rpc TwitchFakeRaid(TwitchFakeRaidRequest) returns (Operation);
   rpc IsUsernameValid(IsUsernameValidRequest) returns (IsUsernameValidResponse);
   rpc CancelOperation(Operation) returns (google.protobuf.Empty);
-  rpc OperationInfo(Operation) returns (OperationInfoResponse);
 }
 
 message Operation {
-  string id = 1;
-}
-
-message OperationInfoResponse {
-
+  uint64 id = 1;
 }
 
 message IsUsernameValidRequest {

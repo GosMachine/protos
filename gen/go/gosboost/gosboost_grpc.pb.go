@@ -24,6 +24,11 @@ const (
 	GosBoostDB_GetTokensForFollow_FullMethodName                = "/gosboost.GosBoostDB/GetTokensForFollow"
 	GosBoostDB_GetChatTokens_FullMethodName                     = "/gosboost.GosBoostDB/GetChatTokens"
 	GosBoostDB_UpdateFollowSuccessAndErrorTokens_FullMethodName = "/gosboost.GosBoostDB/UpdateFollowSuccessAndErrorTokens"
+	GosBoostDB_GetOperation_FullMethodName                      = "/gosboost.GosBoostDB/GetOperation"
+	GosBoostDB_CreateOperation_FullMethodName                   = "/gosboost.GosBoostDB/CreateOperation"
+	GosBoostDB_StartOperation_FullMethodName                    = "/gosboost.GosBoostDB/StartOperation"
+	GosBoostDB_CompleteOperation_FullMethodName                 = "/gosboost.GosBoostDB/CompleteOperation"
+	GosBoostDB_FailOperation_FullMethodName                     = "/gosboost.GosBoostDB/FailOperation"
 )
 
 // GosBoostDBClient is the client API for GosBoostDB service.
@@ -34,6 +39,11 @@ type GosBoostDBClient interface {
 	GetTokensForFollow(ctx context.Context, in *GetTokensForFollowRequest, opts ...grpc.CallOption) (*GetTokensForFollowResponse, error)
 	GetChatTokens(ctx context.Context, in *GetChatTokensRequest, opts ...grpc.CallOption) (*GetChatTokensResponse, error)
 	UpdateFollowSuccessAndErrorTokens(ctx context.Context, in *UpdateFollowSuccessAndErrorTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfo, error)
+	CreateOperation(ctx context.Context, in *OperationInfo, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	StartOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CompleteOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	FailOperation(ctx context.Context, in *FailOperationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type gosBoostDBClient struct {
@@ -84,6 +94,56 @@ func (c *gosBoostDBClient) UpdateFollowSuccessAndErrorTokens(ctx context.Context
 	return out, nil
 }
 
+func (c *gosBoostDBClient) GetOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfo, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OperationInfo)
+	err := c.cc.Invoke(ctx, GosBoostDB_GetOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gosBoostDBClient) CreateOperation(ctx context.Context, in *OperationInfo, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GosBoostDB_CreateOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gosBoostDBClient) StartOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GosBoostDB_StartOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gosBoostDBClient) CompleteOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GosBoostDB_CompleteOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gosBoostDBClient) FailOperation(ctx context.Context, in *FailOperationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GosBoostDB_FailOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GosBoostDBServer is the server API for GosBoostDB service.
 // All implementations must embed UnimplementedGosBoostDBServer
 // for forward compatibility.
@@ -92,6 +152,11 @@ type GosBoostDBServer interface {
 	GetTokensForFollow(context.Context, *GetTokensForFollowRequest) (*GetTokensForFollowResponse, error)
 	GetChatTokens(context.Context, *GetChatTokensRequest) (*GetChatTokensResponse, error)
 	UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error)
+	GetOperation(context.Context, *Operation) (*OperationInfo, error)
+	CreateOperation(context.Context, *OperationInfo) (*emptypb.Empty, error)
+	StartOperation(context.Context, *Operation) (*emptypb.Empty, error)
+	CompleteOperation(context.Context, *Operation) (*emptypb.Empty, error)
+	FailOperation(context.Context, *FailOperationRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGosBoostDBServer()
 }
 
@@ -113,6 +178,21 @@ func (UnimplementedGosBoostDBServer) GetChatTokens(context.Context, *GetChatToke
 }
 func (UnimplementedGosBoostDBServer) UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFollowSuccessAndErrorTokens not implemented")
+}
+func (UnimplementedGosBoostDBServer) GetOperation(context.Context, *Operation) (*OperationInfo, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOperation not implemented")
+}
+func (UnimplementedGosBoostDBServer) CreateOperation(context.Context, *OperationInfo) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateOperation not implemented")
+}
+func (UnimplementedGosBoostDBServer) StartOperation(context.Context, *Operation) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartOperation not implemented")
+}
+func (UnimplementedGosBoostDBServer) CompleteOperation(context.Context, *Operation) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompleteOperation not implemented")
+}
+func (UnimplementedGosBoostDBServer) FailOperation(context.Context, *FailOperationRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FailOperation not implemented")
 }
 func (UnimplementedGosBoostDBServer) mustEmbedUnimplementedGosBoostDBServer() {}
 func (UnimplementedGosBoostDBServer) testEmbeddedByValue()                    {}
@@ -207,6 +287,96 @@ func _GosBoostDB_UpdateFollowSuccessAndErrorTokens_Handler(srv interface{}, ctx 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GosBoostDB_GetOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Operation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostDBServer).GetOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoostDB_GetOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostDBServer).GetOperation(ctx, req.(*Operation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GosBoostDB_CreateOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OperationInfo)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostDBServer).CreateOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoostDB_CreateOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostDBServer).CreateOperation(ctx, req.(*OperationInfo))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GosBoostDB_StartOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Operation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostDBServer).StartOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoostDB_StartOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostDBServer).StartOperation(ctx, req.(*Operation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GosBoostDB_CompleteOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Operation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostDBServer).CompleteOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoostDB_CompleteOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostDBServer).CompleteOperation(ctx, req.(*Operation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GosBoostDB_FailOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FailOperationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostDBServer).FailOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoostDB_FailOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostDBServer).FailOperation(ctx, req.(*FailOperationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GosBoostDB_ServiceDesc is the grpc.ServiceDesc for GosBoostDB service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -230,6 +400,26 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "UpdateFollowSuccessAndErrorTokens",
 			Handler:    _GosBoostDB_UpdateFollowSuccessAndErrorTokens_Handler,
 		},
+		{
+			MethodName: "GetOperation",
+			Handler:    _GosBoostDB_GetOperation_Handler,
+		},
+		{
+			MethodName: "CreateOperation",
+			Handler:    _GosBoostDB_CreateOperation_Handler,
+		},
+		{
+			MethodName: "StartOperation",
+			Handler:    _GosBoostDB_StartOperation_Handler,
+		},
+		{
+			MethodName: "CompleteOperation",
+			Handler:    _GosBoostDB_CompleteOperation_Handler,
+		},
+		{
+			MethodName: "FailOperation",
+			Handler:    _GosBoostDB_FailOperation_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "gosboost/gosboost.proto",
@@ -244,7 +434,6 @@ const (
 	GosBoost_TwitchFakeRaid_FullMethodName      = "/gosboost.GosBoost/TwitchFakeRaid"
 	GosBoost_IsUsernameValid_FullMethodName     = "/gosboost.GosBoost/IsUsernameValid"
 	GosBoost_CancelOperation_FullMethodName     = "/gosboost.GosBoost/CancelOperation"
-	GosBoost_OperationInfo_FullMethodName       = "/gosboost.GosBoost/OperationInfo"
 )
 
 // GosBoostClient is the client API for GosBoost service.
@@ -259,7 +448,6 @@ type GosBoostClient interface {
 	TwitchFakeRaid(ctx context.Context, in *TwitchFakeRaidRequest, opts ...grpc.CallOption) (*Operation, error)
 	IsUsernameValid(ctx context.Context, in *IsUsernameValidRequest, opts ...grpc.CallOption) (*IsUsernameValidResponse, error)
 	CancelOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	OperationInfo(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfoResponse, error)
 }
 
 type gosBoostClient struct {
@@ -350,16 +538,6 @@ func (c *gosBoostClient) CancelOperation(ctx context.Context, in *Operation, opt
 	return out, nil
 }
 
-func (c *gosBoostClient) OperationInfo(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfoResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(OperationInfoResponse)
-	err := c.cc.Invoke(ctx, GosBoost_OperationInfo_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // GosBoostServer is the server API for GosBoost service.
 // All implementations must embed UnimplementedGosBoostServer
 // for forward compatibility.
@@ -372,7 +550,6 @@ type GosBoostServer interface {
 	TwitchFakeRaid(context.Context, *TwitchFakeRaidRequest) (*Operation, error)
 	IsUsernameValid(context.Context, *IsUsernameValidRequest) (*IsUsernameValidResponse, error)
 	CancelOperation(context.Context, *Operation) (*emptypb.Empty, error)
-	OperationInfo(context.Context, *Operation) (*OperationInfoResponse, error)
 	mustEmbedUnimplementedGosBoostServer()
 }
 
@@ -406,9 +583,6 @@ func (UnimplementedGosBoostServer) IsUsernameValid(context.Context, *IsUsernameV
 }
 func (UnimplementedGosBoostServer) CancelOperation(context.Context, *Operation) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelOperation not implemented")
-}
-func (UnimplementedGosBoostServer) OperationInfo(context.Context, *Operation) (*OperationInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method OperationInfo not implemented")
 }
 func (UnimplementedGosBoostServer) mustEmbedUnimplementedGosBoostServer() {}
 func (UnimplementedGosBoostServer) testEmbeddedByValue()                  {}
@@ -575,24 +749,6 @@ func _GosBoost_CancelOperation_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GosBoost_OperationInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Operation)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GosBoostServer).OperationInfo(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GosBoost_OperationInfo_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostServer).OperationInfo(ctx, req.(*Operation))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // GosBoost_ServiceDesc is the grpc.ServiceDesc for GosBoost service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -631,10 +787,6 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CancelOperation",
 			Handler:    _GosBoost_CancelOperation_Handler,
-		},
-		{
-			MethodName: "OperationInfo",
-			Handler:    _GosBoost_OperationInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

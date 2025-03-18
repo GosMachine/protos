@@ -236,28 +236,30 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	GosBoost_TwitchFollowChannel_FullMethodName   = "/gosboost.GosBoost/TwitchFollowChannel"
-	GosBoost_TwitchClipViewers_FullMethodName     = "/gosboost.GosBoost/TwitchClipViewers"
-	GosBoost_TwitchVODViewers_FullMethodName      = "/gosboost.GosBoost/TwitchVODViewers"
-	GosBoost_TwitchLiveViewers_FullMethodName     = "/gosboost.GosBoost/TwitchLiveViewers"
-	GosBoost_TwitchStopLiveViewers_FullMethodName = "/gosboost.GosBoost/TwitchStopLiveViewers"
-	GosBoost_TwitchChatters_FullMethodName        = "/gosboost.GosBoost/TwitchChatters"
-	GosBoost_TwitchFakeRaid_FullMethodName        = "/gosboost.GosBoost/TwitchFakeRaid"
-	GosBoost_IsUsernameValid_FullMethodName       = "/gosboost.GosBoost/IsUsernameValid"
+	GosBoost_TwitchFollowChannel_FullMethodName = "/gosboost.GosBoost/TwitchFollowChannel"
+	GosBoost_TwitchClipViewers_FullMethodName   = "/gosboost.GosBoost/TwitchClipViewers"
+	GosBoost_TwitchVODViewers_FullMethodName    = "/gosboost.GosBoost/TwitchVODViewers"
+	GosBoost_TwitchLiveViewers_FullMethodName   = "/gosboost.GosBoost/TwitchLiveViewers"
+	GosBoost_TwitchChatters_FullMethodName      = "/gosboost.GosBoost/TwitchChatters"
+	GosBoost_TwitchFakeRaid_FullMethodName      = "/gosboost.GosBoost/TwitchFakeRaid"
+	GosBoost_IsUsernameValid_FullMethodName     = "/gosboost.GosBoost/IsUsernameValid"
+	GosBoost_CancelOperation_FullMethodName     = "/gosboost.GosBoost/CancelOperation"
+	GosBoost_OperationInfo_FullMethodName       = "/gosboost.GosBoost/OperationInfo"
 )
 
 // GosBoostClient is the client API for GosBoost service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GosBoostClient interface {
-	TwitchFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchClipViewers(ctx context.Context, in *TwitchClipViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchVODViewers(ctx context.Context, in *TwitchVODViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchStopLiveViewers(ctx context.Context, in *TwitchStopLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchChatters(ctx context.Context, in *TwitchChattersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TwitchFakeRaid(ctx context.Context, in *TwitchFakeRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	TwitchFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*Operation, error)
+	TwitchClipViewers(ctx context.Context, in *TwitchClipViewersRequest, opts ...grpc.CallOption) (*Operation, error)
+	TwitchVODViewers(ctx context.Context, in *TwitchVODViewersRequest, opts ...grpc.CallOption) (*Operation, error)
+	TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*Operation, error)
+	TwitchChatters(ctx context.Context, in *TwitchChattersRequest, opts ...grpc.CallOption) (*Operation, error)
+	TwitchFakeRaid(ctx context.Context, in *TwitchFakeRaidRequest, opts ...grpc.CallOption) (*Operation, error)
 	IsUsernameValid(ctx context.Context, in *IsUsernameValidRequest, opts ...grpc.CallOption) (*IsUsernameValidResponse, error)
+	CancelOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	OperationInfo(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfoResponse, error)
 }
 
 type gosBoostClient struct {
@@ -268,9 +270,9 @@ func NewGosBoostClient(cc grpc.ClientConnInterface) GosBoostClient {
 	return &gosBoostClient{cc}
 }
 
-func (c *gosBoostClient) TwitchFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchFollowChannel(ctx context.Context, in *TwitchFollowChannelRequest, opts ...grpc.CallOption) (*Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(Operation)
 	err := c.cc.Invoke(ctx, GosBoost_TwitchFollowChannel_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -278,9 +280,9 @@ func (c *gosBoostClient) TwitchFollowChannel(ctx context.Context, in *TwitchFoll
 	return out, nil
 }
 
-func (c *gosBoostClient) TwitchClipViewers(ctx context.Context, in *TwitchClipViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchClipViewers(ctx context.Context, in *TwitchClipViewersRequest, opts ...grpc.CallOption) (*Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(Operation)
 	err := c.cc.Invoke(ctx, GosBoost_TwitchClipViewers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -288,9 +290,9 @@ func (c *gosBoostClient) TwitchClipViewers(ctx context.Context, in *TwitchClipVi
 	return out, nil
 }
 
-func (c *gosBoostClient) TwitchVODViewers(ctx context.Context, in *TwitchVODViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchVODViewers(ctx context.Context, in *TwitchVODViewersRequest, opts ...grpc.CallOption) (*Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(Operation)
 	err := c.cc.Invoke(ctx, GosBoost_TwitchVODViewers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -298,9 +300,9 @@ func (c *gosBoostClient) TwitchVODViewers(ctx context.Context, in *TwitchVODView
 	return out, nil
 }
 
-func (c *gosBoostClient) TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchLiveViewers(ctx context.Context, in *TwitchLiveViewersRequest, opts ...grpc.CallOption) (*Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(Operation)
 	err := c.cc.Invoke(ctx, GosBoost_TwitchLiveViewers_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -308,19 +310,9 @@ func (c *gosBoostClient) TwitchLiveViewers(ctx context.Context, in *TwitchLiveVi
 	return out, nil
 }
 
-func (c *gosBoostClient) TwitchStopLiveViewers(ctx context.Context, in *TwitchStopLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchChatters(ctx context.Context, in *TwitchChattersRequest, opts ...grpc.CallOption) (*Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, GosBoost_TwitchStopLiveViewers_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *gosBoostClient) TwitchChatters(ctx context.Context, in *TwitchChattersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(Operation)
 	err := c.cc.Invoke(ctx, GosBoost_TwitchChatters_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -328,9 +320,9 @@ func (c *gosBoostClient) TwitchChatters(ctx context.Context, in *TwitchChattersR
 	return out, nil
 }
 
-func (c *gosBoostClient) TwitchFakeRaid(ctx context.Context, in *TwitchFakeRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostClient) TwitchFakeRaid(ctx context.Context, in *TwitchFakeRaidRequest, opts ...grpc.CallOption) (*Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(Operation)
 	err := c.cc.Invoke(ctx, GosBoost_TwitchFakeRaid_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -348,18 +340,39 @@ func (c *gosBoostClient) IsUsernameValid(ctx context.Context, in *IsUsernameVali
 	return out, nil
 }
 
+func (c *gosBoostClient) CancelOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GosBoost_CancelOperation_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gosBoostClient) OperationInfo(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OperationInfoResponse)
+	err := c.cc.Invoke(ctx, GosBoost_OperationInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GosBoostServer is the server API for GosBoost service.
 // All implementations must embed UnimplementedGosBoostServer
 // for forward compatibility.
 type GosBoostServer interface {
-	TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error)
-	TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*emptypb.Empty, error)
-	TwitchVODViewers(context.Context, *TwitchVODViewersRequest) (*emptypb.Empty, error)
-	TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*emptypb.Empty, error)
-	TwitchStopLiveViewers(context.Context, *TwitchStopLiveViewersRequest) (*emptypb.Empty, error)
-	TwitchChatters(context.Context, *TwitchChattersRequest) (*emptypb.Empty, error)
-	TwitchFakeRaid(context.Context, *TwitchFakeRaidRequest) (*emptypb.Empty, error)
+	TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*Operation, error)
+	TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*Operation, error)
+	TwitchVODViewers(context.Context, *TwitchVODViewersRequest) (*Operation, error)
+	TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*Operation, error)
+	TwitchChatters(context.Context, *TwitchChattersRequest) (*Operation, error)
+	TwitchFakeRaid(context.Context, *TwitchFakeRaidRequest) (*Operation, error)
 	IsUsernameValid(context.Context, *IsUsernameValidRequest) (*IsUsernameValidResponse, error)
+	CancelOperation(context.Context, *Operation) (*emptypb.Empty, error)
+	OperationInfo(context.Context, *Operation) (*OperationInfoResponse, error)
 	mustEmbedUnimplementedGosBoostServer()
 }
 
@@ -370,29 +383,32 @@ type GosBoostServer interface {
 // pointer dereference when methods are called.
 type UnimplementedGosBoostServer struct{}
 
-func (UnimplementedGosBoostServer) TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*emptypb.Empty, error) {
+func (UnimplementedGosBoostServer) TwitchFollowChannel(context.Context, *TwitchFollowChannelRequest) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchFollowChannel not implemented")
 }
-func (UnimplementedGosBoostServer) TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*emptypb.Empty, error) {
+func (UnimplementedGosBoostServer) TwitchClipViewers(context.Context, *TwitchClipViewersRequest) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchClipViewers not implemented")
 }
-func (UnimplementedGosBoostServer) TwitchVODViewers(context.Context, *TwitchVODViewersRequest) (*emptypb.Empty, error) {
+func (UnimplementedGosBoostServer) TwitchVODViewers(context.Context, *TwitchVODViewersRequest) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchVODViewers not implemented")
 }
-func (UnimplementedGosBoostServer) TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*emptypb.Empty, error) {
+func (UnimplementedGosBoostServer) TwitchLiveViewers(context.Context, *TwitchLiveViewersRequest) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchLiveViewers not implemented")
 }
-func (UnimplementedGosBoostServer) TwitchStopLiveViewers(context.Context, *TwitchStopLiveViewersRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TwitchStopLiveViewers not implemented")
-}
-func (UnimplementedGosBoostServer) TwitchChatters(context.Context, *TwitchChattersRequest) (*emptypb.Empty, error) {
+func (UnimplementedGosBoostServer) TwitchChatters(context.Context, *TwitchChattersRequest) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchChatters not implemented")
 }
-func (UnimplementedGosBoostServer) TwitchFakeRaid(context.Context, *TwitchFakeRaidRequest) (*emptypb.Empty, error) {
+func (UnimplementedGosBoostServer) TwitchFakeRaid(context.Context, *TwitchFakeRaidRequest) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchFakeRaid not implemented")
 }
 func (UnimplementedGosBoostServer) IsUsernameValid(context.Context, *IsUsernameValidRequest) (*IsUsernameValidResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IsUsernameValid not implemented")
+}
+func (UnimplementedGosBoostServer) CancelOperation(context.Context, *Operation) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelOperation not implemented")
+}
+func (UnimplementedGosBoostServer) OperationInfo(context.Context, *Operation) (*OperationInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OperationInfo not implemented")
 }
 func (UnimplementedGosBoostServer) mustEmbedUnimplementedGosBoostServer() {}
 func (UnimplementedGosBoostServer) testEmbeddedByValue()                  {}
@@ -487,24 +503,6 @@ func _GosBoost_TwitchLiveViewers_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GosBoost_TwitchStopLiveViewers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TwitchStopLiveViewersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GosBoostServer).TwitchStopLiveViewers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GosBoost_TwitchStopLiveViewers_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostServer).TwitchStopLiveViewers(ctx, req.(*TwitchStopLiveViewersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _GosBoost_TwitchChatters_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TwitchChattersRequest)
 	if err := dec(in); err != nil {
@@ -559,6 +557,42 @@ func _GosBoost_IsUsernameValid_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GosBoost_CancelOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Operation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostServer).CancelOperation(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoost_CancelOperation_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostServer).CancelOperation(ctx, req.(*Operation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GosBoost_OperationInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Operation)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostServer).OperationInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoost_OperationInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostServer).OperationInfo(ctx, req.(*Operation))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GosBoost_ServiceDesc is the grpc.ServiceDesc for GosBoost service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -583,10 +617,6 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _GosBoost_TwitchLiveViewers_Handler,
 		},
 		{
-			MethodName: "TwitchStopLiveViewers",
-			Handler:    _GosBoost_TwitchStopLiveViewers_Handler,
-		},
-		{
 			MethodName: "TwitchChatters",
 			Handler:    _GosBoost_TwitchChatters_Handler,
 		},
@@ -597,6 +627,14 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IsUsernameValid",
 			Handler:    _GosBoost_IsUsernameValid_Handler,
+		},
+		{
+			MethodName: "CancelOperation",
+			Handler:    _GosBoost_CancelOperation_Handler,
+		},
+		{
+			MethodName: "OperationInfo",
+			Handler:    _GosBoost_OperationInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

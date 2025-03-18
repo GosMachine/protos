@@ -53,17 +53,25 @@ message Account {
 
 service GosBoost {
   rpc TwitchFollowChannel(TwitchFollowChannelRequest)
-      returns (google.protobuf.Empty);
+      returns (Operation);
   rpc TwitchClipViewers(TwitchClipViewersRequest)
-      returns (google.protobuf.Empty);
-  rpc TwitchVODViewers(TwitchVODViewersRequest) returns (google.protobuf.Empty);
+      returns (Operation);
+  rpc TwitchVODViewers(TwitchVODViewersRequest) returns (Operation);
   rpc TwitchLiveViewers(TwitchLiveViewersRequest)
-      returns (google.protobuf.Empty);
-  rpc TwitchStopLiveViewers(TwitchStopLiveViewersRequest)
-      returns (google.protobuf.Empty);
-  rpc TwitchChatters(TwitchChattersRequest) returns (google.protobuf.Empty);
-  rpc TwitchFakeRaid(TwitchFakeRaidRequest) returns (google.protobuf.Empty);
+      returns (Operation);
+  rpc TwitchChatters(TwitchChattersRequest) returns (Operation);
+  rpc TwitchFakeRaid(TwitchFakeRaidRequest) returns (Operation);
   rpc IsUsernameValid(IsUsernameValidRequest) returns (IsUsernameValidResponse);
+  rpc CancelOperation(Operation) returns (google.protobuf.Empty);
+  rpc OperationInfo(Operation) returns (OperationInfoResponse);
+}
+
+message Operation {
+  string id = 1;
+}
+
+message OperationInfoResponse {
+
 }
 
 message IsUsernameValidRequest {
@@ -77,10 +85,7 @@ message IsUsernameValidResponse {
 message TwitchFakeRaidRequest {
   string raiderChannel = 1;
   int64 quantity = 2;
-}
-
-message TwitchStopLiveViewersRequest {
-  string username = 1;
+  int64 waitTimeMinutes = 3;
 }
 
 message TwitchFollowChannelRequest {
@@ -88,6 +93,7 @@ message TwitchFollowChannelRequest {
   int64 quantity = 2;
   bool follow = 3;
   bool extra = 4;
+  int64 intervalMS = 5;
 }
 
 message TwitchClipViewersRequest {

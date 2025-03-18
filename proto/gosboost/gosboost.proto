@@ -63,6 +63,15 @@ service GosBoost {
       returns (google.protobuf.Empty);
   rpc TwitchChatters(TwitchChattersRequest) returns (google.protobuf.Empty);
   rpc TwitchRaid(TwitchRaidRequest) returns (google.protobuf.Empty);
+  rpc IsUsernameValid(IsUsernameValidRequest) returns (IsUsernameValidResponse);
+}
+
+message IsUsernameValidRequest {
+  string username = 1;
+}
+
+message IsUsernameValidResponse {
+  bool valid = 1;
 }
 
 message TwitchRaidRequest {

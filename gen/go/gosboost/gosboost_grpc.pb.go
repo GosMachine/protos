@@ -243,6 +243,7 @@ const (
 	GosBoost_TwitchStopLiveViewers_FullMethodName = "/gosboost.GosBoost/TwitchStopLiveViewers"
 	GosBoost_TwitchChatters_FullMethodName        = "/gosboost.GosBoost/TwitchChatters"
 	GosBoost_TwitchRaid_FullMethodName            = "/gosboost.GosBoost/TwitchRaid"
+	GosBoost_IsUsernameValid_FullMethodName       = "/gosboost.GosBoost/IsUsernameValid"
 )
 
 // GosBoostClient is the client API for GosBoost service.
@@ -256,6 +257,7 @@ type GosBoostClient interface {
 	TwitchStopLiveViewers(ctx context.Context, in *TwitchStopLiveViewersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchChatters(ctx context.Context, in *TwitchChattersRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	TwitchRaid(ctx context.Context, in *TwitchRaidRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	IsUsernameValid(ctx context.Context, in *IsUsernameValidRequest, opts ...grpc.CallOption) (*IsUsernameValidResponse, error)
 }
 
 type gosBoostClient struct {
@@ -336,6 +338,16 @@ func (c *gosBoostClient) TwitchRaid(ctx context.Context, in *TwitchRaidRequest, 
 	return out, nil
 }
 
+func (c *gosBoostClient) IsUsernameValid(ctx context.Context, in *IsUsernameValidRequest, opts ...grpc.CallOption) (*IsUsernameValidResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(IsUsernameValidResponse)
+	err := c.cc.Invoke(ctx, GosBoost_IsUsernameValid_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GosBoostServer is the server API for GosBoost service.
 // All implementations must embed UnimplementedGosBoostServer
 // for forward compatibility.
@@ -347,6 +359,7 @@ type GosBoostServer interface {
 	TwitchStopLiveViewers(context.Context, *TwitchStopLiveViewersRequest) (*emptypb.Empty, error)
 	TwitchChatters(context.Context, *TwitchChattersRequest) (*emptypb.Empty, error)
 	TwitchRaid(context.Context, *TwitchRaidRequest) (*emptypb.Empty, error)
+	IsUsernameValid(context.Context, *IsUsernameValidRequest) (*IsUsernameValidResponse, error)
 	mustEmbedUnimplementedGosBoostServer()
 }
 
@@ -377,6 +390,9 @@ func (UnimplementedGosBoostServer) TwitchChatters(context.Context, *TwitchChatte
 }
 func (UnimplementedGosBoostServer) TwitchRaid(context.Context, *TwitchRaidRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TwitchRaid not implemented")
+}
+func (UnimplementedGosBoostServer) IsUsernameValid(context.Context, *IsUsernameValidRequest) (*IsUsernameValidResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsUsernameValid not implemented")
 }
 func (UnimplementedGosBoostServer) mustEmbedUnimplementedGosBoostServer() {}
 func (UnimplementedGosBoostServer) testEmbeddedByValue()                  {}
@@ -525,6 +541,24 @@ func _GosBoost_TwitchRaid_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GosBoost_IsUsernameValid_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IsUsernameValidRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostServer).IsUsernameValid(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoost_IsUsernameValid_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostServer).IsUsernameValid(ctx, req.(*IsUsernameValidRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GosBoost_ServiceDesc is the grpc.ServiceDesc for GosBoost service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -559,6 +593,10 @@ var GosBoost_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TwitchRaid",
 			Handler:    _GosBoost_TwitchRaid_Handler,
+		},
+		{
+			MethodName: "IsUsernameValid",
+			Handler:    _GosBoost_IsUsernameValid_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

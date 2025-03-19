@@ -20,6 +20,7 @@ service GosBoostDB {
   rpc StartOperation(Operation) returns (google.protobuf.Empty);
   rpc CompleteOperation(Operation) returns (google.protobuf.Empty);
   rpc FailOperation(FailOperationRequest) returns (google.protobuf.Empty);
+  rpc InQueueOperation(Operation) returns (google.protobuf.Empty);
 }
 
 message GetOperationsByStatusesResponse {

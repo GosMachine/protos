@@ -16,7 +16,7 @@ service GosBoostDB {
   rpc UpdateFollowSuccessAndErrorTokens(UpdateFollowSuccessAndErrorTokensRequest) returns (google.protobuf.Empty);
   rpc GetOperation(Operation) returns (OperationInfo);
   rpc GetOperationsByStatuses(GetOperationsByStatusesRequest) returns (GetOperationsByStatusesResponse);
-  rpc CreateOperation(OperationInfo) returns (google.protobuf.Empty);
+  rpc CreateOperation(OperationInfo) returns (Operation);
   rpc StartOperation(Operation) returns (google.protobuf.Empty);
   rpc CompleteOperation(Operation) returns (google.protobuf.Empty);
   rpc FailOperation(FailOperationRequest) returns (google.protobuf.Empty);

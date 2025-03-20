@@ -44,7 +44,7 @@ type GosBoostDBClient interface {
 	UpdateFollowSuccessAndErrorTokens(ctx context.Context, in *UpdateFollowSuccessAndErrorTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfo, error)
 	GetOperationsByStatuses(ctx context.Context, in *GetOperationsByStatusesRequest, opts ...grpc.CallOption) (*GetOperationsByStatusesResponse, error)
-	CreateOperation(ctx context.Context, in *OperationInfo, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreateOperation(ctx context.Context, in *OperationInfo, opts ...grpc.CallOption) (*Operation, error)
 	StartOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CompleteOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	FailOperation(ctx context.Context, in *FailOperationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -120,9 +120,9 @@ func (c *gosBoostDBClient) GetOperationsByStatuses(ctx context.Context, in *GetO
 	return out, nil
 }
 
-func (c *gosBoostDBClient) CreateOperation(ctx context.Context, in *OperationInfo, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *gosBoostDBClient) CreateOperation(ctx context.Context, in *OperationInfo, opts ...grpc.CallOption) (*Operation, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(Operation)
 	err := c.cc.Invoke(ctx, GosBoostDB_CreateOperation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -190,7 +190,7 @@ type GosBoostDBServer interface {
 	UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error)
 	GetOperation(context.Context, *Operation) (*OperationInfo, error)
 	GetOperationsByStatuses(context.Context, *GetOperationsByStatusesRequest) (*GetOperationsByStatusesResponse, error)
-	CreateOperation(context.Context, *OperationInfo) (*emptypb.Empty, error)
+	CreateOperation(context.Context, *OperationInfo) (*Operation, error)
 	StartOperation(context.Context, *Operation) (*emptypb.Empty, error)
 	CompleteOperation(context.Context, *Operation) (*emptypb.Empty, error)
 	FailOperation(context.Context, *FailOperationRequest) (*emptypb.Empty, error)
@@ -224,7 +224,7 @@ func (UnimplementedGosBoostDBServer) GetOperation(context.Context, *Operation) (
 func (UnimplementedGosBoostDBServer) GetOperationsByStatuses(context.Context, *GetOperationsByStatusesRequest) (*GetOperationsByStatusesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOperationsByStatuses not implemented")
 }
-func (UnimplementedGosBoostDBServer) CreateOperation(context.Context, *OperationInfo) (*emptypb.Empty, error) {
+func (UnimplementedGosBoostDBServer) CreateOperation(context.Context, *OperationInfo) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOperation not implemented")
 }
 func (UnimplementedGosBoostDBServer) StartOperation(context.Context, *Operation) (*emptypb.Empty, error) {

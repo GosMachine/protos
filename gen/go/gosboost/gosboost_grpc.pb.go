@@ -26,6 +26,7 @@ const (
 	GosBoostDB_UpdateFollowSuccessAndErrorTokens_FullMethodName = "/gosboost.GosBoostDB/UpdateFollowSuccessAndErrorTokens"
 	GosBoostDB_GetOperation_FullMethodName                      = "/gosboost.GosBoostDB/GetOperation"
 	GosBoostDB_GetOperationsByStatuses_FullMethodName           = "/gosboost.GosBoostDB/GetOperationsByStatuses"
+	GosBoostDB_GetOperations_FullMethodName                     = "/gosboost.GosBoostDB/GetOperations"
 	GosBoostDB_CreateOperation_FullMethodName                   = "/gosboost.GosBoostDB/CreateOperation"
 	GosBoostDB_StartOperation_FullMethodName                    = "/gosboost.GosBoostDB/StartOperation"
 	GosBoostDB_CompleteOperation_FullMethodName                 = "/gosboost.GosBoostDB/CompleteOperation"
@@ -43,7 +44,8 @@ type GosBoostDBClient interface {
 	GetChatTokens(ctx context.Context, in *GetChatTokensRequest, opts ...grpc.CallOption) (*GetChatTokensResponse, error)
 	UpdateFollowSuccessAndErrorTokens(ctx context.Context, in *UpdateFollowSuccessAndErrorTokensRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*OperationInfo, error)
-	GetOperationsByStatuses(ctx context.Context, in *GetOperationsByStatusesRequest, opts ...grpc.CallOption) (*GetOperationsByStatusesResponse, error)
+	GetOperationsByStatuses(ctx context.Context, in *GetOperationsByStatusesRequest, opts ...grpc.CallOption) (*GetOperationsResponse, error)
+	GetOperations(ctx context.Context, in *GetOperationsRequest, opts ...grpc.CallOption) (*GetOperationsResponse, error)
 	CreateOperation(ctx context.Context, in *OperationInfo, opts ...grpc.CallOption) (*Operation, error)
 	StartOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CompleteOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -110,10 +112,20 @@ func (c *gosBoostDBClient) GetOperation(ctx context.Context, in *Operation, opts
 	return out, nil
 }
 
-func (c *gosBoostDBClient) GetOperationsByStatuses(ctx context.Context, in *GetOperationsByStatusesRequest, opts ...grpc.CallOption) (*GetOperationsByStatusesResponse, error) {
+func (c *gosBoostDBClient) GetOperationsByStatuses(ctx context.Context, in *GetOperationsByStatusesRequest, opts ...grpc.CallOption) (*GetOperationsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetOperationsByStatusesResponse)
+	out := new(GetOperationsResponse)
 	err := c.cc.Invoke(ctx, GosBoostDB_GetOperationsByStatuses_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gosBoostDBClient) GetOperations(ctx context.Context, in *GetOperationsRequest, opts ...grpc.CallOption) (*GetOperationsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOperationsResponse)
+	err := c.cc.Invoke(ctx, GosBoostDB_GetOperations_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +201,8 @@ type GosBoostDBServer interface {
 	GetChatTokens(context.Context, *GetChatTokensRequest) (*GetChatTokensResponse, error)
 	UpdateFollowSuccessAndErrorTokens(context.Context, *UpdateFollowSuccessAndErrorTokensRequest) (*emptypb.Empty, error)
 	GetOperation(context.Context, *Operation) (*OperationInfo, error)
-	GetOperationsByStatuses(context.Context, *GetOperationsByStatusesRequest) (*GetOperationsByStatusesResponse, error)
+	GetOperationsByStatuses(context.Context, *GetOperationsByStatusesRequest) (*GetOperationsResponse, error)
+	GetOperations(context.Context, *GetOperationsRequest) (*GetOperationsResponse, error)
 	CreateOperation(context.Context, *OperationInfo) (*Operation, error)
 	StartOperation(context.Context, *Operation) (*emptypb.Empty, error)
 	CompleteOperation(context.Context, *Operation) (*emptypb.Empty, error)
@@ -221,8 +234,11 @@ func (UnimplementedGosBoostDBServer) UpdateFollowSuccessAndErrorTokens(context.C
 func (UnimplementedGosBoostDBServer) GetOperation(context.Context, *Operation) (*OperationInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOperation not implemented")
 }
-func (UnimplementedGosBoostDBServer) GetOperationsByStatuses(context.Context, *GetOperationsByStatusesRequest) (*GetOperationsByStatusesResponse, error) {
+func (UnimplementedGosBoostDBServer) GetOperationsByStatuses(context.Context, *GetOperationsByStatusesRequest) (*GetOperationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOperationsByStatuses not implemented")
+}
+func (UnimplementedGosBoostDBServer) GetOperations(context.Context, *GetOperationsRequest) (*GetOperationsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOperations not implemented")
 }
 func (UnimplementedGosBoostDBServer) CreateOperation(context.Context, *OperationInfo) (*Operation, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOperation not implemented")
@@ -371,6 +387,24 @@ func _GosBoostDB_GetOperationsByStatuses_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GosBoostDB_GetOperations_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOperationsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GosBoostDBServer).GetOperations(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GosBoostDB_GetOperations_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GosBoostDBServer).GetOperations(ctx, req.(*GetOperationsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _GosBoostDB_CreateOperation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OperationInfo)
 	if err := dec(in); err != nil {
@@ -509,6 +543,10 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOperationsByStatuses",
 			Handler:    _GosBoostDB_GetOperationsByStatuses_Handler,
+		},
+		{
+			MethodName: "GetOperations",
+			Handler:    _GosBoostDB_GetOperations_Handler,
 		},
 		{
 			MethodName: "CreateOperation",

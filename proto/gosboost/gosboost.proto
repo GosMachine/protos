@@ -15,7 +15,8 @@ service GosBoostDB {
       returns (GetChatTokensResponse);
   rpc UpdateFollowSuccessAndErrorTokens(UpdateFollowSuccessAndErrorTokensRequest) returns (google.protobuf.Empty);
   rpc GetOperation(Operation) returns (OperationInfo);
-  rpc GetOperationsByStatuses(GetOperationsByStatusesRequest) returns (GetOperationsByStatusesResponse);
+  rpc GetOperationsByStatuses(GetOperationsByStatusesRequest) returns (GetOperationsResponse);
+  rpc GetOperations(GetOperationsRequest) returns (GetOperationsResponse);
   rpc CreateOperation(OperationInfo) returns (Operation);
   rpc StartOperation(Operation) returns (google.protobuf.Empty);
   rpc CompleteOperation(Operation) returns (google.protobuf.Empty);
@@ -29,13 +30,17 @@ message  AppendOperationCompletedRequest {
   uint64 completed = 2;
 }
 
-message GetOperationsByStatusesResponse {
+message GetOperationsResponse {
   repeated OperationInfo operations = 1;
 }
 
 message GetOperationsByStatusesRequest {
   repeated string statuses = 1;
   repeated uint64 existingOperations = 2;
+}
+
+message GetOperationsRequest {
+  repeated uint64 IDs = 1;
 }
 
 message FailOperationRequest {

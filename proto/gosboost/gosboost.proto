@@ -22,7 +22,12 @@ service GosBoostDB {
   rpc CompleteOperation(Operation) returns (google.protobuf.Empty);
   rpc FailOperation(FailOperationRequest) returns (google.protobuf.Empty);
   rpc InQueueOperation(Operation) returns (google.protobuf.Empty);
+  rpc GetCompletePercentage(Operation) returns (GetCompletePercentageResponse);
   rpc AppendOperationCompleted(AppendOperationCompletedRequest) returns (google.protobuf.Empty);
+}
+
+message GetCompletePercentageResponse {
+  float percentage = 1;
 }
 
 message  AppendOperationCompletedRequest {

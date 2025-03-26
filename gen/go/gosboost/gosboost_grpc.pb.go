@@ -32,7 +32,6 @@ const (
 	GosBoostDB_CompleteOperation_FullMethodName                 = "/gosboost.GosBoostDB/CompleteOperation"
 	GosBoostDB_FailOperation_FullMethodName                     = "/gosboost.GosBoostDB/FailOperation"
 	GosBoostDB_InQueueOperation_FullMethodName                  = "/gosboost.GosBoostDB/InQueueOperation"
-	GosBoostDB_GetCompletePercentage_FullMethodName             = "/gosboost.GosBoostDB/GetCompletePercentage"
 	GosBoostDB_AppendOperationCompleted_FullMethodName          = "/gosboost.GosBoostDB/AppendOperationCompleted"
 )
 
@@ -52,7 +51,6 @@ type GosBoostDBClient interface {
 	CompleteOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	FailOperation(ctx context.Context, in *FailOperationRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	InQueueOperation(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetCompletePercentage(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*GetCompletePercentageResponse, error)
 	AppendOperationCompleted(ctx context.Context, in *AppendOperationCompletedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
@@ -184,16 +182,6 @@ func (c *gosBoostDBClient) InQueueOperation(ctx context.Context, in *Operation, 
 	return out, nil
 }
 
-func (c *gosBoostDBClient) GetCompletePercentage(ctx context.Context, in *Operation, opts ...grpc.CallOption) (*GetCompletePercentageResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetCompletePercentageResponse)
-	err := c.cc.Invoke(ctx, GosBoostDB_GetCompletePercentage_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *gosBoostDBClient) AppendOperationCompleted(ctx context.Context, in *AppendOperationCompletedRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
@@ -220,7 +208,6 @@ type GosBoostDBServer interface {
 	CompleteOperation(context.Context, *Operation) (*emptypb.Empty, error)
 	FailOperation(context.Context, *FailOperationRequest) (*emptypb.Empty, error)
 	InQueueOperation(context.Context, *Operation) (*emptypb.Empty, error)
-	GetCompletePercentage(context.Context, *Operation) (*GetCompletePercentageResponse, error)
 	AppendOperationCompleted(context.Context, *AppendOperationCompletedRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGosBoostDBServer()
 }
@@ -267,9 +254,6 @@ func (UnimplementedGosBoostDBServer) FailOperation(context.Context, *FailOperati
 }
 func (UnimplementedGosBoostDBServer) InQueueOperation(context.Context, *Operation) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InQueueOperation not implemented")
-}
-func (UnimplementedGosBoostDBServer) GetCompletePercentage(context.Context, *Operation) (*GetCompletePercentageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCompletePercentage not implemented")
 }
 func (UnimplementedGosBoostDBServer) AppendOperationCompleted(context.Context, *AppendOperationCompletedRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AppendOperationCompleted not implemented")
@@ -511,24 +495,6 @@ func _GosBoostDB_InQueueOperation_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _GosBoostDB_GetCompletePercentage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Operation)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(GosBoostDBServer).GetCompletePercentage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: GosBoostDB_GetCompletePercentage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GosBoostDBServer).GetCompletePercentage(ctx, req.(*Operation))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _GosBoostDB_AppendOperationCompleted_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AppendOperationCompletedRequest)
 	if err := dec(in); err != nil {
@@ -601,10 +567,6 @@ var GosBoostDB_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InQueueOperation",
 			Handler:    _GosBoostDB_InQueueOperation_Handler,
-		},
-		{
-			MethodName: "GetCompletePercentage",
-			Handler:    _GosBoostDB_GetCompletePercentage_Handler,
 		},
 		{
 			MethodName: "AppendOperationCompleted",
